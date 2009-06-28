@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="pages/admin/registrarCliente.jsf" x="1144" y="148" zoom="true"/>
+        <Node id="pages/admin/modificarMueble.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="pages/admin/modificarCliente.jsf" x="400" y="750" zoom="true"/>
+        <Node id="pages/admin/edicionMueble.jsf" x="513" y="751" zoom="true"/>
+        <Node id="pages/admin/consultarMueble.jsf" x="837" y="351" zoom="true"/>
+        <Node id="pages/admin/borrarCliente.jsf" x="511" y="148" zoom="true"/>
+        <Node id="pages/cliente/confirmacionCompra.jsf" x="400" y="600" zoom="true"/>
+        <Node id="pages/admin/edicionCliente.jsf" x="900" y="450" zoom="true"/>
+        <Node id="pages/admin/consultarCliente.jsf" x="118" y="545" zoom="true"/>
+        <Node id="pages/cliente/detalleCompraPaso2.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="pages/admin/modificarCliente.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="pages/cliente/nuevoCliente.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="pages/cliente/detalleCompraPaso1.jsf" x="900" y="300" zoom="true"/>
+        <Node id="pages/cliente/detalleProducto.jsf" x="900" y="150" zoom="true"/>
+        <Node id="pages/login.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="pages/cliente/menuCliente.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="*" x="563" y="357" zoom="true"/>
+        <Node id="pages/admin/registrarMueble.jsf" x="150" y="150" zoom="true"/>
+        <Node id="pages/admin/detalleMueble.jsf" x="820" y="615" zoom="true"/>
+        <Node id="pages/admin/borrarMueble.jsf" x="117" y="359" zoom="true"/>
+        <Node id="pages/admin/menuAdmin.jsf" x="825" y="149" zoom="true"/>
+        <Node id="pages/cliente/detalleCarrito.jsf" x="650" y="300" zoom="true"/>
+        <Node id="forward.jsp" x="27" y="34" zoom="true"/>
+        <Node id="pages/cliente/detalleCarrito.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="pages/cliente/nuevoCliente.jsf" x="150" y="750" zoom="true"/>
+        <Node id="pages/admin/consultarMueble.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="pages/admin/registroPrecios.jsf" x="1192" y="352" zoom="true"/>
+        <Node id="pages/login.jsf" x="231" y="34" zoom="true"/>
+        <Node id="pages/cliente/menuCliente.jsf" x="400" y="150" zoom="true"/>
+        <Node id="pages/admin/menuAdmin.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="pages/cliente/detalleCompraPaso2.jsf" x="400" y="450" zoom="true"/>
+        <Node id="pages/admin/modificarMueble.jsf" x="1461" y="145" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

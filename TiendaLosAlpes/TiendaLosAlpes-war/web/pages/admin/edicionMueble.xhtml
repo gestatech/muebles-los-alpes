@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Detalle para Edición de Mueble"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Menu" action="admin"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Menú de Edición de Mueble</f:facet>                     
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Referencia (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.referencia}" required="true"/>
+                            <h:outputLabel value="Nombre (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.nombre}" required="true"/>
+                            <h:outputLabel value="Descripción (*):"/>
+                            <h:inputTextarea value="#{CatalogBean.mueble.descripcion}"/>
+                            <h:outputLabel value="Tipo (*):"/>
+                            <h:selectOneMenu value="#{CatalogBean.mueble.tipo}">
+                                <f:selectItems value="#{CatalogBean.tiposMuebles}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Material (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.material}"/>
+                            <h:outputLabel value="Alto (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.alto}" required="true"/>
+                            <h:outputLabel value="Ancho (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.ancho}" required="true"/>
+                            <h:outputLabel value="Profundidad (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.profundidad}" required="true"/>
+                            <h:outputLabel value="Color (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.color}"/>
+                            <h:outputLabel value="Peso  (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.peso}" required="true"/>
+                            <h:outputLabel value="Ruta de Foto  (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.foto}"/>
+                        </h:panelGrid>
+                        <br/>
+                        <h:panelGrid columns="2">
+                            <h:commandButton value="Actualizar" action="#{CatalogBean.getActualizar}"/>
+                        </h:panelGrid>
+                </rich:panel>
+                </a4j:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

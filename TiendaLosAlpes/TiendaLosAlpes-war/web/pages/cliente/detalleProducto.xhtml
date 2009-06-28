@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Detalle de Mueble"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Carrito de Compras" action="carrito"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Catálogo" action="cliente"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <rich:panel>
+                <f:facet name="header">Detalle de Producto</f:facet>
+                <h:panelGrid columns="2">
+                    <rich:extendedDataTable id="tablaMueble1"  align="center" width="200px" height="240px" value="#{CatalogBean.mueble}" var="mueble">
+                        <rich:column width="200px" label="Foto">
+                            <f:facet name="header">Foto</f:facet>
+                            <h:graphicImage width="200px" height="200px" value="#{mueble.foto}"/>
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <h:panelGrid>
+                    <rich:extendedDataTable id="tablaMueble2"  align="center" width="500px" height="47px" value="#{CatalogBean.mueble}" var="mueble">
+                        <rich:column width="100px" label="Referencia">
+                            <f:facet name="header">Referencia</f:facet>
+                            #{mueble.referencia}
+                        </rich:column>
+                        <rich:column width="100px" label="Nombre">
+                            <f:facet name="header">Nombre</f:facet>
+                            #{mueble.nombre}
+                        </rich:column>
+                        <rich:column width="200px" label="Descripcion">
+                            <f:facet name="header">Descripcion</f:facet>
+                            #{mueble.descripcion}
+                        </rich:column>
+                        <rich:column width="100px" label="Material">
+                            <f:facet name="header">Material</f:facet>
+                            #{mueble.material}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br/>
+                    <rich:extendedDataTable id="tablaMueble3"  align="center" width="500px" height="47px" value="#{CatalogBean.mueble}" var="mueble">
+                        <rich:column width="100px" label="Alto">
+                            <f:facet name="header">Alto</f:facet>
+                            #{mueble.alto}
+                        </rich:column>
+                        <rich:column width="100px" label="Ancho">
+                            <f:facet name="header">Ancho</f:facet>
+                            #{mueble.ancho}
+                        </rich:column>
+                        <rich:column width="100px" label="Profundidad">
+                            <f:facet name="header">Profundidad</f:facet>
+                            #{mueble.profundidad}
+                        </rich:column>
+                        <rich:column width="100px" label="Color">
+                            <f:facet name="header">Color</f:facet>
+                            #{mueble.color}
+                        </rich:column>
+                        <rich:column width="100px" label="Peso">
+                            <f:facet name="header">Peso</f:facet>
+                            #{mueble.peso}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br/>
+                    <rich:extendedDataTable id="tablaMueble4" align="center" width="200px" height="47px" value="#{CatalogBean.mueble}" var="mueble">
+                        <rich:column width="100px" label="Tipo">
+                            <f:facet name="header">Tipo</f:facet>
+                            #{mueble.tipo}
+                        </rich:column>
+                        <rich:column width="100px" label="Precio">
+                            <f:facet name="header">Precio</f:facet>
+                            #{mueble.precio}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                </h:panelGrid>
+                </h:panelGrid>
+                </rich:panel>
+                <a4j:form>
+                    <rich:panel>
+                        <f:facet name="header">Carrito de Compras</f:facet>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Cantidad de Muebles a Agregar al Carrito"/>
+                            <h:inputText value="#{CarritoCompraBean.cantidad}"/>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                            <h:outputLabel value="Agregar al Carrito el Producto: ">
+                            <h:commandButton value="#{CatalogBean.mueble.referencia}" actionListener="#{CarritoCompraBean.getAgregarMueble}" action="#{CarritoCompraBean.getAgregar}"/>
+                            </h:outputLabel>
+                        </h:panelGrid>
+                    </rich:panel>
+                </a4j:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

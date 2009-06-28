@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Consulta de Clientes"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Menu" action="admin"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Menú de Consulta de Clientes</f:facet>
+                     <a4j:form>
+                         <h:panelGrid columns="2">
+                            <h:outputLabel value="Criterio de Busqueda:"/>
+                                <h:selectOneMenu value="#{ClienteBean.criterio}">
+                                    <f:selectItems value="#{ClienteBean.tipoCriterio}"/>
+                                </h:selectOneMenu>
+                            <h:outputLabel value="Valor a Consultar"/>
+                            <h:inputText value="#{ClienteBean.valor}"/>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                            <a4j:commandButton value="Consultar" action="#{ClienteBean.getClienteConsultado}" reRender="tablaCliente1,tablaCliente2"/>
+                        </h:panelGrid>
+                    </a4j:form>
+                </rich:panel>
+                <rich:panel>
+                    <rich:extendedDataTable id="tablaCliente1" align="center" height="47px" value="#{ClienteBean.cliente}" var="cliente">
+                        <rich:column width="100px" label="Identificación">
+                            <f:facet name="header">Identificación</f:facet>
+                            #{cliente.numeroDocumento}
+                        </rich:column>
+                        <rich:column width="100px" label="Documento">
+                            <f:facet name="header">Documento</f:facet>
+                            #{cliente.tipoDocumento}
+                        </rich:column>
+                        <rich:column width="150px" label="Nombres">
+                            <f:facet name="header">Nombres</f:facet>
+                            #{cliente.nombres}
+                        </rich:column>
+                        <rich:column width="100px" label="País">
+                            <f:facet name="header">País</f:facet>
+                            #{cliente.pais}
+                        </rich:column>
+                        <rich:column width="100px" label="Departamento">
+                            <f:facet name="header">Departamento</f:facet>
+                            #{cliente.departamento}
+                        </rich:column>
+                        <rich:column width="100px" label="Ciudad">
+                            <f:facet name="header">Ciudad</f:facet>
+                            #{cliente.ciudadResidencia}
+                        </rich:column>
+                        <rich:column width="150px" label="Dirección">
+                            <f:facet name="header">Dirección</f:facet>
+                            #{cliente.direccion}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br/>
+                    <rich:extendedDataTable id="tablaCliente2" align="center" width="500px" height="47px" value="#{ClienteBean.cliente}" var="cliente">
+                        <rich:column width="150px" label="Correo Electrónico">
+                            <f:facet name="header">Correo Electrónico</f:facet>
+                            #{cliente.email}
+                        </rich:column>
+                        <rich:column width="100px" label="Profesión">
+                            <f:facet name="header">Profesion</f:facet>
+                            #{cliente.profesion}
+                        </rich:column>
+                        <rich:column width="150px" label="Teléfono Residencia">
+                            <f:facet name="header">Teléfono Residencia</f:facet>
+                            #{cliente.telefonoResidencia}
+                        </rich:column>
+                        <rich:column width="100px" label="Celular">
+                            <f:facet name="header">Celular</f:facet>
+                            #{cliente.telefonoCelular}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                </rich:panel>
+                <rich:panel>
+                     <f:facet name="header">Listado de Todos los Clientes</f:facet>
+                     <rich:extendedDataTable id="tablaCliente3" align="center" width="420px" height="100px" value="#{ClienteBean.clientesTienda}" var="clientes">
+                        <rich:column width="100px" label="Identificación">
+                            <f:facet name="header">Identificación</f:facet>
+                            #{clientes.numeroDocumento}
+                        </rich:column>
+                        <rich:column width="150px" label="Nombres">
+                            <f:facet name="header">Nombres</f:facet>
+                            #{clientes.nombres}
+                        </rich:column>
+                        <rich:column width="170px" label="Correo Electrónico">
+                            <f:facet name="header">Correo Electrónico</f:facet>
+                            #{clientes.email}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                </rich:panel>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

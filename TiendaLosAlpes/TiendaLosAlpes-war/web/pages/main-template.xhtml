@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <head><title>Muebles Los Alpes - #{titulo}</title></head>
+    <body>
+        <center>
+            <table align="center">
+                <tr>
+                    <td align="center">
+                        <rich:layout>
+                            <rich:layoutPanel position="top" width="800px">
+                                <h:graphicImage value="/img/header.jpg" />
+                            </rich:layoutPanel>
+                            <rich:layoutPanel position="center" width="800px">
+                                <ui:insert name="body"/>
+                            </rich:layoutPanel>
+                            <rich:layoutPanel  position="bottom" width="800px">
+                                <h:graphicImage value="/img/bottom.jpg" />
+                            </rich:layoutPanel>
+                        </rich:layout>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Detalle de Compra"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Carrito de Compras" action="carrito"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Catálogo" action="cliente"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Compra de Muebles</f:facet>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Referencia (*):"/>
+                            <h:inputText value="#{VentaBean.venta.referencia}" required="true"/>
+                            <h:outputLabel value="Valor (*):"/>
+                            <h:inputText value="#{VentaBean.venta.valor}" required="true"/>
+                            <h:outputLabel value="Descripción (*):"/>
+                            <h:inputTextarea value="#{VentaBean.venta.descripcion}" required="true"/>
+                        </h:panelGrid>
+                </rich:panel>
+                <rich:panel>
+                    <f:facet name="header">Compra de Muebles</f:facet>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Numero de Identificación del Cliente (*):"/>
+                            <h:inputText value="#{VentaBean.venta.clienteId}" required="true"/>
+                            <h:outputLabel value="Nombre del Cliente (*):"/>
+                            <h:inputText value="#{VentaBean.venta.nombreCompleto}" required="true"/>
+                            <h:outputLabel value="Número de Tarjeta (*):"/>
+                            <h:inputText value="#{VentaBean.venta.numeroTarjeta}" required="true"/>
+                            <h:outputLabel value="Código de Seguridad (*):"/>
+                            <h:inputSecret value="#{VentaBean.venta.codigoSeguridad }" required="true"/>
+                            <h:outputLabel value="Fecha de Expiración (*):"/>
+                            <h:inputText value="#{VentaBean.venta.fechaExpiracionTarjeta}" required="true"/>
+                            <h:outputLabel value="Cuotas (*):"/>
+                            <h:inputText value="#{VentaBean.venta.cuotas}" required="true"/>
+                        </h:panelGrid>
+                        <br/>
+                        <h:panelGrid>
+                            <h:commandButton value="Pagar" action="#{VentaBean.getComprarMuebles}"/>
+                        </h:panelGrid>
+                </rich:panel>
+                </a4j:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

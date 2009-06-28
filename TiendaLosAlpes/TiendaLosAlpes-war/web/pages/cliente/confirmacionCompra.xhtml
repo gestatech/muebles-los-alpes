@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Detalle de Mueble"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Catálogo" action="cliente"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <a4j:form>
+                    <rich:panel>
+                        <f:facet name="header">Detalles de Compra</f:facet>
+                        <table border="1">
+                            <tr>
+                                <td>Numero de Referencia de Compra</td>
+                                <td>#{VentaBean.venta.referencia}</td>
+                            </tr>
+                            <tr>
+                                <td>Valor de la Compra</td>
+                                <td>#{VentaBean.venta.valor}</td>
+                            </tr>
+                            <tr>
+                                <td>Descripción de Compra</td>
+                                <td>#{VentaBean.venta.descripcion}</td>
+                            </tr>
+                            <tr>
+                                <td>Numero de Identificación del Cliente</td>
+                                <td>#{VentaBean.venta.clienteId}</td>
+                            </tr>
+                            <tr>
+                                <td>Nombre del Cliente</td>
+                                <td>#{VentaBean.venta.nombreCompleto}</td>
+                            </tr>
+                            <tr>
+                                <td>Número de Tarjeta</td>
+                                <td>#{VentaBean.venta.numeroTarjeta}</td>
+                            </tr>
+                            <tr>
+                                <td>Fecha de Expiración</td>
+                                <td>#{VentaBean.venta.fechaExpiracionTarjeta}</td>
+                            </tr>
+                            <tr>
+                                <td>Cuotas</td>
+                                <td>#{VentaBean.venta.cuotas}</td>
+                            </tr>
+                        </table>
+                    </rich:panel>
+                    <rich:panel>
+                     <f:facet name="header">Confirmación de Compra</f:facet>
+                     <h:panelGrid>
+                         <h:outputText value="Su compra esta siendo procesada por la tienda !!!"/>
+                     </h:panelGrid>
+                     <h:panelGrid>     
+                         <h:outputText value="Se le envio un correo electrónico a su cuenta de correo confirmando la compra"/>
+                     </h:panelGrid>
+                     <h:panelGrid>
+                        <h:commandButton value="Volver al Catálogo de Productos" action="cliente"/>
+                     </h:panelGrid>
+                    </rich:panel>
+                </a4j:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

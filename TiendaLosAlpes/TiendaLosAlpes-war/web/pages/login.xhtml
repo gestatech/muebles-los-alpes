@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="./main-template.xhtml">
+            <ui:param name="titulo" value="Control de Acceso"/>
+            <ui:define name="body">
+                <rich:panel>
+                    <f:facet name="header">Ingreso al Sistema</f:facet>
+                    <a4j:form>
+                        <p>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Nombre Usuario: "/>
+                                <h:inputText value="#{SecurityBean.nombreUsuario}" required="true"/>
+                                <h:outputLabel value="Contraseña: "/>
+                                <h:inputSecret value="#{SecurityBean.contrasenia}" required="true"/>
+                            </h:panelGrid>
+                        </p>
+                        <p>
+                            <h:panelGrid>
+                                <h:commandButton value="Ingresar" action="#{SecurityBean.login}"/>
+                            </h:panelGrid>
+                        </p>
+                    </a4j:form>
+                    <a4j:form>
+                    <h:panelGrid>
+                        <h:commandButton value="Nuevo Cliente" action="nuevoCliente"/>                            
+                    </h:panelGrid>
+                    </a4j:form>
+                </rich:panel>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Consulta de Muebles"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Menu" action="admin"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Menú de Consulta de Muebles</f:facet>                     
+                         <h:panelGrid columns="2">
+                            <h:outputLabel value="Criterio de Busqueda:"/>
+                                <h:selectOneMenu value="#{CatalogBean.criterio}">
+                                    <f:selectItems value="#{CatalogBean.tipoCriterio}"/>
+                                </h:selectOneMenu>
+                            <h:outputLabel value="Valor a Consultar"/>
+                            <h:inputText value="#{CatalogBean.valor}"/>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                            <a4j:commandButton value="Consultar" action="#{CatalogBean.getMueblesConsultados}" reRender="tablaMueble,confirmarDetalle"/>
+                        </h:panelGrid>                    
+                </rich:panel>
+                </a4j:form>
+                <a4j:form>
+                <rich:panel>
+                    <rich:extendedDataTable id="tablaMueble" align="center" width="300px" height="100px" value="#{CatalogBean.muebles}" var="mueble">
+                        <rich:column width="100px" label="Nombre">
+                            <f:facet name="header">Nombre</f:facet>
+                            #{mueble.nombre}
+                        </rich:column>
+                        <rich:column width="100px" label="Referencia">
+                            <f:facet name="header">Referencia</f:facet>                            
+                                <h:commandButton id="Referencia" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="#{CatalogBean.getDetalle}"/>                            
+                        </rich:column>
+                        <rich:column width="100px" label="Tipo">
+                            <f:facet name="header">Tipo</f:facet>
+                            #{mueble.tipo}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                </rich:panel>
+                </a4j:form>
+                <br/>
+                <rich:panel>
+                     <f:facet name="header">Listado de Todos los Muebles</f:facet>
+                     <rich:extendedDataTable id="tablaCliente2" align="center" width="450px" height="100px" value="#{CatalogBean.mueblesTienda}" var="mueble">
+                        <rich:column width="100px" label="Referencia">
+                            <f:facet name="header">Referencia</f:facet>
+                            #{mueble.referencia}
+                        </rich:column>
+                        <rich:column width="100px" label="Nombre">
+                            <f:facet name="header">Nombre</f:facet>
+                            #{mueble.nombre}
+                        </rich:column>
+                        <rich:column width="150px" label="Descripción">
+                            <f:facet name="header">Descripción</f:facet>
+                            #{mueble.descripcion}
+                        </rich:column>
+                        <rich:column width="100px" label="Tipo">
+                            <f:facet name="header">Tipo</f:facet>
+                            #{mueble.tipo}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                </rich:panel>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

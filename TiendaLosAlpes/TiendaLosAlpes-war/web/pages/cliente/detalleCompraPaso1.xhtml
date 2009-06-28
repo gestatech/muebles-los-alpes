@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Detalle de Compra"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Carrito de Compras" action="carrito"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Catálogo" action="cliente"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+              <a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Compra de Producto - Listado</f:facet>
+                     <rich:extendedDataTable id="tablaProductos1" align="center" width="300px" height="150px" value="#{CarritoCompraBean.verCarrito}" var="mueble">
+                        <rich:column width="100px" label="Nombre">
+                            <f:facet name="header">Nombre</f:facet>
+                            #{mueble.nombre}
+                        </rich:column>
+                        <rich:column width="100px" label="Precio">
+                            <f:facet name="header">Precio</f:facet>
+                            #{mueble.precio}
+                        </rich:column>
+                        <rich:column width="100px" label="Cantidad">
+                            <f:facet name="header">Cantidad</f:facet>
+                            #{mueble.cantidad}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br/>
+                    <rich:panel>
+                    <f:facet name="header">Valor de la Compra de Muebles</f:facet>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Valor Muebles: "/>
+                        <h:outputLabel value="#{CarritoCompraBean.valorCompra}"/>
+                        <h:outputLabel value="Valor Envio: "/>
+                        <h:outputLabel value="0"/>
+                        <h:outputLabel value="Valor Total de la Compra: "/>
+                        <h:outputLabel value="#{CarritoCompraBean.valorCompra}"/>
+                    </h:panelGrid>
+                    <br/>
+                    <h:panelGrid>
+                        <h:commandButton value="Pagar !!!" action="#{CarritoCompraBean.getComprarMuebles}"/>
+                    </h:panelGrid>
+                    </rich:panel>
+                </rich:panel>
+                </a4j:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

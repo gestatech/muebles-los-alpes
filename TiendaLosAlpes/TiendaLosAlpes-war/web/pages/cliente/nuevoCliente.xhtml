@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Registro de Clientes"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Carrito de Compras" action="carrito"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Catálogo" action="cliente"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Menú de Registro de Clientes</f:facet>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Tipo de Documento (*):"/>
+                            <h:selectOneMenu value="#{ClienteBean.cliente.tipoDocumento}" required="true">
+                                <f:selectItems value="#{ClienteBean.tipoDocumento}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Número de Documento (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.numeroDocumento}" required="true"/>
+                            <h:outputLabel value="Nombres (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.nombres}" required="true"/>
+                            <h:outputLabel value="País (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.pais}" required="true"/>
+                            <h:outputLabel value="Departamento (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.departamento}" required="true"/>
+                            <h:outputLabel value="Ciudad (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.ciudadResidencia}" required="true"/>
+                            <h:outputLabel value="Dirección (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.direccion}" required="true"/>
+                            <h:outputLabel value="Correo Electrónico (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.email}" required="true"/>
+                            <h:outputLabel value="Profesión"/>
+                            <h:inputText value="#{ClienteBean.cliente.profesion}"/>
+                            <h:outputLabel value="Teléfono Residencia (*):"/>
+                            <h:inputText value="#{ClienteBean.cliente.telefonoResidencia}" required="true"/>
+                            <h:outputLabel value="Celular"/>
+                            <h:inputText value="#{ClienteBean.cliente.telefonoCelular}"/>
+                        </h:panelGrid>
+                        <br/>
+                        <h:panelGrid columns="2">
+                            <h:commandButton value="Registrar" action="#{ClienteBean.getRegistrar}"/>
+                        </h:panelGrid>
+                </rich:panel>
+                </a4j:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

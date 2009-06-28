@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="1.2" 
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+
+<!-- Configuracion del Manejador de Facelets -->
+
+    <application>
+        <view-handler>
+            com.sun.facelets.FaceletViewHandler
+        </view-handler>
+    </application>
+
+<!-- Managed Bean creados para la Aplicación -->
+
+    <managed-bean>
+        <managed-bean-name>SecurityBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.security.SecurityBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>CatalogBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.catalog.CatalogBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>ClienteBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.cliente.ClienteBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>CarritoCompraBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.ventas.CarritoCompraBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>VentaBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.ventas.VentaBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+<!-- Reglas de Navegación Generales -->
+
+<navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>admin</from-outcome>
+            <to-view-id>/pages/admin/menuAdmin.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>cliente</from-outcome>
+            <to-view-id>/pages/cliente/menuCliente.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/pages/login.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>carrito</from-outcome>
+            <to-view-id>/pages/cliente/detalleCarrito.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+<!-- Reglas de Navegación para el Administrador -->
+<!-- Cliente -->
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarCliente</from-outcome>
+            <to-view-id>/pages/admin/registrarCliente.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>borrarCliente</from-outcome>
+            <to-view-id>/pages/admin/borrarCliente.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarCliente</from-outcome>
+            <to-view-id>/pages/admin/consultarCliente.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+<!-- Mueble -->
+
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarMueble</from-outcome>
+            <to-view-id>/pages/admin/registrarMueble.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>modificarMueble</from-outcome>
+            <to-view-id>/pages/admin/modificarMueble.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>borrarMueble</from-outcome>
+            <to-view-id>/pages/admin/borrarMueble.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>consultarMueble</from-outcome>
+            <to-view-id>/pages/admin/consultarMueble.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registroPrecios</from-outcome>
+            <to-view-id>/pages/admin/registroPrecios.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/consultarMueble.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalleMueble</from-outcome>
+            <to-view-id>/pages/admin/detalleMueble.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/modificarMueble.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>edicionMueble</from-outcome>
+            <to-view-id>/pages/admin/edicionMueble.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+<!-- Reglas de Navegación para el Cliente -->
+
+    <navigation-rule>
+        <from-view-id>/pages/cliente/menuCliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detalleMueble</from-outcome>
+            <to-view-id>/pages/cliente/detalleProducto.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/cliente/detalleCarrito.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>compra</from-outcome>
+            <to-view-id>/pages/cliente/detalleCompraPaso1.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>pagar</from-outcome>
+            <to-view-id>/pages/cliente/detalleCompraPaso2.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/cliente/detalleCompraPaso2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>confirmacion</from-outcome>
+            <to-view-id>/pages/cliente/confirmacionCompra.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>nuevoCliente</from-outcome>
+            <to-view-id>/pages/cliente/nuevoCliente.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/cliente/nuevoCliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>admin</from-outcome>
+            <to-view-id>/pages/login.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>

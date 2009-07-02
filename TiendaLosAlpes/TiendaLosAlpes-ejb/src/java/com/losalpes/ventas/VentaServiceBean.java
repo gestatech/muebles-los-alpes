@@ -2,6 +2,7 @@ package com.losalpes.ventas;
 
 import com.losalpes.persistence.entity.Venta;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -91,5 +92,18 @@ public class VentaServiceBean implements IVentaService{
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public List<Venta> obtenerVentasConsultadas(String valor){
+        List<Venta> ventasConsultadas = new ArrayList<Venta>();
+        Venta venta = new Venta();
+        Iterator it = ventas.iterator();
+
+        while(it.hasNext()){
+            venta = (Venta) it.next();
+            if(venta.getFechaGeneracion().equalsIgnoreCase(valor))
+                ventasConsultadas.add(venta);
+        }
+        return ventasConsultadas;
     }
 }

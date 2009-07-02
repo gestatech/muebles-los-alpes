@@ -52,6 +52,11 @@
         <managed-bean-class>com.losalpes.ventas.ReporteVentas</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>VendedorBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.vendedor.VendedorBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
 <!-- Reglas de Navegación Generales -->
 
@@ -172,6 +177,28 @@
         <navigation-case>
             <from-outcome>edicionMueble</from-outcome>
             <to-view-id>/pages/admin/edicionMueble.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+<!-- Vendedores -->
+
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrar</from-outcome>
+            <to-view-id>/pages/admin/controlVendedores.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+<!-- Vendedores -->
+
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>reporteDiario</from-outcome>
+            <to-view-id>/pages/admin/reporteDiario.jsf</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

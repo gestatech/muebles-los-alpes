@@ -5,6 +5,7 @@ import com.losalpes.persistence.entity.Mueble;
 import com.losalpes.persistence.entity.Venta;
 import com.losalpes.persistence.entity.TipoConsultaMueble;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -173,9 +174,12 @@ public class CarritoCompraBean {
         String referencias = "";
         int contadorMuebles = 0;
         String descripcion;
+        List<String> refMuebles = new ArrayList<String>();
         // Bucle para contar los muebles y obtener su referencia.
         while(it.hasNext()){
-            referencias = referencias+"--"+((Mueble)it.next()).getReferencia();
+            String ref = ((Mueble)it.next()).getReferencia();
+            referencias = referencias+"--"+ ref;
+            refMuebles.add(ref);
             contadorMuebles++;
         }
         descripcion = "("+contadorMuebles+") muebles con referencia(s): "+referencias;
@@ -186,6 +190,7 @@ public class CarritoCompraBean {
         Calendar fechaActual = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         getVenta().setFechaGeneracion(df.format(fechaActual.getTime()));
+        getVenta().setReferenciasMuebles(refMuebles);
        // Asigna la venta creada al servicio Mock de ventas.
         ventaService.crear(getVenta());      
         // String para redireccionar a la pagina de autenticación.

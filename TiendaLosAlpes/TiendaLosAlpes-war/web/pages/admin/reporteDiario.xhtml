@@ -19,6 +19,41 @@
                         </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
+                <a4j:form>
+                    <rich:panel>
+                        <f:facet name="header">Muebles Los Alpes - Reporte Diario</f:facet>
+                         <a4j:form>
+                             <h:panelGrid columns="2">
+                                <h:outputLabel value="Fecha"/>
+                                <h:inputText value="#{ReporteVentas.valor}"/>
+                            </h:panelGrid>
+                            <h:panelGrid>
+                                <a4j:commandButton value="Consultar" action="#{ReporteVentas.getConsultarFecha}" reRender="tablaVentas,tablaFullVentas"/>
+                            </h:panelGrid>
+                        </a4j:form>
+                    </rich:panel>
+                    <rich:panel>
+                        <f:facet name="header">Muebles Los Alpes - Reporte Diario</f:facet>
+                           <rich:extendedDataTable id="tablaVentas" align="center" height="47px" value="#{ReporteVentas.muebles}" var="mueble">
+                                <rich:column width="100px" label="Nombre">
+                                    <f:facet name="header">Nombre</f:facet>
+                                    #{mueble.nombre}
+                                </rich:column>
+                                <rich:column width="100px" label="Cantidad">
+                                    <f:facet name="header">Cantidad</f:facet>
+                                    #{mueble.cantidad}
+                                </rich:column>
+                                <rich:column width="150px" label="Costo Unitario">
+                                    <f:facet name="header">Costo Unitario</f:facet>
+                                    #{mueble.precio}
+                                </rich:column>
+                                <rich:column width="100px" label="Total">
+                                    <f:facet name="header">Total</f:facet>
+                                    #{venta.pais}
+                                </rich:column>
+                           </rich:extendedDataTable>
+                     </rich:panel>
+                </a4j:form>
             </ui:define>
         </ui:composition>
     </body>

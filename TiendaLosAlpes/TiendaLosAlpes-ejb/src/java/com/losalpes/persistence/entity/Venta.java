@@ -1,5 +1,7 @@
 package com.losalpes.persistence.entity;
 
+import java.util.List;
+
 /**
  * POJO de Venta
  * @author Memo Toro
@@ -14,6 +16,7 @@ public class Venta {
     private int cuotas;
     private int clienteId;
     private String fechaGeneracion;
+    private List<String> referenciasMuebles;
 
     /** Crea una nueva instancia de Venta */
     public Venta() {
@@ -89,5 +92,13 @@ public class Venta {
 
     public void setFechaGeneracion(String fechaGeneracion) {
         this.fechaGeneracion = fechaGeneracion;
-    }    
+    }
+
+    public List<String> getReferenciasMuebles() {
+        return referenciasMuebles;
+    }
+
+    public void setReferenciasMuebles(List<String> referenciasMuebles) {
+        this.referenciasMuebles = referenciasMuebles;
+    }
 }

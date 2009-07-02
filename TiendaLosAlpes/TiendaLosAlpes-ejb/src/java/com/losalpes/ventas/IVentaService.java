@@ -34,4 +34,6 @@ public interface IVentaService {
      * Método para enviar correos electrónicos con las librerias de Apache
      */    
     void enviarCorreo();
+
+    List<Venta> obtenerVentasConsultadas(String valor);
 }

@@ -2,17 +2,18 @@ package com.losalpes.security;
 
 import com.losalpes.persistence.entity.TipoUsuario;
 import com.losalpes.persistence.entity.Usuario;
+import javax.ejb.EJB;
 
 /**
  * Managed Bean para controlar la autenticación de usuarios. 
  * Dicho carrito conoce las interfaces de varios Mocl para interactuar con Ventas, Catalogo
  * @author Memo Toro
- * @author Camilo Alvarez
  */
 public class SecurityBean {
     /**
-     * Interfaz Mock para manejar la seguridad.
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz ISecurityService para los usuarios.
      */
+    @EJB
     private ISecurityService securityService;
     /**
      * Variable String para el nombre de usuario.
@@ -25,11 +26,10 @@ public class SecurityBean {
 
     /** Crea una nueva instancia de SecurityBean */
     public SecurityBean() {
-        securityService = new SecurityServiceMock();
     }
     /**
      * Método para obtener el tipo de usuario. El rol de usuario y poder redireccionar.
-     * @return Variable de tipo String con el redireccionamiento.
+     * @return String Variable de tipo String con el redireccionamiento.
      */
      public String login(){
         Usuario usuario = securityService.login(nombreUsuario, contrasenia);
@@ -37,7 +37,7 @@ public class SecurityBean {
             return "admin";
         }
         if(usuario.getTipoUsuario() == TipoUsuario.CLIENTE){
-            return "pagar";
+            return "cliente";
         }
         else{
             return "login";
@@ -45,7 +45,7 @@ public class SecurityBean {
     }
     /**
      * Método par obtener el password del usuario.
-     * @return variable tipo String con el password.
+     * @return String variable tipo String con el password.
      */
     public String getContrasenia() {
         return contrasenia;
@@ -59,7 +59,7 @@ public class SecurityBean {
     }
    /**
      * Método para obtener el nombre de usuario.
-     * @return Variable de tipo String para el Nombre de Usuario.
+     * @return String Variable de tipo String para el Nombre de Usuario.
      */
     public String getNombreUsuario() {
         return nombreUsuario;

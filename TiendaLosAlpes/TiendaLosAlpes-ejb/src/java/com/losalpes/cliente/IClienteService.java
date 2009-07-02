@@ -3,27 +3,35 @@ package com.losalpes.cliente;
 import com.losalpes.persistence.entity.Cliente;
 import com.losalpes.persistence.entity.TipoConsultaCliente;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  * Interfaz con métodos de Cliente
+ * Anotada con @Local para indicar que su acceso a través de los SessionBean seran de manera local.
  * @author Memo Toro
  */
+@Local
 public interface IClienteService {
     /**
      * Método para registrar clientes
-     * @param Variable tipo cliente
+     * @param cliente Variable tipo cliente
      */
     void registrar(Cliente cliente);
     /**
      * Método para eliminar clientes a partir de un cliente seleccionado.
-     * @param Variable cliente a eliminar
+     * @param cliente Variable cliente a eliminar
      */
     void eliminar(Cliente cliente);
     /**
+     * Método para editar Cliente
+     * @param Cliente Variable cliente*
+     */
+    void editar(Cliente cliente);
+    /**
      * Método para consulta clientes por criterios establecidos
-     * @param Variable tipo TipoConsultaCliente criterio
-     * @param Variable String para el valor de la consula
-     * @return Variable tipo Cliente.
+     * @param criterio Variable tipo TipoConsultaCliente criterio
+     * @param consula Variable String para el valor de la consula
+     * @return Cliente Variable tipo Cliente.
      */
     Cliente consultar(TipoConsultaCliente criterio, String valor);
     /**

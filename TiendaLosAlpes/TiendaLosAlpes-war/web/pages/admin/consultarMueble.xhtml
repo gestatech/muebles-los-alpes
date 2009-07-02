@@ -12,7 +12,7 @@
                 <a4j:form>
                     <rich:toolBar height="26" itemSeparator="Grid">
                         <rich:toolBarGroup location="right">
-                            <h:commandButton value="Menu" action="admin"/>
+                            <h:commandButton value="Menu" action="#{CatalogBean.getLimpiar}"/>
                         </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Salir" action="login"/>
@@ -31,7 +31,7 @@
                             <h:inputText value="#{CatalogBean.valor}"/>
                         </h:panelGrid>
                         <h:panelGrid>
-                            <a4j:commandButton value="Consultar" action="#{CatalogBean.getMueblesConsultados}" reRender="tablaMueble,confirmarDetalle"/>
+                            <a4j:commandButton value="Consultar" action="#{CatalogBean.getMueblesConsultados}" reRender="tablaMueble"/>
                         </h:panelGrid>                    
                 </rich:panel>
                 </a4j:form>
@@ -44,7 +44,7 @@
                         </rich:column>
                         <rich:column width="100px" label="Referencia">
                             <f:facet name="header">Referencia</f:facet>                            
-                                <h:commandButton id="Referencia" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="#{CatalogBean.getDetalle}"/>                            
+                                <h:commandButton id="Referencia" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="detalleMueble"/>
                         </rich:column>
                         <rich:column width="100px" label="Tipo">
                             <f:facet name="header">Tipo</f:facet>

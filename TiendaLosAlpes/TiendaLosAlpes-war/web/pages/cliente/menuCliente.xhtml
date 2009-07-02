@@ -17,6 +17,9 @@
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Catálogo" action="cliente"/>
                         </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
                 <a4j:form>
@@ -41,7 +44,7 @@
                                 </rich:column>
                                 <rich:column width="100px" label="Ver">
                                     <f:facet name="header">Ver Mas...</f:facet>
-                                        <h:commandButton id="Ver" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="#{CatalogBean.getDetalle}"/>
+                                        <h:commandButton id="Ver" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="detalleProducto"/>
                                 </rich:column>                   
                     </rich:extendedDataTable>
                     </rich:panel>

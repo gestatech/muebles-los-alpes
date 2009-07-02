@@ -76,7 +76,6 @@ public class Cliente {
         this.nombres = nombres;
     }
 
-
     public String getPais() {
         return pais;
     }

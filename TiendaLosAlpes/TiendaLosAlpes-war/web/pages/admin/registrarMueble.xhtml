@@ -12,7 +12,7 @@
                 <a4j:form>
                     <rich:toolBar height="26" itemSeparator="Grid">
                         <rich:toolBarGroup location="right">
-                            <h:commandButton value="Menu" action="admin"/>
+                            <h:commandButton value="Menu" action="#{CatalogBean.getLimpiar}"/>
                         </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Salir" action="login"/>
@@ -22,36 +22,63 @@
                 <a4j:form>
                 <rich:panel>
                      <f:facet name="header">Menú de Registro de Muebles</f:facet>
-                        <h:panelGrid columns="2">
+                        <h:panelGrid columns="3">
                             <h:outputLabel value="Referencia (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.referencia}" required="true"/>
+                            <h:inputText value="#{CatalogBean.mueble.referencia}" required="true" id="Referencia">
+                                <f:validateLength minimum="4" maximum="4"/>
+                            </h:inputText>
+                            <rich:message for="Referencia"/>
                             <h:outputLabel value="Nombre (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.nombre}" required="true"/>
+                            <h:inputText value="#{CatalogBean.mueble.nombre}" required="true" id="Nombre">
+                                <f:validateLength minimum="4"/>
+                            </h:inputText>
+                            <rich:message for="Nombre"/>
                             <h:outputLabel value="Descripción (*):"/>
-                            <h:inputTextarea value="#{CatalogBean.mueble.descripcion}" required="true"/>
+                            <h:inputTextarea value="#{CatalogBean.mueble.descripcion}" required="true" id="Descripción">
+                                <f:validateLength minimum="4"/>
+                            </h:inputTextarea>
+                            <rich:message for="Descripción"/>
                             <h:outputLabel value="Tipo (*):"/>
-                            <h:selectOneMenu value="#{CatalogBean.mueble.tipo}" required="true">
+                            <h:selectOneMenu value="#{CatalogBean.mueble.tipo}" required="true" id="Tipo">
                                 <f:selectItems value="#{CatalogBean.tiposMuebles}" />
                             </h:selectOneMenu>
+                            <rich:message for="Tipo"/>
                             <h:outputLabel value="Material (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.material}" required="true"/>
-                            <h:outputLabel value="Alto (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.alto}" required="true"/>
-                            <h:outputLabel value="Ancho (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.ancho}" required="true"/>
-                            <h:outputLabel value="Profundidad (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.profundidad}" required="true"/>
+                            <h:inputText value="#{CatalogBean.mueble.material}" required="true" id="Material">
+                                <f:validateLength minimum="4"/>
+                            </h:inputText>
+                            <rich:message for="Material"/>
+                            <h:outputLabel value="Alto Metros (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.alto}" required="true" id="Alto">
+                                <f:validateLongRange minimum="1" maximum="100"/>
+                            </h:inputText>
+                            <rich:message for="Alto"/>
+                            <h:outputLabel value="Ancho Metros (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.ancho}" required="true" id="Ancho">
+                                <f:validateLongRange minimum="1" maximum="100"/>
+                            </h:inputText>
+                            <rich:message for="Ancho"/>
+                            <h:outputLabel value="Profundidad Metros (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.profundidad}" required="true" id="Profundidad">
+                                <f:validateLongRange minimum="1" maximum="100"/>
+                            </h:inputText>
+                            <rich:message for="Profundidad"/>
                             <h:outputLabel value="Color (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.color}" required="true"/>
-                            <h:outputLabel value="Peso  (*):"/>
-                            <h:inputText value="#{CatalogBean.mueble.peso}" required="true"/>
+                            <h:inputText value="#{CatalogBean.mueble.color}" required="true" id="Color">
+                                <f:validateLength minimum="4"/>
+                            </h:inputText>
+                            <rich:message for="Color"/>
+                            <h:outputLabel value="Peso Kg (*):"/>
+                            <h:inputText value="#{CatalogBean.mueble.peso}" required="true" id="Peso">
+                                <f:validateLongRange minimum="1" maximum="100"/>
+                            </h:inputText>
+                            <rich:message for="Peso"/>
                             <h:outputLabel value="Ruta de Foto :"/>
                             <h:inputText value="#{CatalogBean.mueble.foto}"/>
                         </h:panelGrid>
                         <br/>
-                        <h:panelGrid columns="2">
+                        <h:panelGrid>
                             <h:commandButton value="Crear" action="#{CatalogBean.getRegistrar}"/>
-                            <h:commandButton type="reset" value="Limpiar Formulario"/>
                         </h:panelGrid>                    
                 </rich:panel>
                 </a4j:form>

@@ -1,23 +1,41 @@
 package com.losalpes.ventas;
 
-import com.losalpes.catalog.CatalogServiceMock;
 import com.losalpes.catalog.ICatalogService;
 import com.losalpes.persistence.entity.Mueble;
 import com.losalpes.persistence.entity.Venta;
 import com.losalpes.persistence.entity.TipoConsultaMueble;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
  * Managed Bean para controlar el Carrito de Compras y las Ventas.
- * Dicho carrito conoce las interfaces de varios Mocl para interactuar con Ventas, Catalogo
+ * Dicho carrito conoce las interfaces de varios Mock para interactuar con Ventas, Catalogo
  * @author Memo Toro
  */
 public class CarritoCompraBean {
+    /**
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz ICarritoService para los muebles.
+     */
+    @EJB
+    private ICarritoService carritoService;
+    /**
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz ICatalogService para los muebles.
+     */
+    @EJB
+    private ICatalogService catalogService;
+    /**
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IVentaService para los muebles.
+     */
+    @EJB
+    private IVentaService ventaService;
     /**
      * Variable de tipo Mueble a comprar.
      */
@@ -27,26 +45,13 @@ public class CarritoCompraBean {
      */
     private Venta venta;
     /**
-     * Interfaz Mock de Carrito para las operaciones de negocio del carrito de compras.
-     */
-    private ICarritoService carritoService = new CarritoServiceMock();
-    /**
-     * Interfaz Mock de Catálogo para las operaciones de negocio del catalogo de muebles.
-     */
-    private ICatalogService catalogService = new CatalogServiceMock();
-    /**
-     * Interfaz Mock de Venta para las operaciones de negocio de ventas.
-     */
-    private IVentaService ventaService = new VentaServiceMock();
-    /**
      * Variable para el valor de la compra.
      */
     private double valorCompra;
     /**
      * Variable para la cantidad por tipo de productos a agregar al carrito.
      */
-    private int cantidad = 1;
-
+    private int cantidad;
     /** Crea una nueva instancia de CarritoCompraBean */
     public CarritoCompraBean() {
         mueble = new Mueble();
@@ -54,62 +59,56 @@ public class CarritoCompraBean {
     }
     /**
      * Método que obtiene el mueble .
-     * @param Variable tipo Mueble
+     * @param Mueble Variable tipo Mueble
      */
     public Mueble getMueble() {
         return mueble;
     }
     /**
      * Método que asigna el mueble a la variable local de mueble.
-     * @param Variable tipo Mueble
+     * @param mueble Variable tipo Mueble
      */
     public void setMueble(Mueble mueble) {
         this.mueble = mueble;
     }
     /**
      * Método que retorna el valor de la compra
-     * @return Variable tipo Double con el valor de la compra.
+     * @return double Variable tipo Double con el valor de la compra.
      */
     public double getValorCompra() {
         return valorCompra;
     }
     /**
      * Método que asigna el valor de la compra.
-     * @param Variable tipo Double con el valor de la compra.
+     * @param valorCompra Variable tipo Double con el valor de la compra.
      */
     public void setValorCompra(double valorCompra) {
         this.valorCompra = valorCompra;
     }
     /**
-     * Método para Borrar un mueble del carrito.
-     */
-    public void getEliminarMueble(){
-        carritoService.eliminar(mueble);
-    }
-    /**
      * Método para obtener la cantidad de unidades de cada mueble cargado al carrito.
-     * @return Variable tipo Int con la cantidad de productos cargados en el carrito por tipo de mueble.
+     * @return int Variable tipo Int con la cantidad de productos cargados en el carrito por tipo de mueble.
      */
     public int getCantidad() {
         return cantidad;
     }
     /**
      * Método para asignar la cantidad de unidades.
-     * @param Variable tipo Int con la cantidad de unidades.
+     * @param cantidad Variable tipo Int con la cantidad de unidades.
      */
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
     /**
      * Método para obtener la venta que se esta manipulando con el carrito.
-     * @return Variable tipo Venta.
+     * @return Venta Variable tipo Venta.
      */
     public Venta getVenta() {
         return venta;
     }
     /**
      * Método para asignar la Venta.
-     * @param Variable tipo venta.
+     * @param venta Variable tipo venta.
      */
     public void setVenta(Venta venta) {
         this.venta = venta;
@@ -117,7 +116,7 @@ public class CarritoCompraBean {
     /**
      * Método para agregar un mueble al carrito de compras.
      * Se dispara a partir de un evento de clic sobre el boton de agregar mueble.
-     * @param Variable tipo evento como clic.
+     * @param evento Variable tipo evento como clic.
      */
     public void getAgregarMueble(ActionEvent evento){
         // Lógica de captura del evento y del valor del parametro pasado.
@@ -134,7 +133,7 @@ public class CarritoCompraBean {
         // Carga el mueble al carrito de compras.
         carritoService.agregar(getMueble());
         // Cálcula el valor de la compra acumulada con el mueble agregado.
-        setValorCompra(getValorCompra()+getMueble().getCantidad()*getMueble().getPrecio());
+        setValorCompra(getValorCompra()+getCantidad()*getMueble().getPrecio());
     }
     /**
      * Método para eliminar un mueble del carrito de compras.
@@ -166,10 +165,11 @@ public class CarritoCompraBean {
     public String getComprarMuebles(){
         // Crea un aleatorio para simlar un numero de referencia.
         Random rand = new Random();
-        String referencia = (String.valueOf(rand.nextInt(1000)))+"-"+(String.valueOf(rand.nextInt(100000000)));
-        getVenta().setReferencia(referencia);
-        getVenta().setValor(valorCompra);
-        Iterator it = carritoService.ver().iterator();
+        String referenciaCompra = (String.valueOf(rand.nextInt(1000)))+"-"+(String.valueOf(rand.nextInt(100000000)));
+        setVenta(new Venta());
+        getVenta().setReferencia(referenciaCompra);
+        getVenta().setValor(getValorCompra());
+        Iterator it = carritoService.verMueblesCarrito().iterator();
         String referencias = "";
         int contadorMuebles = 0;
         String descripcion;
@@ -180,30 +180,22 @@ public class CarritoCompraBean {
         }
         descripcion = "("+contadorMuebles+") muebles con referencia(s): "+referencias;
         getVenta().setDescripcion(descripcion);
-        // Asigna la venta creada al servicio Mock de ventas.
-        ventaService.crear(getVenta());
+        // Asigna el identificador del cliente con el cliente autenticado y asignado al carrito.
+        getVenta().setClienteId(carritoService.obtenerClienteAutenticado());
+        // Asigna la fecha a la compra la fecha actual.
+        Calendar fechaActual = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        getVenta().setFechaGeneracion(df.format(fechaActual.getTime()));
+       // Asigna la venta creada al servicio Mock de ventas.
+        ventaService.crear(getVenta());      
         // String para redireccionar a la pagina de autenticación.
-        return "login";
+        return "pagar";
     }
     /**
-     * Método que retorna unList con todos los muebles agregados al carrito de compras.
-     * @return Variable tipo List con los muebles cargados al carrito.
+     * Método que retorna un List con todos los muebles agregados al carrito de compras.
+     * @return List Variable tipo List con los muebles cargados al carrito.
      */
     public List getVerCarrito(){
-        return carritoService.ver();
-    }
-    /**
-     * Método para redireccionar al menu de cliente invocado desde le menu de Agregar Carrito. El home de catálogo de productos.
-     * @return Variable tipo String para redireccionamiento.
-     */
-    public String getAgregar(){
-        return "cliente";
-    }
-    /**
-     * Método para redireccionar al menu de cliente invocado desde el menu de Eliminar Carrito. El home de catálogo de productos.
-     * @return Variable tipo String para redireccionamiento.
-     */
-    public String getEliminar(){
-        return "cliente";
+        return carritoService.verMueblesCarrito();
     }
 }

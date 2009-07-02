@@ -23,7 +23,7 @@
                 <rich:panel>
                 <f:facet name="header">Menú de Borrado de Clientes</f:facet>
                          <h:panelGrid columns="2">
-                            <h:outputLabel value="Criterio de Eliminación" style="align=center"/>
+                            <h:outputLabel value="Criterio de Eliminación"/>
                                 <h:selectOneMenu value="#{ClienteBean.criterio}">
                                     <f:selectItems value="#{ClienteBean.tipoCriterio}"/>
                                 </h:selectOneMenu>
@@ -51,14 +51,14 @@
                         </rich:column>
                     </rich:extendedDataTable>
                 </rich:panel>
-                <a4j:form id="confirmarBorrado">
-                <rich:panel>
+                <a4j:form>
+                <rich:panel id="confirmarBorrado">
                     <f:facet name="header">Confirmación de Borrado</f:facet>                    
                         <h:panelGrid>
                             <h:outputLabel value="Pulse el Botón para Realizar el BORRADO del Cliente Ubicado en el Boton" rendered="true"/>
                         </h:panelGrid>
                         <h:panelGrid>
-                            <h:commandButton id="Borrar" value="#{ClienteBean.cliente.numeroDocumento}" actionListener="#{ClienteBean.getBorrarCliente}" action="#{ClienteBean.getBorrar}" rendered="true"/>
+                            <h:commandButton id="Borrar" value="#{ClienteBean.cliente.numeroDocumento}" actionListener="#{ClienteBean.getBorrarCliente}" action="admin" rendered="true"/>
                         </h:panelGrid>
                 </rich:panel>
                 </a4j:form>

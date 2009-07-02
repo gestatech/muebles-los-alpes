@@ -22,31 +22,48 @@
                 <a4j:form>
                 <rich:panel>
                      <f:facet name="header">Menú de Registro de Clientes</f:facet>
-                        <h:panelGrid columns="2">
+                        <h:panelGrid columns="3">
                             <h:outputLabel value="Tipo de Documento (*):"/>
-                            <h:selectOneMenu value="#{ClienteBean.cliente.tipoDocumento}" required="true">
+                            <h:selectOneMenu value="#{ClienteBean.cliente.tipoDocumento}" required="true" id="TipoDocumento">
                                 <f:selectItems value="#{ClienteBean.tipoDocumento}" />
                             </h:selectOneMenu>
+                            <rich:message for="TipoDocumento"/>
                             <h:outputLabel value="Número de Documento (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.numeroDocumento}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.numeroDocumento}" required="true" id="Documento">
+                                <f:validateLongRange minimum="1000000" maximum="1000000000"/>
+                            </h:inputText>
+                            <rich:message for="Documento"/>
                             <h:outputLabel value="Nombres (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.nombres}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.nombres}" required="true" id="Nombre"/>
+                            <rich:message for="Nombre"/>
                             <h:outputLabel value="País (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.pais}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.pais}" required="true" id="Pais"/>
+                            <rich:message for="Pais"/>
                             <h:outputLabel value="Departamento (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.departamento}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.departamento}" required="true" id="Depto"/>
+                            <rich:message for="Depto"/>
                             <h:outputLabel value="Ciudad (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.ciudadResidencia}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.ciudadResidencia}" required="true" id="Ciudad"/>
+                            <rich:message for="Ciudad"/>
                             <h:outputLabel value="Dirección (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.direccion}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.direccion}" required="true" id="Direccion"/>
+                            <rich:message for="Direccion"/>
                             <h:outputLabel value="Correo Electrónico (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.email}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.email}" required="true" id="Correo"/>
+                            <rich:message for="Correo"/>
                             <h:outputLabel value="Profesión"/>
-                            <h:inputText value="#{ClienteBean.cliente.profesion}"/>
+                            <h:inputText value="#{ClienteBean.cliente.profesion}" id="Profesion"/>
+                            <rich:message for="Profesion"/>
                             <h:outputLabel value="Teléfono Residencia (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.telefonoResidencia}" required="true"/>
+                            <h:inputText value="#{ClienteBean.cliente.telefonoResidencia}" id="Residencia" required="true">
+                                <f:validateLength minimum="7" maximum="7"/>
+                            </h:inputText>
+                            <rich:message for="Residencia"/>
                             <h:outputLabel value="Celular"/>
-                            <h:inputText value="#{ClienteBean.cliente.telefonoCelular}"/>
+                            <h:inputText value="#{ClienteBean.cliente.telefonoCelular}" id="Celular">
+                                <f:validateLength minimum="10" maximum="10"/>
+                            </h:inputText>
+                                <rich:message for="Celular"/>
                         </h:panelGrid>
                         <br/>
                         <h:panelGrid columns="2">

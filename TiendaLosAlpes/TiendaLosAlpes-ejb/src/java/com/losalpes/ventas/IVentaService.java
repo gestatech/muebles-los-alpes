@@ -2,10 +2,13 @@ package com.losalpes.ventas;
 
 import com.losalpes.persistence.entity.Venta;
 import java.util.List;
+import javax.ejb.Local;
+
 /**
- * Interfaz con métodos de Venta
+ * Interfaz con métodos de Venta, Anotada con @Local para acceso al Bean.
  * @author Memo Toro
  */
+@Local
 public interface IVentaService {
     /**
      * Método para crear una Venta
@@ -21,7 +24,7 @@ public interface IVentaService {
      * Método para obtener el listado de ventas de la tienda.
      * @return List con las ventas de la tienda.
      */
-    List<Venta> obtener();
+    List<Venta> obtenerVentas();
     /**
      * Método para obtener la venta actual.
      * @return Variable tipo Venta.

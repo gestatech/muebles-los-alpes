@@ -13,11 +13,13 @@
                     <f:facet name="header">Ingreso al Sistema</f:facet>
                     <a4j:form>
                         <p>
-                            <h:panelGrid columns="2">
+                            <h:panelGrid columns="3">
                                 <h:outputLabel value="Nombre Usuario: "/>
-                                <h:inputText value="#{SecurityBean.nombreUsuario}" required="true"/>
+                                <h:inputText value="#{SecurityBean.nombreUsuario}" required="true" id="Nombre"/>
+                                <rich:message for="Nombre"/>
                                 <h:outputLabel value="Contraseña: "/>
-                                <h:inputSecret value="#{SecurityBean.contrasenia}" required="true"/>
+                                <h:inputSecret value="#{SecurityBean.contrasenia}" required="true" id="Contraseña"/>
+                                <rich:message for="Contraseña"/>
                             </h:panelGrid>
                         </p>
                         <p>
@@ -26,11 +28,16 @@
                             </h:panelGrid>
                         </p>
                     </a4j:form>
+                    <br/>
+                    <rich:panel>
                     <a4j:form>
-                    <h:panelGrid>
-                        <h:commandButton value="Nuevo Cliente" action="nuevoCliente"/>                            
-                    </h:panelGrid>
+                        <h:outputLabel value="Opciones para el Cliente"/>
+                        <h:panelGrid columns="2">
+                            <h:commandButton value="Nuevo Cliente" action="nuevoCliente"/>
+                            <h:commandButton value="Editar Mis Datos" action="editarCliente"/>
+                        </h:panelGrid>
                     </a4j:form>
+                    </rich:panel>
                 </rich:panel>
             </ui:define>
         </ui:composition>

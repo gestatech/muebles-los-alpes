@@ -16,9 +16,23 @@
                         </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
-                <a4j:form>
                 <rich:panel>
-                     <f:facet name="header">Menú de Registro de Clientes</f:facet>
+                     <f:facet name="header">Menú de Edición de Clientes</f:facet>
+                     <a4j:form>
+                         <h:panelGrid columns="2">
+                            <h:outputLabel value="Usuario"/>
+                            <h:inputText value="#{ClienteBean.valor}"/>
+                            <h:outputLabel value="Contraseña"/>
+                            <h:inputText value="#{ClienteBean.valor}"/>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                            <a4j:commandButton value="Consultar" action="#{ClienteBean.getClienteEditar}" reRender="tablaCliente"/>
+                        </h:panelGrid>
+                    </a4j:form>
+                </rich:panel>
+                <a4j:form>
+                    <rich:panel id="tablaCliente">
+                     <f:facet name="header">Menú de Edición de Clientes</f:facet>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Tipo de Documento (*):"/>
                             <h:selectOneMenu value="#{ClienteBean.cliente.tipoDocumento}" required="true" id="TipoDocumento">
@@ -26,9 +40,7 @@
                             </h:selectOneMenu>
                             <rich:message for="TipoDocumento"/>
                             <h:outputLabel value="Número de Documento (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.numeroDocumento}" required="true" id="Documento">
-                                <f:validateLongRange minimum="1000000" maximum="1000000000"/>
-                            </h:inputText>
+                            <h:inputText value="#{ClienteBean.cliente.numeroDocumento}" required="true" id="Documento"/>
                             <rich:message for="Documento"/>
                             <h:outputLabel value="Nombres (*):"/>
                             <h:inputText value="#{ClienteBean.cliente.nombres}" required="true" id="Nombre"/>
@@ -60,11 +72,11 @@
                             <h:inputText value="#{ClienteBean.cliente.telefonoCelular}" id="Celular">
                                 <f:validateLength minimum="10" maximum="10"/>
                             </h:inputText>
-                                <rich:message for="Celular"/>
+                            <rich:message for="Celular"/>
                         </h:panelGrid>
                         <br/>
                         <h:panelGrid columns="2">
-                            <h:commandButton value="Registrar" action="#{ClienteBean.getRegistrar}"/>
+                            <h:commandButton value="Editar" action="#{ClienteBean.getEditarCliente}"/>
                         </h:panelGrid>
                 </rich:panel>
                 </a4j:form>

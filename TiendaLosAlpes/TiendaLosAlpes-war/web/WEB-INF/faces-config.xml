@@ -36,10 +36,20 @@
         <managed-bean-name>CarritoCompraBean</managed-bean-name>
         <managed-bean-class>com.losalpes.ventas.CarritoCompraBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>cantidad</property-name>
+            <property-class>int</property-class>
+            <value>1</value>
+        </managed-property>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>VentaBean</managed-bean-name>
         <managed-bean-class>com.losalpes.ventas.VentaBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>ReporteVentas</managed-bean-name>
+        <managed-bean-class>com.losalpes.ventas.ReporteVentas</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
@@ -79,7 +89,9 @@
     </navigation-rule>
 
 <!-- Reglas de Navegación para el Administrador -->
+
 <!-- Cliente -->
+
     <navigation-rule>
         <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
         <navigation-case>
@@ -169,7 +181,7 @@
     <navigation-rule>
         <from-view-id>/pages/cliente/menuCliente.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>detalleMueble</from-outcome>
+            <from-outcome>detalleProducto</from-outcome>
             <to-view-id>/pages/cliente/detalleProducto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
@@ -183,7 +195,7 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/pages/login.xhtml</from-view-id>
+        <from-view-id>/pages/cliente/detalleCompraPaso1.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>pagar</from-outcome>
             <to-view-id>/pages/cliente/detalleCompraPaso2.jsf</to-view-id>
@@ -211,6 +223,14 @@
         <navigation-case>
             <from-outcome>admin</from-outcome>
             <to-view-id>/pages/login.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editarCliente</from-outcome>
+            <to-view-id>/pages/cliente/editarCliente.jsf</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

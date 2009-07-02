@@ -8,12 +8,12 @@ public class Venta {
     private String referencia;
     private double valor;
     private String descripcion;
-    private String nombreCompleto;
     private String numeroTarjeta;
     private int codigoSeguridad;
     private String fechaExpiracionTarjeta;
     private int cuotas;
     private int clienteId;
+    private String fechaGeneracion;
 
     /** Crea una nueva instancia de Venta */
     public Venta() {
@@ -51,14 +51,6 @@ public class Venta {
         this.fechaExpiracionTarjeta = fechaExpiracionTarjeta;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
     public String getNumeroTarjeta() {
         return numeroTarjeta;
     }
@@ -90,4 +82,12 @@ public class Venta {
     public void setClienteId(int clienteId) {
         this.clienteId = clienteId;
     }
+
+    public String getFechaGeneracion() {
+        return fechaGeneracion;
+    }
+
+    public void setFechaGeneracion(String fechaGeneracion) {
+        this.fechaGeneracion = fechaGeneracion;
+    }    
 }

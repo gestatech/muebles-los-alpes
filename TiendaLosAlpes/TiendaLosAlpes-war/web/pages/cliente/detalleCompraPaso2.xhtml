@@ -17,6 +17,9 @@
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Catálogo" action="cliente"/>
                         </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
                 <a4j:form>
@@ -24,28 +27,39 @@
                      <f:facet name="header">Compra de Muebles</f:facet>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Referencia (*):"/>
-                            <h:inputText value="#{VentaBean.venta.referencia}" required="true"/>
+                            <h:inputText value="#{VentaBean.venta.referencia}"/>
                             <h:outputLabel value="Valor (*):"/>
-                            <h:inputText value="#{VentaBean.venta.valor}" required="true"/>
+                            <h:inputText value="#{VentaBean.venta.valor}"/>
                             <h:outputLabel value="Descripción (*):"/>
-                            <h:inputTextarea value="#{VentaBean.venta.descripcion}" required="true"/>
+                            <h:inputTextarea value="#{VentaBean.venta.descripcion}"/>
                         </h:panelGrid>
                 </rich:panel>
                 <rich:panel>
                     <f:facet name="header">Compra de Muebles</f:facet>
-                        <h:panelGrid columns="2">
-                            <h:outputLabel value="Numero de Identificación del Cliente (*):"/>
-                            <h:inputText value="#{VentaBean.venta.clienteId}" required="true"/>
-                            <h:outputLabel value="Nombre del Cliente (*):"/>
-                            <h:inputText value="#{VentaBean.venta.nombreCompleto}" required="true"/>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Numero de Identificación del Cliente (*):" id="NumeroId"/>
+                            <h:outputLabel value="#{VentaBean.venta.clienteId}"/>
+                            <rich:message for="NumeroId"/>
                             <h:outputLabel value="Número de Tarjeta (*):"/>
-                            <h:inputText value="#{VentaBean.venta.numeroTarjeta}" required="true"/>
+                            <h:inputText value="#{VentaBean.venta.numeroTarjeta}" required="true" id="Tarjeta">
+                                <f:validateLength minimum="4" maximum="10"/>
+                            </h:inputText>
+                            <rich:message for="Tarjeta"/>
                             <h:outputLabel value="Código de Seguridad (*):"/>
-                            <h:inputSecret value="#{VentaBean.venta.codigoSeguridad }" required="true"/>
+                            <h:inputSecret value="#{VentaBean.venta.codigoSeguridad }" required="true" id="Seguridad">
+                                <f:validateLength minimum="4" maximum="4"/>
+                            </h:inputSecret>
+                            <rich:message for="Seguridad"/>
                             <h:outputLabel value="Fecha de Expiración (*):"/>
-                            <h:inputText value="#{VentaBean.venta.fechaExpiracionTarjeta}" required="true"/>
+                            <h:inputText value="#{VentaBean.venta.fechaExpiracionTarjeta}" required="true" id="Fecha">
+                                <f:convertDateTime pattern="dd/mm/yyyy" type="date" dateStyle="short"/>
+                            </h:inputText>
+                            <rich:message for="Fecha"/>
                             <h:outputLabel value="Cuotas (*):"/>
-                            <h:inputText value="#{VentaBean.venta.cuotas}" required="true"/>
+                            <h:inputText value="#{VentaBean.venta.cuotas}" required="true" id="Cuotas">
+                                <f:validateLongRange minimum="2" maximum="36"/>
+                            </h:inputText>
+                            <rich:message for="Cuotas"/>
                         </h:panelGrid>
                         <br/>
                         <h:panelGrid>

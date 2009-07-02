@@ -10,7 +10,7 @@
             <ui:param name="titulo" value="Menu de Administración"/>
             <ui:define name="body">
                 <a4j:form>
-                    <rich:toolBar height="26" itemSeparator="disc">
+                    <rich:toolBar height="26" itemSeparator="Grid">
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Salir" action="login"/>
                         </rich:toolBarGroup>
@@ -45,6 +45,19 @@
                         <h:outputLabel value="Registro de Precios en el Catálogo"/>
                         <h:panelGrid>
                             <h:commandButton action="registroPrecios" value="Precios"/>
+                        </h:panelGrid>
+                        </p>
+                    </rich:panel>
+                    </a4j:form>
+                    <a4j:form>
+                    <rich:panel>
+                        <f:facet name="header">Control de Ventas - Reportes</f:facet>
+                        <h:outputLabel value="Opciones de Reportes"/>
+                        <p>
+                        <h:panelGrid columns="4">
+                            <h:commandButton action="reporteDiario" value="Reporte Diario"/>
+                            <h:commandButton action="reporteProducto" value="Reporte por Producto "/>
+                            <h:commandButton action="reporteFecha" value="Reporte por Fecha"/>
                         </h:panelGrid>
                         </p>
                     </rich:panel>

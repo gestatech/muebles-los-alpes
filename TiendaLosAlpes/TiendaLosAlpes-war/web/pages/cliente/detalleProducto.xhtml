@@ -17,6 +17,9 @@
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Catálogo" action="cliente"/>
                         </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
                 <rich:panel>
@@ -88,12 +91,15 @@
                     <rich:panel>
                         <f:facet name="header">Carrito de Compras</f:facet>
                         <h:panelGrid columns="2">
-                            <h:outputLabel value="Cantidad de Muebles a Agregar al Carrito"/>
-                            <h:inputText value="#{CarritoCompraBean.cantidad}"/>
+                            <h:outputLabel value="Cantidad de Muebles a Agregar al Carrito (*)"/>
+                            <h:inputText value="#{CarritoCompraBean.cantidad}" required="true" id="Cantidad">
+                                <f:validateLongRange minimum="1" maximum="20"/>
+                            </h:inputText>
+                            <rich:message for="Cantidad"/>
                         </h:panelGrid>
                         <h:panelGrid>
                             <h:outputLabel value="Agregar al Carrito el Producto: ">
-                            <h:commandButton value="#{CatalogBean.mueble.referencia}" actionListener="#{CarritoCompraBean.getAgregarMueble}" action="#{CarritoCompraBean.getAgregar}"/>
+                            <h:commandButton value="#{CatalogBean.mueble.referencia}" actionListener="#{CarritoCompraBean.getAgregarMueble}" action="cliente"/>
                             </h:outputLabel>
                         </h:panelGrid>
                     </rich:panel>

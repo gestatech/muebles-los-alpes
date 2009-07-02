@@ -12,7 +12,7 @@
                 <a4j:form>
                     <rich:toolBar height="26" itemSeparator="Grid">
                         <rich:toolBarGroup location="right">
-                            <h:commandButton value="Menu" action="admin"/>
+                            <h:commandButton value="Menu" action="#{CatalogBean.getLimpiar}"/>
                         </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Salir" action="login"/>
@@ -44,7 +44,7 @@
                         </rich:column>
                         <rich:column width="100px" label="Referencia">
                             <f:facet name="header">Referencia</f:facet>
-                                <h:commandButton id="Referencia" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="#{CatalogBean.getModificar}"/>
+                                <h:commandButton id="Referencia" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="edicionMueble"/>
                         </rich:column>
                         <rich:column width="100px" label="Tipo">
                             <f:facet name="header">Tipo</f:facet>

@@ -14,6 +14,9 @@
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Catálogo" action="cliente"/>
                         </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
                 <a4j:form>
@@ -37,16 +40,14 @@
                                 <td>#{VentaBean.venta.clienteId}</td>
                             </tr>
                             <tr>
-                                <td>Nombre del Cliente</td>
-                                <td>#{VentaBean.venta.nombreCompleto}</td>
-                            </tr>
-                            <tr>
                                 <td>Número de Tarjeta</td>
                                 <td>#{VentaBean.venta.numeroTarjeta}</td>
                             </tr>
                             <tr>
                                 <td>Fecha de Expiración</td>
-                                <td>#{VentaBean.venta.fechaExpiracionTarjeta}</td>
+                                <td><h:outputText value="#{VentaBean.venta.fechaExpiracionTarjeta}">
+                                    <f:convertDateTime pattern="dd/mm/yyyy" type="date" dateStyle="short"/>
+                                    </h:outputText></td>
                             </tr>
                             <tr>
                                 <td>Cuotas</td>

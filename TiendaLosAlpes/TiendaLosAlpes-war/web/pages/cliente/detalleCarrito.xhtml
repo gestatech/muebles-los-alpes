@@ -17,6 +17,9 @@
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Catálogo" action="cliente"/>
                         </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
                 <a4j:form>
@@ -27,10 +30,10 @@
                          <h:outputLabel value="#{CarritoCompraBean.valorCompra}"/>
                      </h:panelGrid>
                      <h:panelGrid>
-                         <h:commandButton value="Efectuar Compra !!!" action="compra"/>
+                         <h:commandButton value="Efectuar Compra !!!" action="compra" rendered="#{not empty CarritoCompraBean.verCarrito}"/>
                      </h:panelGrid>
                      <h:panelGrid>
-                        <h:commandButton value="Seguir Comprando !!!" action="cliente"/>
+                        <h:commandButton value="Seguir Comprando !!!" action="cliente" rendered="#{not empty CarritoCompraBean.verCarrito}"/>
                      </h:panelGrid>
                 </rich:panel>
                 </a4j:form>
@@ -60,7 +63,7 @@
                         </rich:column>
                         <rich:column width="100px" label="Eliminar">
                             <f:facet name="header">Sacar del Carrito</f:facet>
-                            <h:commandButton id="Sacar" value="#{mueble.referencia}" actionListener="#{CarritoCompraBean.getEliminarMueble}" action="#{CarritoCompraBean.getEliminar}"/>
+                            <h:commandButton id="Sacar" value="#{mueble.referencia}" actionListener="#{CarritoCompraBean.getEliminarMueble}" action="cliente"/>
                         </rich:column>
                     </rich:extendedDataTable>
                 </rich:panel>

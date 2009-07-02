@@ -1,6 +1,7 @@
 package com.losalpes.ventas;
 
 import com.losalpes.persistence.entity.Venta;
+import javax.ejb.EJB;
 /**
  * Managed Bean para acceder la Venta y Enviar la notificación final
  * por correo electrónico sobre la confirmación de la venta.
@@ -8,28 +9,28 @@ import com.losalpes.persistence.entity.Venta;
  */
 public class VentaBean {
     /**
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IVentaService para los muebles.
+     */
+    private IVentaService ventaService = new VentaServiceBean();
+    /**
      * Variable tipo Venta para ser desplegada y asignada.
      */
-    private Venta venta = new Venta();
-    /**
-     * Interfaz Mock de Carrito para las operaciones de negocio asociadas a Venta.
-     */
-    private IVentaService ventaService = new VentaServiceMock();
-
+    private Venta venta;
     /** Crea una nueva instancia de VentaBean */
     public VentaBean() {
-        venta = ventaService.obtenerVenta();
+       venta = new Venta();
+       setVenta(ventaService.obtenerVenta());
     }
     /**
      * Método para obtener la venta activa en la compra.
-     * @return Variable de Tipo Venta
+     * @return Venta Variable de Tipo Venta
      */
     public Venta getVenta() {
         return venta;
     }
     /**
      * Método para asignar la Venta que se esta manipulando.
-     * @param Variable de tipo Venta.
+     * @param venta Variable de tipo Venta.
      */
     public void setVenta(Venta venta) {
         this.venta = venta;

@@ -12,7 +12,7 @@
                 <a4j:form>
                     <rich:toolBar height="26" itemSeparator="Grid">
                         <rich:toolBarGroup location="right">
-                            <h:commandButton value="Menu" action="admin"/>
+                            <h:commandButton value="Menu" action="#{CatalogBean.getLimpiar}"/>
                         </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Salir" action="login"/>
@@ -23,7 +23,7 @@
                 <rich:panel>
                 <f:facet name="header">Menú de Borrado de Mueble</f:facet>                     
                          <h:panelGrid columns="2">
-                            <h:outputLabel value="Criterio de Eliminación" style="align=center"/>
+                            <h:outputLabel value="Criterio de Eliminación"/>
                                 <h:selectOneMenu value="#{CatalogBean.criterio}">
                                     <f:selectItems value="#{CatalogBean.tipoCriterio}"/>
                                 </h:selectOneMenu>
@@ -66,7 +66,7 @@
                             <h:outputLabel value="Pulse el Botón para Realizar el BORRADO del Mueble Ubicado en el Boton" rendered="true"/>
                         </h:panelGrid>
                         <h:panelGrid>
-                            <h:commandButton id="Borrar" value="#{CatalogBean.mueble.referencia}" actionListener="#{CatalogBean.getBorrarMueble}" action="#{CatalogBean.getBorrar}" rendered="true"/>
+                            <h:commandButton id="Borrar" value="#{CatalogBean.mueble.referencia}" actionListener="#{CatalogBean.getBorrarMueble}" action="#{CatalogBean.getLimpiar}" rendered="true"/>
                         </h:panelGrid>                    
                 </rich:panel>
                 </a4j:form>

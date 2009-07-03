@@ -1,8 +1,8 @@
-package com.losalpes.vendedor;
+package com.losalpes.vendor;
 
 import com.losalpes.persistence.entity.ExperienciaVendendor;
 import com.losalpes.persistence.entity.Vendedor;
-import com.losalpes.vendedores.IVendedorService;
+import com.losalpes.vendors.IVendorServices;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -13,10 +13,10 @@ import javax.faces.context.FacesContext;
  *
  * @author Camilo Alvarez Duran
  */
-public class VendedorBean {
+public class VendorsBean {
 
     @EJB
-    private IVendedorService vendedorService;
+    private IVendorServices vendorServices;
     private ExperienciaVendendor experienciaVendendor = new ExperienciaVendendor();
     private String id;
 
@@ -27,13 +27,13 @@ public class VendedorBean {
     private Vendedor vendedor;
 
     /** Creates a new instance of VendorsBean */
-    public VendedorBean() {
+    public VendorsBean() {
     }
 
     @PostConstruct
     public void init() {
-        vendedores = vendedorService.findAll();
-        vendedor = vendedorService.getVendedor();
+        vendedores = vendorServices.findAll();
+        vendedor = vendorServices.getVendedor();
     }
 
     @PreDestroy
@@ -41,19 +41,19 @@ public class VendedorBean {
     }
 
     public String newVendor() {
-        vendedor = vendedorService.newVendedor();
+        vendedor = vendorServices.newVendedor();
         return null;
     }
 
     public String createOrUpdate() {
-        vendedor = vendedorService.createOrUpdate();
+        vendedor = vendorServices.createOrUpdate();
         destroyBean();
         return null;
     }
 
     public String delete() {
-        vendedorService.setVendedor(id);
-        vendedorService.delete();
+        vendorServices.setVendedor(id);
+        vendorServices.delete();
         destroyBean();
         return null;
     }
@@ -76,7 +76,7 @@ public class VendedorBean {
     }
 
     public String findById() {
-        vendedor = vendedorService.setVendedor(id);
+        vendedor = vendorServices.setVendedor(id);
         return null;
     }
 

@@ -45,32 +45,6 @@ public class CarritoServiceBean implements ICarritoService{
      * @param mueble Vatiable tipo mueble a agregar al listado.
      */
     public void agregar(Mueble mueble) {
-        /*Mueble comparar = new Mueble();
-        Iterator it;
-        it = mueblesCarrito.iterator();
-        // Variable boolean para verificar la existencia del mueble.
-        boolean existencia = false;
-        // Recorre todo el listado comparando el mueble del listado con el mueble que llego.
-        while(it.hasNext()){
-            comparar = (Mueble) it.next();
-            if(comparar.getNombre().equalsIgnoreCase(mueble.getNombre())){
-                existencia = true;
-                break;
-            }
-        }
-        // Verifica si el mueble no existe en el carrito, lo agrega inmediatamente al listado
-        if(existencia == false)
-            mueblesCarrito.add(mueble);
-        // Si el mueble existe en el carrito, actualiza su cantidad y actualiza sus datos.
-        else{
-            int a = comparar.getCantidad();
-            int b = mueble.getCantidad();
-            int nuevaCantidad = comparar.getCantidad() + mueble.getCantidad();
-            mueble.setCantidad(nuevaCantidad);
-            mueblesCarrito.remove(comparar);
-            mueblesCarrito.add(mueble);
-            //mueblesCarrito.set(index, comparar);
-        }*/
         mueblesCarrito.add(mueble);
     }
     /**

@@ -1,26 +1,27 @@
-package com.losalpes.vendedores;
+package com.losalpes.vendors;
 
+import com.losalpes.persistencia.IPersistenceServices;
 import com.losalpes.persistence.entity.Vendedor;
-import com.losalpes.persistencia.IPersistenciaService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 
 /**
- * Session Bean para vendedores. Anotado con @Stateful para almacenar algunos datos durante la sesion.
- * @author Orlando
+ *
+ * @author Camilo Alvarez Duran
  */
 @Stateful
-public class VendedorServiceBean implements IVendedorService {
+public class VendorServices implements IVendorServices {
+
     @EJB
-    private IPersistenciaService persistenceServices;
+    private IPersistenceServices persistenceServices;
     /**
      * Contiene la información del vendedor actual
      */
     private Vendedor cVendedor;
 
-    public VendedorServiceBean() {
+    public VendorServices() {
     }
 
     public Vendedor newVendedor() {

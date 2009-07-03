@@ -53,8 +53,8 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>VendedorBean</managed-bean-name>
-        <managed-bean-class>com.losalpes.vendedor.VendedorBean</managed-bean-class>
+        <managed-bean-name>VendorsBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.vendor.VendorsBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 

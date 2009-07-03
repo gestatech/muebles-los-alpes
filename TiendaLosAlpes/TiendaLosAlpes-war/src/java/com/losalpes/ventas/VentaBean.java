@@ -9,7 +9,7 @@ import javax.ejb.EJB;
  */
 public class VentaBean {
     /**
-     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IVentaService para los muebles.
+     * Interfaz con la referencia a la interfaz IVentaService para los muebles.
      */
     private IVentaService ventaService = new VentaServiceBean();
     /**

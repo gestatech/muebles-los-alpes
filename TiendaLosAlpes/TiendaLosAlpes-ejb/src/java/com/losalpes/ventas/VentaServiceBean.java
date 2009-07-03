@@ -6,14 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import org.apache.commons.mail.SimpleEmail;
 
 /**
  * Servicio Mock que implementa la interfaz con los métodos de Venta. Anotada con @Stateless.
  * @author Memo Toro
  */
-@Stateless
+@Stateful
 public class VentaServiceBean implements IVentaService{
     /**
      * Variable Static con el Listado de Ventas de la Tienda.
@@ -80,7 +80,7 @@ public class VentaServiceBean implements IVentaService{
             email.setHostName("mail1.igac.gov.co");
             email.addTo("memo.toro@gmail.com", "memo.toro@gmail.com");
             email.addTo("memotoro83@hotmail.com", "memotoro83@hotmail.com");
-            email.setAuthentication("gtoro", "password");
+            email.setAuthentication("gtoro", "igac");
             email.setFrom("gtoro@igac.gov.co", "Muebles Los Alpes");
             email.setSubject("Confirmación de Compra");
             email.setMsg(   "Apreciado Cliente:\n" +
@@ -93,7 +93,11 @@ public class VentaServiceBean implements IVentaService{
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Método para obtener las ventas a partir de una fecha.
+     * @param valor Valor de la consulta por fecha.
+     * @return List Listado de Ventas.
+     */
     public List<Venta> obtenerVentasConsultadas(String valor){
         List<Venta> ventasConsultadas = new ArrayList<Venta>();
         Venta venta = new Venta();

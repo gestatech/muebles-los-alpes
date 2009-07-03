@@ -6,16 +6,15 @@ import java.util.List;
 import javax.ejb.Stateless;
 
 /**
- * Session Bean Mock de persistena de vendedores. Esta anotado con @Stateless ya que no almancena ningun estado conversacional.
- * @author Memo Toro
- * @author Orlando
+ *
+ * @author Camilo Alvarez
  */
 @Stateless
-public class PersistenciaServiceBean implements IPersistenciaService {
-    
-private static ArrayList sData;
+public class PersistenceServicesMock implements IPersistenceServices {
 
-    public PersistenciaServiceBean() {
+    private static ArrayList sData;
+
+    public PersistenceServicesMock() {
         if (sData == null) {
             sData = new ArrayList();
             for (int i = 0; i < 10; i++) {
@@ -23,10 +22,7 @@ private static ArrayList sData;
                 vendedor.setIdentificacion(i + "");
                 vendedor.setNombres("Nombre " + i);
                 vendedor.setApellidos("Apellidos " + i);
-                vendedor.setSalario(1500*2*i);
-                vendedor.setComisionVentas(vendedor.getSalario()*0.1);
-                vendedor.setPerfil("Ingeniero Tipo-"+i);
-                vendedor.setDireccionResidencia("Carrera "+(i+4)*2+" No. 1"+i+"-12"+(i*3)+". Bogotá.");
+                vendedor.setSalario(1500);
                 sData.add(vendedor);
             }
         }

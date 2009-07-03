@@ -34,6 +34,10 @@ public interface IVentaService {
      * Método para enviar correos electrónicos con las librerias de Apache
      */    
     void enviarCorreo();
-
+    /**
+     * Método para obtener las ventas a partir de una fecha.
+     * @param valor Valor de la consulta por fecha.
+     * @return List Listado de Ventas.
+     */
     List<Venta> obtenerVentasConsultadas(String valor);
 }

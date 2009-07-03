@@ -22,8 +22,8 @@
                          <h:panelGrid columns="2">
                             <h:outputLabel value="Usuario"/>
                             <h:inputText value="#{ClienteBean.valor}"/>
-                            <h:inputSecret value="Contraseña"/>
-                            <h:inputText value="#{ClienteBean.valor}"/>
+                            <h:outputLabel value="Contraseña"/>
+                            <h:inputSecret value="#{ClienteBean.valor}"/>
                         </h:panelGrid>
                         <h:panelGrid>
                             <a4j:commandButton value="Consultar" action="#{ClienteBean.getClienteEditar}" reRender="tablaCliente"/>

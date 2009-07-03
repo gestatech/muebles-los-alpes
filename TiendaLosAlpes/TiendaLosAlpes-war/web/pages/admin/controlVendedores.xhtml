@@ -6,12 +6,11 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:f="http://java.sun.com/jsf/core">
     <body>
-        <f:view beforePhase="#{VendedorBean.fetch}">
+        <f:view beforePhase="#{VendorsBean.fetch}">
             <ui:composition template="../main-template.xhtml">
                 <ui:param name="titulo" value="Vendedores" />
                 <ui:define name="body">
                 <a4j:form>
-
                 </a4j:form>
                     <a4j:form>
                         <rich:toolBar height="26" itemSeparator="Grid">
@@ -36,42 +35,38 @@
                         </rich:toolBar>
                     </a4j:form>
                     <rich:simpleTogglePanel id="stpEdicion" opened="true">
-                        <f:facet name="header">Menu de Edición de Vendedores</f:facet>
+                        <f:facet name="header">
+                            Edición
+                        </f:facet>
                         <a4j:form>
                             <rich:tabPanel switchType="client">
                                 <rich:tab label="Datos Básicos">
                                     <table>
                                         <tr>
                                             <td>
-                                                <h:inputHidden value="#{VendedorBean.vendedor.identificacion}" />
+                                                <h:inputHidden value="#{VendorsBean.vendedor.identificacion}" />
                                                 <h:outputLabel value="Nombres" styleClass="label" /> <br/>
-                                                <h:inputText value="#{VendedorBean.vendedor.nombres}" /> <br/>
+                                                <h:inputText value="#{VendorsBean.vendedor.nombres}" /> <br/>
                                             </td>
                                             <td>
                                                 <h:outputLabel value="Apellidos" styleClass="label" /> <br/>
-                                                <h:inputText value="#{VendedorBean.vendedor.apellidos}" /> <br/>
+                                                <h:inputText value="#{VendorsBean.vendedor.apellidos}" /> <br/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <h:outputLabel value="Salario" styleClass="label" /> <br/>
-                                                <h:inputText value="#{VendedorBean.vendedor.salario}" /> <br/>
+                                                <h:inputText value="#{VendorsBean.vendedor.salario}" /> <br/>
                                             </td>
                                             <td>
                                                 <h:outputLabel value="Comisión de Ventas" styleClass="label" /> <br/>
-                                                <h:inputText value="#{VendedorBean.vendedor.comisionVentas}" /> <br/>
+                                                <h:inputText value="#{VendorsBean.vendedor.comisionVentas}" /> <br/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2">
                                                 <h:outputLabel value="Perfil" styleClass="label" /> <br/>
-                                                <h:inputTextarea style="width:100%" value="#{VendedorBean.vendedor.perfil}" /> <br/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <h:outputLabel value="Dirección" styleClass="label" /> <br/>
-                                                <h:inputTextarea style="width:100%" value="#{VendedorBean.vendedor.direccionResidencia}" /> <br/>
+                                                <h:inputTextarea style="width:100%" value="#{VendorsBean.vendedor.perfil}" /> <br/>
                                             </td>
                                         </tr>
                                     </table>
@@ -81,40 +76,46 @@
                                         <tr>
                                             <td >
                                                 <h:outputLabel value="Nombre Empresa" styleClass="label" /> <br/>
-                                                <h:inputText value="#{VendedorBean.experienciaVendendor.nombreEmpesa}" />
+                                                <h:inputText value="#{VendorsBean.experienciaVendendor.nombreEmpesa}" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td >
                                                 <h:outputLabel value="Cargo" styleClass="label" /> <br/>
-                                                <h:inputText value="#{VendedorBean.experienciaVendendor.cargo}" />
+                                                <h:inputText value="#{VendorsBean.experienciaVendendor.cargo}" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td >
                                                 <h:outputLabel value="Año" styleClass="label" /> <br/>
-                                                <h:inputText value="#{VendedorBean.experienciaVendendor.anio}" />
+                                                <h:inputText value="#{VendorsBean.experienciaVendendor.anio}" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td >
                                                 <h:outputLabel value="Descripción" styleClass="label" /> <br/>
-                                                <h:inputTextarea value="#{VendedorBean.experienciaVendendor.descripcion}" />
+                                                <h:inputTextarea value="#{VendorsBean.experienciaVendendor.descripcion}" />
                                             </td>
                                         </tr>
                                     </table>
                                     <rich:separator />
-                                    <rich:extendedDataTable id="tblExperiencia" height="360px" value="#{VendedorBean.vendedor.experiencia}" var="cr">
+                                    <rich:extendedDataTable id="tblExperiencia" height="360px" value="#{VendorsBean.vendedor.experiencia}" var="cr">
                                         <rich:column width="150" filterBy="#{cr.nombreEmpesa}" sortBy="#{cr.nombreEmpesa}" label="Identificación">
-                                            <f:facet name="header">Nombre Empresa</f:facet>
+                                            <f:facet name="header">
+                                                Nombre Empresa
+                                            </f:facet>
                                             #{cr.nombreEmpesa}
                                         </rich:column>
                                         <rich:column width="250" filterBy="#{cr.anio}" sortBy="#{cr.anio}" label="Nombres">
-                                            <f:facet name="header">Año</f:facet>
+                                            <f:facet name="header">
+                                                Año
+                                            </f:facet>
                                             #{cr.anio}
                                         </rich:column>
                                         <rich:column width="114" label="op" >
-                                            <f:facet name="header" >Operaciones</f:facet>
+                                            <f:facet name="header" >
+                                                Operaciones
+                                            </f:facet>
                                             <h:graphicImage value="/img/edit.gif" styleClass="icon" />
                                             <rich:spacer width="3" />
                                             <h:graphicImage value="/img/del.gif" styleClass="icon" />
@@ -122,29 +123,32 @@
                                     </rich:extendedDataTable>
                                 </rich:tab>
                             </rich:tabPanel>
-                            <a4j:jsFunction name="createVendor" action="#{VendedorBean.createOrUpdate}" reRender="stpEdicion,tblVendedores   "  />
+                            <a4j:jsFunction name="createVendor" action="#{VendorsBean.createOrUpdate}" reRender="stpEdicion,tblVendedores   "  />
                         </a4j:form>
                     </rich:simpleTogglePanel>
                     <a4j:form>
-                        <rich:extendedDataTable id="tblVendedores" height="360px" value="#{VendedorBean.allVendors}" var="cr">
-                            <rich:column width="100" filterBy="#{cr.identificacion}" sortBy="#{cr.identificacion}" label="Identificación">
-                                <f:facet name="header">Identificación</f:facet>
+                        <rich:extendedDataTable id="tblVendedores" height="360px" value="#{VendorsBean.allVendors}" var="cr">
+                            <rich:column width="150" filterBy="#{cr.identificacion}" sortBy="#{cr.identificacion}" label="Identificación">
+                                <f:facet name="header">
+                                    Identificación
+                                </f:facet>
                                 #{cr.identificacion}
                             </rich:column>
-                            <rich:column width="200" filterBy="#{cr.nombres}" sortBy="#{cr.nombres}" label="Nombres">
-                                <f:facet name="header">Nombres</f:facet>
+                            <rich:column width="250" filterBy="#{cr.nombres}" sortBy="#{cr.nombres}" label="Nombres">
+                                <f:facet name="header">
+                                    Nombres
+                                </f:facet>
                                 #{cr.nombres}
                             </rich:column>
-                            <rich:column width="200" filterBy="#{cr.apellidos}" sortBy="#{cr.apellidos}" label="Apellidos">
-                                <f:facet name="header">Apellidos</f:facet>
+                            <rich:column width="250" filterBy="#{cr.apellidos}" sortBy="#{cr.apellidos}" label="Apellidos">
+                                <f:facet name="header">
+                                    Apellidos
+                                </f:facet>
                                 #{cr.apellidos}
                             </rich:column>
-                            <rich:column width="200" filterBy="#{cr.direccionResidencia}" sortBy="#{cr.direccionResidencia}" label="Dirección">
-                                <f:facet name="header">Dirección</f:facet>
-                                #{cr.direccionResidencia}
-                            </rich:column>
-                            <rich:column width="100" label="op" >
-                                <f:facet name="header" >Operaciones
+                            <rich:column width="114" label="op" >
+                                <f:facet name="header" >
+                                    Operaciones
                                 </f:facet>
                                 <h:graphicImage value="/img/edit.gif" onclick="srcById(#{cr.identificacion})" styleClass="icon" />
                                 <rich:spacer width="3" />
@@ -152,13 +156,14 @@
                             </rich:column>
                         </rich:extendedDataTable>
                     </a4j:form>
+
                     <a4j:form>
-                        <a4j:jsFunction name="newVendor" action="#{VendedorBean.newVendor}" reRender="stpEdicion"  />
-                        <a4j:jsFunction name="delVendor" action="#{VendedorBean.delete}" reRender="tblVendedores" oncomplete="" >
-                            <a4j:actionparam name="p1" assignTo="#{VendedorBean.id}" />
+                        <a4j:jsFunction name="newVendor" action="#{VendorsBean.newVendor}" reRender="stpEdicion"  />
+                        <a4j:jsFunction name="delVendor" action="#{VendorsBean.delete}" reRender="tblVendedores" oncomplete="" >
+                            <a4j:actionparam name="p1" assignTo="#{VendorsBean.id}" />
                         </a4j:jsFunction>
-                        <a4j:jsFunction name="srcById" action="#{VendedorBean.findById}" reRender="stpEdicion" oncomplete="" >
-                            <a4j:actionparam name="p1" assignTo="#{VendedorBean.id}" />
+                        <a4j:jsFunction name="srcById" action="#{VendorsBean.findById}" reRender="stpEdicion" oncomplete="" >
+                            <a4j:actionparam name="p1" assignTo="#{VendorsBean.id}" />
                         </a4j:jsFunction>
                     </a4j:form>
                 </ui:define>

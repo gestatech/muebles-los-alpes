@@ -1,14 +1,21 @@
 package com.losalpes.persistencia;
 
+import com.losalpes.enums.TipoCiudad;
+import com.losalpes.enums.TipoDepartamento;
 import com.losalpes.persistence.entity.Cliente;
 import com.losalpes.persistence.entity.Mueble;
-import com.losalpes.persistence.entity.TipoDocumento;
-import com.losalpes.persistence.entity.TipoMueble;
+import com.losalpes.enums.TipoDocumento;
+import com.losalpes.enums.TipoMueble;
+import com.losalpes.enums.TipoPais;
+import com.losalpes.enums.TipoUsuario;
+import com.losalpes.persistence.entity.Usuario;
+import com.losalpes.persistence.entity.Venta;
+import com.losalpes.security.ISecurityService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
-
 /**
  * Servicio Mock que implementa la interfaz con los métodos del TiendaSeriveMocl para simular la persistencia.
  * Bean anotado con @Stateful para que guarde en memoria de sesion los valores de los muebles y clientes de la tienda.
@@ -17,9 +24,19 @@ import javax.ejb.Stateful;
 @Stateful
 public class TiendaServiceMock implements ITiendaService{
     /**
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IClienteService para los clientes.
+     */
+    @EJB
+    private ISecurityService securityService;
+
+    /**
      * Listado de clientes de la tienda.
      */
-    private List<Cliente> clientes;
+    private static List<Cliente> clientes;
+    /**
+     * Listado de usuarios de la tienda.
+     */
+    private static List<Usuario> usuarios;
     /**
      * Listado de Muebles de la Tienda.
      */
@@ -32,6 +49,10 @@ public class TiendaServiceMock implements ITiendaService{
      * Variable contador para tener control sobre las instancias de esta clase y los muebles.
      */
     private static int contadorMueble;
+    /**
+     * Variable contador para tener control sobre las instancias de esta clase y los usuarios.
+     */
+    private static int contadorUsuario;
     /** Crea una nueva instancia de TiendaServiceMock */
     public TiendaServiceMock() {
     }
@@ -40,8 +61,7 @@ public class TiendaServiceMock implements ITiendaService{
      */
     @PostConstruct
     public void iniciar(){
-        clientes = new ArrayList<Cliente>();
-        muebles = new ArrayList<Mueble>();
+        System.out.println("INICIO EL POSTCONSTRUCT DE TIENDASERVICE");
     }
     /**
      * Método para crear clientes a partir de un bucle. Verifica una sola instancia.
@@ -50,12 +70,21 @@ public class TiendaServiceMock implements ITiendaService{
     public void crearClientes(){
         contadorCliente++;
         // Se crean clientes solo si es una vez que se invoca.
+        Usuario usua = null;
         if(contadorCliente==1){
             clientes = new ArrayList<Cliente>();
-            for (int i = 1; i <= 5; i++) {
-                Cliente temp = new Cliente("Cliente con Nombre "+i,TipoDocumento.CEDULA,80800900+i,"Colombia","Departamento-"+i,"Cra. "+i+" # 10"+i+"-1"+i,"Ciudad-"+i,"usuario"+i+"@uniandes.edu.co","Ingeniero Tipo-"+i,4556670+i,310233445+i);
-                clientes.add(temp);
+            contadorUsuario++;
+            if(contadorUsuario==1){
+                usuarios = new ArrayList<Usuario>();
             }
+            for (int i = 1; i <= 5; i++) {
+                Cliente temp = new Cliente("Cliente con Nombre "+i,TipoDocumento.CEDULA,80800900+i,"Cra. "+i+" # 10"+i+"-1"+i,TipoPais.values()[i-1],TipoDepartamento.values()[i-1],TipoCiudad.values()[i-1],"usuario"+i+"@uniandes.edu.co","Ingeniero Tipo-"+i,4556670+i,310233445+i, new ArrayList<Venta>());
+                usua = new Usuario(80800900+i+"","usuario"+i, TipoUsuario.CLIENTE,temp);
+                clientes.add(temp);
+                usuarios.add(usua);
+            }
+            usua = new Usuario("admin","admin",TipoUsuario.ADMINISTRADOR,new Cliente());
+            usuarios.add(usua);
         }
     }
     /**
@@ -66,6 +95,7 @@ public class TiendaServiceMock implements ITiendaService{
         contadorMueble++;
         // Se crean muebles solo si es una vez que se invoca.
         if(contadorMueble==1){
+            muebles = new ArrayList<Mueble>();
             for (int i = 1; i <= 5; i++) {
                 Mueble temp = new Mueble("001"+i, "Mueble-" + i, "Descripción del mueble " + i, TipoMueble.EXTERIOR,"Madera Fina Tipo-"+i,20+i,30+i,50+i,"Color-"+i,15+i,"mueble-"+i+".jpg", 20000*i,3*i);
                 muebles.add(temp);
@@ -100,6 +130,33 @@ public class TiendaServiceMock implements ITiendaService{
     public List<Cliente> retornarClientes(){
         return clientes;
     }
+    /**
+     * Método para registrar un nuevo usuario en el listado.
+     * @param usuario Variable tipo Usuario.
+     */
+    public void registrarUsuario(Usuario usuario){
+        contadorUsuario++;
+        if(contadorUsuario==1){
+            usuarios = new ArrayList<Usuario>();
+        }
+        usuarios.add(usuario);
+    }
+    /**
+     * Método para retornar todos los usuarios del listado de la tienda.
+     * @return List con los usuarios de la tienta.
+     */
+    public List<Usuario> retornarUsuarios(){
+        return usuarios;
+    }
+        /**
+     * MÃ©todo para actualizar los datos del usuario.
+     * @param usuario Variable tipo Usuario.
+     */
+    public void actualizarUsuario(Usuario usuario){
+        Usuario usua = securityService.login(usuario.getNombreUsuario(),usuario.getContrasenia());
+        usua.setCliente(usuario.getCliente());
+    }
+
     /**
      * Método para registrar mueble al catálogo.
      * @param mueble Variable tipo mueble.

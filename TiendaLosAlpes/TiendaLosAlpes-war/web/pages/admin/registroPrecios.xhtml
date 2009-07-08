@@ -38,7 +38,7 @@
                 <a4j:form>
                 <rich:panel>
                     <f:facet name="header">Menú de Registro de Precios e Inventario</f:facet>
-                    <rich:extendedDataTable id="tablaMueble" align="center" width="400px" height="200px" value="#{CatalogBean.muebles}" var="mueble">
+                    <rich:extendedDataTable id="tablaMueble" align="center" width="500px" height="200px" value="#{CatalogBean.muebles}" var="mueble">
                         <rich:column width="100px" label="Referencia">
                             <f:facet name="header">Referencia</f:facet>
                             <h:outputLabel value="#{mueble.referencia}"/>
@@ -55,10 +55,18 @@
                             <f:facet name="header">Cantidad</f:facet>
                             <h:inputText value="#{mueble.cantidad}"/>
                         </rich:column>
+                        <rich:column width="100px" label="Actualizar Precio">
+                            <f:facet name="header">Actualizar Precio</f:facet>
+                            <h:commandButton id="Actualizar" value="Actualizar !!!" actionListener="#{CatalogBean.getActualizarPrecios}">
+                                <f:param id="referencia" value="#{mueble.referencia}"/>
+                                <f:param id="precio" value="#{mueble.precio}"/>
+                                <f:param id="cantidad" value="#{mueble.cantidad}"/>
+                            </h:commandButton>
+                        </rich:column>
                     </rich:extendedDataTable>
-                    <br/>                    
-                        <h:commandButton value="Registrar Precios" action="#{CatalogBean.getActualizarPrecios}"/>
-                </rich:panel>
+                    <br/>
+                    <h:outputLabel value="El Mueble #{CatalogBean.mueble.referencia} ha sido actualizado satisfactoriamente" rendered="#{not empty CatalogBean.muebles}"/>
+                </rich:panel>                   
                 </a4j:form>
             </ui:define>
         </ui:composition>

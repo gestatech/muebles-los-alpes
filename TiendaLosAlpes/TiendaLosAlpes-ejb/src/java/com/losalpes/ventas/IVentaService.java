@@ -3,7 +3,6 @@ package com.losalpes.ventas;
 import com.losalpes.persistence.entity.Venta;
 import java.util.List;
 import javax.ejb.Local;
-
 /**
  * Interfaz con métodos de Venta, Anotada con @Local para acceso al Bean.
  * @author Memo Toro

@@ -48,14 +48,9 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>ReporteVentas</managed-bean-name>
-        <managed-bean-class>com.losalpes.ventas.ReporteVentas</managed-bean-class>
+        <managed-bean-name>ReporteCliente</managed-bean-name>
+        <managed-bean-class>com.losalpes.reportes.ReporteClienteBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>VendorsBean</managed-bean-name>
-        <managed-bean-class>com.losalpes.vendor.VendorsBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 
 <!-- Reglas de Navegación Generales -->
@@ -97,14 +92,6 @@
 
 <!-- Cliente -->
 
-    <navigation-rule>
-        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>registrarCliente</from-outcome>
-            <to-view-id>/pages/admin/registrarCliente.jsf</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
     <navigation-rule>
         <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
         <navigation-case>
@@ -181,24 +168,13 @@
         </navigation-case>
     </navigation-rule>
 
-<!-- Vendedores -->
+    <!-- Reportes -->
 
     <navigation-rule>
         <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>administrar</from-outcome>
-            <to-view-id>/pages/admin/controlVendedores.jsf</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-
-<!-- Vendedores -->
-
-    <navigation-rule>
-        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>reporteDiario</from-outcome>
-            <to-view-id>/pages/admin/reporteDiario.jsf</to-view-id>
+            <from-outcome>reporteCliente</from-outcome>
+            <to-view-id>/pages/admin/reporteCliente.jsf</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -246,18 +222,18 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/pages/cliente/nuevoCliente.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>admin</from-outcome>
-            <to-view-id>/pages/login.jsf</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
         <from-view-id>/pages/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>editarCliente</from-outcome>
             <to-view-id>/pages/cliente/editarCliente.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/cliente/nuevoCliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/pages/login.jsf</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

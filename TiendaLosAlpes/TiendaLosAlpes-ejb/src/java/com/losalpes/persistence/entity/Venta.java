@@ -1,7 +1,9 @@
 package com.losalpes.persistence.entity;
 
+import com.losalpes.enums.TipoCiudad;
+import com.losalpes.enums.TipoDepartamento;
+import com.losalpes.enums.TipoPais;
 import java.util.List;
-
 /**
  * POJO de Venta
  * @author Memo Toro
@@ -14,10 +16,12 @@ public class Venta {
     private int codigoSeguridad;
     private String fechaExpiracionTarjeta;
     private int cuotas;
-    private int clienteId;
     private String fechaGeneracion;
-    private List<String> referenciasMuebles;
-
+    private List<DetalleVenta> detalleVenta;
+    private TipoPais pais;
+    private TipoDepartamento departamento;
+    private TipoCiudad ciudad;
+    private int idCliente;
     /** Crea una nueva instancia de Venta */
     public Venta() {
     }
@@ -46,12 +50,28 @@ public class Venta {
         this.descripcion = descripcion;
     }
 
+    public List<DetalleVenta> getDetalleVenta() {
+        return detalleVenta;
+    }
+
+    public void setDetalleVenta(List<DetalleVenta> detalleVenta) {
+        this.detalleVenta = detalleVenta;
+    }
+
     public String getFechaExpiracionTarjeta() {
         return fechaExpiracionTarjeta;
     }
 
     public void setFechaExpiracionTarjeta(String fechaExpiracionTarjeta) {
         this.fechaExpiracionTarjeta = fechaExpiracionTarjeta;
+    }
+
+    public String getFechaGeneracion() {
+        return fechaGeneracion;
+    }
+
+    public void setFechaGeneracion(String fechaGeneracion) {
+        this.fechaGeneracion = fechaGeneracion;
     }
 
     public String getNumeroTarjeta() {
@@ -78,27 +98,35 @@ public class Venta {
         this.valor = valor;
     }
 
-    public int getClienteId() {
-        return clienteId;
+    public TipoCiudad getCiudad() {
+        return ciudad;
     }
 
-    public void setClienteId(int clienteId) {
-        this.clienteId = clienteId;
+    public void setCiudad(TipoCiudad ciudad) {
+        this.ciudad = ciudad;
     }
 
-    public String getFechaGeneracion() {
-        return fechaGeneracion;
+    public TipoDepartamento getDepartamento() {
+        return departamento;
     }
 
-    public void setFechaGeneracion(String fechaGeneracion) {
-        this.fechaGeneracion = fechaGeneracion;
+    public void setDepartamento(TipoDepartamento departamento) {
+        this.departamento = departamento;
     }
 
-    public List<String> getReferenciasMuebles() {
-        return referenciasMuebles;
+    public TipoPais getPais() {
+        return pais;
     }
 
-    public void setReferenciasMuebles(List<String> referenciasMuebles) {
-        this.referenciasMuebles = referenciasMuebles;
+    public void setPais(TipoPais pais) {
+        this.pais = pais;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 }

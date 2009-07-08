@@ -28,19 +28,26 @@
                             <h:outputLabel value="Número de Documento (*):"/>
                             <h:inputText value="#{ClienteBean.cliente.numeroDocumento}" required="true" id="Documento">
                                 <f:validateLongRange minimum="1000000" maximum="1000000000"/>
+                                <a4j:support event="onkeyup" reRender="Usuario" limitToList="true" ajaxSingle="true"/>
                             </h:inputText>
                             <rich:message for="Documento"/>
                             <h:outputLabel value="Nombres (*):"/>
                             <h:inputText value="#{ClienteBean.cliente.nombres}" required="true" id="Nombre"/>
                             <rich:message for="Nombre"/>
                             <h:outputLabel value="País (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.pais}" required="true" id="Pais"/>
-                            <rich:message for="Pais"/>
+                            <h:selectOneMenu value="#{ClienteBean.cliente.pais}" id="País">
+                                <f:selectItems value="#{ClienteBean.paises}" />
+                            </h:selectOneMenu>
+                            <rich:message for="País"/>
                             <h:outputLabel value="Departamento (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.departamento}" required="true" id="Depto"/>
-                            <rich:message for="Depto"/>
+                            <h:selectOneMenu value="#{ClienteBean.cliente.departamento}" id="Departamento">
+                                <f:selectItems value="#{ClienteBean.departamentos}" />
+                            </h:selectOneMenu>
+                            <rich:message for="Departamento"/>
                             <h:outputLabel value="Ciudad (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.ciudadResidencia}" required="true" id="Ciudad"/>
+                            <h:selectOneMenu value="#{ClienteBean.cliente.ciudadResidencia}" id="Ciudad">
+                                <f:selectItems value="#{ClienteBean.ciudadResidencia}" />
+                            </h:selectOneMenu>
                             <rich:message for="Ciudad"/>
                             <h:outputLabel value="Dirección (*):"/>
                             <h:inputText value="#{ClienteBean.cliente.direccion}" required="true" id="Direccion"/>
@@ -62,6 +69,19 @@
                             </h:inputText>
                                 <rich:message for="Celular"/>
                         </h:panelGrid>
+                        <rich:panel>
+                        <f:facet name="header">Datos de Usuario</f:facet>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Usuario"/>
+                            <h:inputText value="#{ClienteBean.cliente.numeroDocumento}" id="Usuario" disabled="true">
+                            </h:inputText>
+                            <rich:message for="Usuario"/>
+                            <h:outputLabel value="Contraseña"/>
+                            <h:inputText value="#{ClienteBean.usuario.contrasenia}" id="Contrasenia" >
+                            </h:inputText>
+                            <rich:message for="Contrasenia"/>
+                        </h:panelGrid>
+                        </rich:panel>
                         <br/>
                         <h:panelGrid columns="2">
                             <h:commandButton value="Registrar" action="#{ClienteBean.getRegistrar}"/>

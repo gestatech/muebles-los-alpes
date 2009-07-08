@@ -1,10 +1,9 @@
 package com.losalpes.catalog;
 
 import com.losalpes.persistence.entity.Mueble;
-import com.losalpes.persistence.entity.TipoConsultaMueble;
+import com.losalpes.enums.TipoConsultaMueble;
 import java.util.List;
 import javax.ejb.Local;
-
 /**
  * Interfaz con métodos de Catálogo anotada con @Local para indicar su acceso desde los Bean.
  * @author Memo Toro
@@ -28,7 +27,7 @@ public interface ICatalogService {
     void actualizar(Mueble mueble);
     /**
      * Método para obtener los muebles consulados como Listado
-     * @param criterio Variable tipo TipoConsultaCliente criterio
+     * @param criterio Variable tipo TipoConsultaMueble
      * @param consula Variable String para el valor de la consula
      * @return List Variable tipo List de muebles.
      */

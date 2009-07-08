@@ -21,9 +21,9 @@
                      <a4j:form>
                          <h:panelGrid columns="2">
                             <h:outputLabel value="Usuario"/>
-                            <h:inputText value="#{ClienteBean.valor}"/>
+                            <h:inputText value="#{ClienteBean.usuario.nombreUsuario}"/>
                             <h:outputLabel value="Contraseña"/>
-                            <h:inputSecret value="#{ClienteBean.valor}"/>
+                            <h:inputSecret value="#{ClienteBean.usuario.contrasenia}"/>
                         </h:panelGrid>
                         <h:panelGrid>
                             <a4j:commandButton value="Consultar" action="#{ClienteBean.getClienteEditar}" reRender="tablaCliente"/>
@@ -46,13 +46,19 @@
                             <h:inputText value="#{ClienteBean.cliente.nombres}" required="true" id="Nombre"/>
                             <rich:message for="Nombre"/>
                             <h:outputLabel value="País (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.pais}" required="true" id="Pais"/>
-                            <rich:message for="Pais"/>
+                            <h:selectOneMenu value="#{ClienteBean.cliente.pais}" id="País">
+                                <f:selectItems value="#{ClienteBean.paises}" />
+                            </h:selectOneMenu>
+                            <rich:message for="País"/>
                             <h:outputLabel value="Departamento (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.departamento}" required="true" id="Depto"/>
-                            <rich:message for="Depto"/>
+                            <h:selectOneMenu value="#{ClienteBean.cliente.departamento}" id="Departamento">
+                                <f:selectItems value="#{ClienteBean.departamentos}" />
+                            </h:selectOneMenu>
+                            <rich:message for="Departamento"/>
                             <h:outputLabel value="Ciudad (*):"/>
-                            <h:inputText value="#{ClienteBean.cliente.ciudadResidencia}" required="true" id="Ciudad"/>
+                            <h:selectOneMenu value="#{ClienteBean.cliente.ciudadResidencia}" id="Ciudad">
+                                <f:selectItems value="#{ClienteBean.ciudadResidencia}" />
+                            </h:selectOneMenu>
                             <rich:message for="Ciudad"/>
                             <h:outputLabel value="Dirección (*):"/>
                             <h:inputText value="#{ClienteBean.cliente.direccion}" required="true" id="Direccion"/>

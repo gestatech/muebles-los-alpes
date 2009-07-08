@@ -1,5 +1,10 @@
 package com.losalpes.persistence.entity;
 
+import com.losalpes.enums.TipoCiudad;
+import com.losalpes.enums.TipoDepartamento;
+import com.losalpes.enums.TipoDocumento;
+import com.losalpes.enums.TipoPais;
+import java.util.List;
 /**
  * POJO de Cliente
  * @author Memo Toro
@@ -9,49 +14,58 @@ public class Cliente {
     private String nombres;
     private TipoDocumento tipoDocumento;
     private int numeroDocumento;
-    private String pais;
-    private String departamento;
     private String direccion;
-    private String ciudadResidencia;
+    private TipoPais pais;
+    private TipoDepartamento departamento;
+    private TipoCiudad ciudadResidencia;
     private String email;
     private String profesion;
     private int telefonoResidencia;
     private long telefonoCelular;
-
+    private List<Venta> ventas;
     /** Crea una nueva instancia de Cliente */
     public Cliente() {
     }
-
-    public Cliente(String nombres, TipoDocumento tipoDocumento, int numeroDocumento, String pais, String departamento, String direccion, String ciudadResidencia, String email, String profesion, int telefonoResidencia, long telefonoCelular) {
+    /** Crea una nueva instancia de Cliente pasandole valores */
+    public Cliente(String nombres, TipoDocumento tipoDocumento, int numeroDocumento, String direccion, TipoPais pais, TipoDepartamento departamento, TipoCiudad ciudadResidencia, String email, String profesion, int telefonoResidencia, long telefonoCelular, List<Venta> ventas) {
         this.nombres = nombres;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
+        this.direccion = direccion;
         this.pais = pais;
         this.departamento = departamento;
-        this.direccion = direccion;
         this.ciudadResidencia = ciudadResidencia;
         this.email = email;
         this.profesion = profesion;
         this.telefonoResidencia = telefonoResidencia;
         this.telefonoCelular = telefonoCelular;
+        this.ventas = ventas;
     }
 
-    public String getCiudadResidencia() {
+    public TipoCiudad getCiudadResidencia() {
         return ciudadResidencia;
     }
 
-    public void setCiudadResidencia(String ciudadResidencia) {
+    public void setCiudadResidencia(TipoCiudad ciudadResidencia) {
         this.ciudadResidencia = ciudadResidencia;
     }
 
-    public String getDepartamento() {
+    public TipoDepartamento getDepartamento() {
         return departamento;
     }
 
-    public void setDepartamento(String departamento) {
+    public void setDepartamento(TipoDepartamento departamento) {
         this.departamento = departamento;
     }
 
+    public TipoPais getPais() {
+        return pais;
+    }
+
+    public void setPais(TipoPais pais) {
+        this.pais = pais;
+    }
+    
     public String getDireccion() {
         return direccion;
     }
@@ -74,14 +88,6 @@ public class Cliente {
 
     public void setNombres(String nombres) {
         this.nombres = nombres;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
     }
 
     public String getProfesion() {
@@ -122,5 +128,17 @@ public class Cliente {
 
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
+    }
+    
+    public void setAsignarVenta(Venta venta){
+        this.ventas.add(venta);
     }
 }

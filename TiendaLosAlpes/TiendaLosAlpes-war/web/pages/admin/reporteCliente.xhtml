@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Detalle para Edición de Mueble"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Menu" action="#{CatalogBean.getLimpiar}"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Menú de Consulta de Clientes</f:facet>
+                     <a4j:form>
+                         <h:panelGrid columns="2">
+                            <h:outputLabel value="Criterio de Busqueda:"/>
+                                <h:selectOneMenu value="#{ReporteCliente.criterio}">
+                                    <f:selectItems value="#{ReporteCliente.tipoCriterio}"/>
+                                </h:selectOneMenu>
+                            <h:outputLabel value="Valor a Consultar"/>
+                            <h:inputText value="#{ReporteCliente.valor}"/>
+                        </h:panelGrid>
+                        <h:panelGrid>
+                            <a4j:commandButton value="Consultar" action="#{ReporteCliente.getConsultarVentas}" reRender="tablaCliente,tablaVentas,tablaDetalles"/>
+                        </h:panelGrid>
+                    </a4j:form>
+                </rich:panel>
+                <rich:panel>
+                     <f:facet name="header">Información Básica del Cliente</f:facet>
+                     <rich:extendedDataTable id="tablaCliente" align="center" width="500px" height="47px" value="#{ReporteCliente.cliente}" var="cliente">
+                        <rich:column width="150px" label="Nombres">
+                            <f:facet name="header">Nombres</f:facet>
+                            #{cliente.nombres}
+                        </rich:column>
+                        <rich:column width="100px" label="País">
+                            <f:facet name="header">País</f:facet>
+                            #{cliente.pais}
+                        </rich:column>
+                        <rich:column width="150px" label="Departamento">
+                            <f:facet name="header">Departamento</f:facet>
+                            #{cliente.departamento}
+                        </rich:column>
+                        <rich:column width="100px" label="Ciudad">
+                            <f:facet name="header">Ciudad</f:facet>
+                            #{cliente.ciudadResidencia}
+                        </rich:column>
+                    </rich:extendedDataTable>
+                </rich:panel>
+                <a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Productos Comprados por el Cliente</f:facet>
+                     <rich:dataTable id="tablaVentas" align="center" width="500px" height="100px" value="#{ReporteCliente.ventas}" var="venta">
+                         <rich:column width="150px" label="Fecha" colspan="5">
+                            <f:facet name="header">Fecha</f:facet>
+                            #{venta.fechaGeneracion}
+                        </rich:column>
+                            <rich:subTable id="tablaDetalles" align="center" value="#{venta.detalleVenta}" var="detalle">
+                                <rich:column width="200px" label="Nombre">
+                                    <f:facet name="header">Nombre</f:facet>
+                                    #{detalle.muebleVendido.nombre}
+                                </rich:column>
+                                <rich:column width="200px" label="Referencia">
+                                    <f:facet name="header">Referencia</f:facet>
+                                    #{detalle.muebleVendido.referencia}
+                                </rich:column>
+                                <rich:column width="300px" label="Material">
+                                    <f:facet name="header">Material</f:facet>
+                                    #{detalle.muebleVendido.material}
+                                </rich:column>
+                                <rich:column width="200px" label="Cantidad">
+                                    <f:facet name="header">Cantidad</f:facet>
+                                    #{detalle.cantidadVenta}
+                                </rich:column>
+                                <rich:column width="200px" label="Precio">
+                                    <f:facet name="header">Precio</f:facet>
+                                   #{detalle.precioVenta}
+                                </rich:column>
+                            </rich:subTable>
+                        <rich:column width="150px" label="Referencia" colspan="4">
+                            <h:outputLabel value="El valor de la compra con factura No. #{venta.referencia} tiene un total de:"/>
+                        </rich:column>
+                        <rich:column width="150px" label="Valor">
+                            <f:facet name="header">Valor</f:facet>
+                            #{venta.valor}
+                        </rich:column>
+                     </rich:dataTable>
+                </rich:panel>
+                </a4j:form>
+                </ui:define>
+        </ui:composition>
+    </body>
+</html>

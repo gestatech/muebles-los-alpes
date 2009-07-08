@@ -2,7 +2,7 @@ package com.losalpes.catalog;
 
 import com.losalpes.persistencia.ITiendaService;
 import com.losalpes.persistence.entity.Mueble;
-import com.losalpes.persistence.entity.TipoConsultaMueble;
+import com.losalpes.enums.TipoConsultaMueble;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +10,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-
 /**
  * Session Bean que implementa la interfaz con los métodos del Catálogo.
  * Bean anotado con @Stateless por no ser necesario guardar los datos del catálogo en sesion.
@@ -39,7 +38,7 @@ public class CatalogServiceBean implements ICatalogService {
      */
     @PreDestroy
     public void finalizar(){
-        System.out.println("CatalogServiceBean destruido satisfactoriamente !!!");
+        System.out.println("CATALOG-SERVICE-BEAN DESTRUIDO SATISFACTORIAMENTE !!!");
     }
     /**
      * Método para registrar mueble al catálogo.
@@ -50,7 +49,7 @@ public class CatalogServiceBean implements ICatalogService {
     }
     /**
      * Método para obtener los muebles consulados como Listado
-     * @param criterio Variable tipo TipoConsultaCliente criterio
+     * @param criterio Variable tipo TipoConsultaMueble
      * @param consula Variable String para el valor de la consula
      * @return List Variable tipo List de muebles.
      */
@@ -107,7 +106,7 @@ public class CatalogServiceBean implements ICatalogService {
             }
         }
         if(existencia==true){
-            System.out.println("Mueble existente y se borrará !!!");
+            System.out.println("MUEBLE EXISTE Y SE BORRARÁ !!!");
             // Elimina el mueble del listado.
             tienda.eliminarMueble(eliminado);
         }

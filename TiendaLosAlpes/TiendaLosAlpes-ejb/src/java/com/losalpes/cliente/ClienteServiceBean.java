@@ -2,7 +2,9 @@ package com.losalpes.cliente;
 
 import com.losalpes.persistencia.ITiendaService;
 import com.losalpes.persistence.entity.Cliente;
-import com.losalpes.persistence.entity.TipoConsultaCliente;
+import com.losalpes.enums.TipoConsultaCliente;
+import com.losalpes.persistence.entity.Usuario;
+import com.losalpes.security.ISecurityService;
 import java.util.List;
 import java.util.Iterator;
 import javax.annotation.PostConstruct;
@@ -21,6 +23,11 @@ public class ClienteServiceBean implements IClienteService {
      */
     @EJB
     private ITiendaService tienda;
+    /**
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IClienteService para los clientes.
+     */
+    @EJB
+    private ISecurityService securityService;
     /** Crea una nueva instancia de ClienteServiceMock */
     public ClienteServiceBean() {
     }
@@ -29,15 +36,13 @@ public class ClienteServiceBean implements IClienteService {
      */
     @PostConstruct
     public void iniciar(){
-        // Llama al contructor de tienda para el llenado de clientes iniciales.
-        tienda.crearClientes();
     }
     /**
      * Método anotado como PreDestroy para poder avisar antes de la destrucción.
      */
     @PreDestroy
     public void finalizar(){
-        System.out.println("ClienteServiceBean destruido satisfactoriamente !!!");
+        System.out.println("CLIENTE-SERVICE-BEAN DESTRUIDO SATISFACTORIAMENTE !!!");
     }
     /**
      * Método para registrar clientes. Verifica si el cliente existe a partir del número de identificación. Si existe, no lo ingresa.
@@ -61,7 +66,7 @@ public class ClienteServiceBean implements IClienteService {
             }
         }
         if(existencia==true)
-            System.out.println("Cliente existente y NO se registrará !!!");
+            System.out.println("CLIENTE EXISTE Y NO SE REGISTRARÁ !!!");
         else
             // Registra el nuevo cliente si no esta en la lista.
             tienda.registrarCliente(cliente);
@@ -88,7 +93,6 @@ public class ClienteServiceBean implements IClienteService {
             }
         }
         if(existencia==true){
-            System.out.println("Cliente existente y se borrará !!!");
             // Elimina el cliente de la lista.
             tienda.eliminarCliente(eliminado);
         }
@@ -102,6 +106,10 @@ public class ClienteServiceBean implements IClienteService {
         tienda.eliminarCliente(consultar(TipoConsultaCliente.NUMERO_DOCUMENTO, String.valueOf(cliente.getNumeroDocumento()).toString()));
         // Lo envia al metodo de actualizar.
         tienda.actualizarCliente(cliente);
+        // Asigna el cliente con sus nuevos datos al usuario y actualiza la lista de usuarios
+        Usuario usua = (Usuario)securityService.getObjetoSesion("usuario");
+        usua.setCliente(cliente);
+        tienda.actualizarUsuario(usua);
     }
     /**
      * Método para consulta clientes por criterios establecidos
@@ -140,5 +148,26 @@ public class ClienteServiceBean implements IClienteService {
     public List<Cliente> consultarTodos(){
         // Retorna todos los clientes de la tienda.
         return tienda.retornarClientes();
+    }
+    /**
+     * Método para registrar usuarios.
+     * @param usuario Variable tipo Usuario
+     */
+    public void registrarUsuario(Usuario usuario) {
+        tienda.registrarUsuario(usuario);
+    }
+    /**
+     * Método para obtener el Cliente a partir del usuario ingresado.
+     * @return cliente  variable de tipo Cliente
+     */
+    public Cliente consultarPorUsuario(String nombreUsuario,String contrasenia){
+        // Retorna todos los clientes de la tienda.
+        Usuario usuario = securityService.login(nombreUsuario, contrasenia);
+        if(usuario == null){
+            return null;
+        }
+        else{
+           return usuario.getCliente();
+        }
     }
 }

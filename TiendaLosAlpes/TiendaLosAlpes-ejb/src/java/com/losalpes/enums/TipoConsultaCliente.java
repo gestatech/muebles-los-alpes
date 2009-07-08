@@ -1,5 +1,4 @@
-package com.losalpes.persistence.entity;
-
+package com.losalpes.enums;
 /**
  * Enum de Tipo de Criterio de COnsulta a Cliente.
  * @author Memo Toro

@@ -1,17 +1,21 @@
 package com.losalpes.cliente;
 
+import com.losalpes.enums.TipoCiudad;
 import com.losalpes.persistence.entity.Cliente;
-import com.losalpes.persistence.entity.TipoDocumento;
-import com.losalpes.persistence.entity.TipoConsultaCliente;
+import com.losalpes.enums.TipoDocumento;
+import com.losalpes.enums.TipoConsultaCliente;
+import com.losalpes.enums.TipoDepartamento;
+import com.losalpes.enums.TipoPais;
+import com.losalpes.enums.TipoUsuario;
+import com.losalpes.persistence.entity.Usuario;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
-
 /**
- * Managed Bean para controlar los Clientes de la Tienda.
+ * Backing Bean para controlar los Clientes de la Tienda.
  * @author Memo Toro
  */
 public class ClienteBean {
@@ -25,6 +29,10 @@ public class ClienteBean {
      */
     private Cliente cliente;
     /**
+     * Variable Tipo Usuario
+     */
+    private Usuario usuario;
+    /**
      * Variable tipo Enum para establecer los criterios de seleccion de clientes.
      */
     private TipoConsultaCliente criterio;
@@ -35,6 +43,7 @@ public class ClienteBean {
     /** Crea una nueva instancia de ClienteBean */
     public ClienteBean() {
         cliente = new Cliente();
+        usuario = new Usuario();
     }
     /**
      * Método para obtener el cliente
@@ -49,6 +58,20 @@ public class ClienteBean {
      */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+   /**
+     * Método para obtener el usuario
+     * @return Usuario Variable Tipo Usuario
+     */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    /**
+     * Método para asignar el cliente
+     * @param cliente Variable tipo Cliente
+     */
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     /**
      * Método para obtener el valor de la consulta.
@@ -103,6 +126,42 @@ public class ClienteBean {
         return sItems;
     }
     /**
+     * Método para cargar el Listado de la interfaz con las ciudades registradas en el sistema.
+     * @return SelectItem Variable Enum con el listado de ciudades.
+     */
+    public SelectItem[] getPaises() {
+        TipoPais[] tipos = TipoPais.values();
+        SelectItem[] sItems = new SelectItem[tipos.length];
+        for (int i = 0; i < sItems.length; i++) {
+            sItems[i] = new SelectItem(tipos[i]);
+        }
+        return sItems;
+    }
+    /**
+     * Método para cargar el Listado de la interfaz con las ciudades registradas en el sistema.
+     * @return SelectItem Variable Enum con el listado de ciudades.
+     */
+    public SelectItem[] getDepartamentos() {
+        TipoDepartamento[] tipos = TipoDepartamento.values();
+        SelectItem[] sItems = new SelectItem[tipos.length];
+        for (int i = 0; i < sItems.length; i++) {
+            sItems[i] = new SelectItem(tipos[i]);
+        }
+        return sItems;
+    }
+    /**
+     * Método para cargar el Listado de la interfaz con las ciudades registradas en el sistema.
+     * @return SelectItem Variable Enum con el listado de ciudades.
+     */
+    public SelectItem[] getCiudadResidencia() {
+        TipoCiudad[] tipos = TipoCiudad.values();
+        SelectItem[] sItems = new SelectItem[tipos.length];
+        for (int i = 0; i < sItems.length; i++) {
+            sItems[i] = new SelectItem(tipos[i]);
+        }
+        return sItems;
+    }
+    /**
      *Método para obtener los clientes listados. Asigna a su vez la variable Cliente con el consultado.
      */
     public void getClienteConsultado(){
@@ -121,7 +180,14 @@ public class ClienteBean {
      */
     public String getRegistrar(){
         clienteService.registrar(getCliente());
-        return "admin";
+        // Registra el nuevo usuario.
+        Usuario usua = new Usuario();
+        usua.setNombreUsuario(Integer.valueOf(cliente.getNumeroDocumento()).toString());
+        usua.setContrasenia(usuario.getContrasenia());
+        usua.setTipoUsuario(TipoUsuario.CLIENTE);
+        usua.setCliente(getCliente());
+        clienteService.registrarUsuario(usua);
+        return "login";
     }
     /**
      * Método para borrar el cliente por medio del administrador.
@@ -145,7 +211,7 @@ public class ClienteBean {
      * Método que consulta por el numero de identificación del cliente que es el usuario y password para editarlo.
      */
     public void getClienteEditar(){
-        setCliente(clienteService.consultar(TipoConsultaCliente.NUMERO_DOCUMENTO, valor));
+        setCliente(clienteService.consultarPorUsuario(usuario.getNombreUsuario(),usuario.getContrasenia()));
     }
     /**
      * Método para editar los clientes. Lo ejecutan los Clientes.

@@ -7,13 +7,10 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <body>
         <ui:composition template="../main-template.xhtml">
-            <ui:param name="titulo" value="Detalle de Mueble"/>
+            <ui:param name="titulo" value="Confirmación de Compra"/>
             <ui:define name="body">
                 <a4j:form>
                     <rich:toolBar height="26" itemSeparator="Grid">
-                        <rich:toolBarGroup location="right">
-                            <h:commandButton value="Catálogo" action="cliente"/>
-                        </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Salir" action="login"/>
                         </rich:toolBarGroup>
@@ -33,11 +30,11 @@
                             </tr>
                             <tr>
                                 <td>Descripción de Compra</td>
-                                <td>#{VentaBean.venta.descripcion}</td>
+                                <td><h:inputTextarea value="#{VentaBean.venta.descripcion}"/></td>
                             </tr>
                             <tr>
                                 <td>Numero de Identificación del Cliente</td>
-                                <td>#{VentaBean.venta.clienteId}</td>
+                                <td>#{VentaBean.venta.idCliente}</td>
                             </tr>
                             <tr>
                                 <td>Número de Tarjeta</td>
@@ -53,6 +50,12 @@
                                 <td>Cuotas</td>
                                 <td>#{VentaBean.venta.cuotas}</td>
                             </tr>
+                            <tr>
+                                <td>Sitio de Entrega</td>
+                                <td>#{VentaBean.venta.pais}<br/>
+                                    #{VentaBean.venta.departamento}<br/>
+                                    #{VentaBean.venta.ciudad}</td>
+                            </tr>
                         </table>
                     </rich:panel>
                     <rich:panel>
@@ -64,7 +67,7 @@
                          <h:outputText value="Se le envio un correo electrónico a su cuenta de correo confirmando la compra"/>
                      </h:panelGrid>
                      <h:panelGrid>
-                        <h:commandButton value="Volver al Catálogo de Productos" action="cliente"/>
+                         <h:commandButton value="Volver al Catálogo de Productos" action="#{CarritoCompraBean.getLimpiar}"/>
                      </h:panelGrid>
                     </rich:panel>
                 </a4j:form>

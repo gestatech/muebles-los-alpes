@@ -1,5 +1,4 @@
-package com.losalpes.persistence.entity;
-
+package com.losalpes.enums;
 /**
  * Enum de Tipo de Documentos
  * @author Memo Toro

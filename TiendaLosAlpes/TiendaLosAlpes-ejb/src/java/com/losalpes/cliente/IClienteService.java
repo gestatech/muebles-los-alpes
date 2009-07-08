@@ -1,10 +1,10 @@
 package com.losalpes.cliente;
 
 import com.losalpes.persistence.entity.Cliente;
-import com.losalpes.persistence.entity.TipoConsultaCliente;
+import com.losalpes.enums.TipoConsultaCliente;
+import com.losalpes.persistence.entity.Usuario;
 import java.util.List;
 import javax.ejb.Local;
-
 /**
  * Interfaz con métodos de Cliente
  * Anotada con @Local para indicar que su acceso a través de los SessionBean seran de manera local.
@@ -39,4 +39,14 @@ public interface IClienteService {
      * @return List con los clientes
      */
     List<Cliente> consultarTodos();
+    /**
+     * Método para registrar usuarios
+     * @param usuario Variable tipo Usuario
+     */
+    public void registrarUsuario(Usuario usuario);
+    /**
+     * Método para obtener el cliente del usuarios especificado.
+     * @return Cliente asociado al usuario
+     */
+    public Cliente consultarPorUsuario(String nombreUsuario,String contrasenia);
 }

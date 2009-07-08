@@ -1,5 +1,6 @@
 package com.losalpes.persistence.entity;
 
+import com.losalpes.enums.TipoMueble;
 /**
  * POJO de Mueble
  * @author Memo Toro
@@ -23,7 +24,6 @@ public class Mueble {
     /** Crea una nueva instancia de Mueble */
     public Mueble() {
     }
-
     /** Crea una nueva instancia de Mueble pasandole valores */
     public Mueble(String referencia, String nombre, String descripcion, TipoMueble tipo, String material, double alto, double ancho, double profundidad, String color, double peso, String foto, double precio, int cantidad ) {
         this.referencia = referencia;

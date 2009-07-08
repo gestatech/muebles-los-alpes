@@ -1,5 +1,4 @@
-package com.losalpes.persistence.entity;
-
+package com.losalpes.enums;
 /**
  * Enum de Tipo Criterio de Consulta a Muebles
  * @author Memo Toro

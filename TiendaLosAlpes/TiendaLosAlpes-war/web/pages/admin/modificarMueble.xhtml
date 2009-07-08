@@ -44,7 +44,9 @@
                         </rich:column>
                         <rich:column width="100px" label="Referencia">
                             <f:facet name="header">Referencia</f:facet>
-                                <h:commandButton id="Referencia" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="edicionMueble"/>
+                                <h:commandButton id="Referencia" value="Ver Detalle !!!" actionListener="#{CatalogBean.getDetalleMueble}" action="edicionMueble">
+                                    <f:param id="referencia" value="#{mueble.referencia}"/>
+                                </h:commandButton>
                         </rich:column>
                         <rich:column width="100px" label="Tipo">
                             <f:facet name="header">Tipo</f:facet>

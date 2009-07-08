@@ -8,9 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
 import org.apache.commons.mail.SimpleEmail;
-
 /**
- * Servicio Mock que implementa la interfaz con los métodos de Venta. Anotada con @Stateless.
+ * Servicio Bean que implementa la interfaz con los métodos de Venta. Anotada con @Stateless.
  * @author Memo Toro
  */
 @Stateful
@@ -31,21 +30,23 @@ public class VentaServiceBean implements IVentaService{
      */
     @PostConstruct
     public void iniciar(){
-       ventas = new ArrayList<Venta>();
-       venta = new Venta();
+//       ventas = new ArrayList<Venta>();
+//       venta = new Venta();
     }
     /**
      * Método anotado con @PreDestroy para anunciar la destrucción del carrito.
      */
     @PreDestroy
     public void finalizar(){
-        System.out.println("VentaServiceBean ha sido eliminado con exito !!!");
+        System.out.println("VENTA-SERVICE-BEAN HA SIDO DESTRUIDA SATISFACTORIAMENTE !!!");
     }
     /**
      * Método para crear una Venta
      * @param ventaNueva Variable tipo Venta para crear.
      */
     public void crear(Venta ventaNueva){
+        venta = new Venta();
+        ventas  = new ArrayList<Venta>();
         venta = ventaNueva;
     }
     /**
@@ -79,8 +80,7 @@ public class VentaServiceBean implements IVentaService{
             SimpleEmail email = new SimpleEmail();
             email.setHostName("mail1.igac.gov.co");
             email.addTo("memo.toro@gmail.com", "memo.toro@gmail.com");
-            email.addTo("memotoro83@hotmail.com", "memotoro83@hotmail.com");
-            email.setAuthentication("gtoro", "igac");
+            email.setAuthentication("gtoro", "password");
             email.setFrom("gtoro@igac.gov.co", "Muebles Los Alpes");
             email.setSubject("Confirmación de Compra");
             email.setMsg(   "Apreciado Cliente:\n" +
@@ -88,7 +88,7 @@ public class VentaServiceBean implements IVentaService{
                             "En un par de días le llegará su mercancia a la dirección registrada.\n\n" +
                             "Gracias !!! \n\n" +
                             "Guillermo Antonio Toro Bayona");
-            email.send();
+ //           email.send();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -102,7 +102,6 @@ public class VentaServiceBean implements IVentaService{
         List<Venta> ventasConsultadas = new ArrayList<Venta>();
         Venta venta = new Venta();
         Iterator it = ventas.iterator();
-
         while(it.hasNext()){
             venta = (Venta) it.next();
             if(venta.getFechaGeneracion().equalsIgnoreCase(valor))

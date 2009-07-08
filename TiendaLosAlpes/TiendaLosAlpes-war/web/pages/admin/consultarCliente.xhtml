@@ -36,7 +36,7 @@
                     </a4j:form>
                 </rich:panel>
                 <rich:panel>
-                    <rich:extendedDataTable id="tablaCliente1" align="center" height="47px" value="#{ClienteBean.cliente}" var="cliente">
+                    <rich:extendedDataTable id="tablaCliente1" align="center" width="700px" height="47px" value="#{ClienteBean.cliente}" var="cliente">
                         <rich:column width="100px" label="Identificación">
                             <f:facet name="header">Identificación</f:facet>
                             #{cliente.numeroDocumento}
@@ -53,7 +53,7 @@
                             <f:facet name="header">País</f:facet>
                             #{cliente.pais}
                         </rich:column>
-                        <rich:column width="100px" label="Departamento">
+                        <rich:column width="150px" label="Departamento">
                             <f:facet name="header">Departamento</f:facet>
                             #{cliente.departamento}
                         </rich:column>
@@ -61,13 +61,13 @@
                             <f:facet name="header">Ciudad</f:facet>
                             #{cliente.ciudadResidencia}
                         </rich:column>
+                    </rich:extendedDataTable>
+                    <br/>
+                    <rich:extendedDataTable id="tablaCliente2" align="center" width="650px" height="47px" value="#{ClienteBean.cliente}" var="cliente">
                         <rich:column width="150px" label="Dirección">
                             <f:facet name="header">Dirección</f:facet>
                             #{cliente.direccion}
                         </rich:column>
-                    </rich:extendedDataTable>
-                    <br/>
-                    <rich:extendedDataTable id="tablaCliente2" align="center" width="500px" height="47px" value="#{ClienteBean.cliente}" var="cliente">
                         <rich:column width="150px" label="Correo Electrónico">
                             <f:facet name="header">Correo Electrónico</f:facet>
                             #{cliente.email}

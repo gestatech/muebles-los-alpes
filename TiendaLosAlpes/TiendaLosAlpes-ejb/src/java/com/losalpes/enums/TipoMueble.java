@@ -1,5 +1,4 @@
-package com.losalpes.persistence.entity;
-
+package com.losalpes.enums;
 /**
  * Enum de Tipos de Muebles
  * @author Memo Toro

@@ -3,21 +3,21 @@ package com.losalpes.ventas;
 import com.losalpes.catalog.ICatalogService;
 import com.losalpes.persistence.entity.Mueble;
 import com.losalpes.persistence.entity.Venta;
-import com.losalpes.persistence.entity.TipoConsultaMueble;
+import com.losalpes.enums.TipoConsultaMueble;
+import com.losalpes.persistence.entity.Cliente;
+import com.losalpes.persistence.entity.DetalleVenta;
+import com.losalpes.security.ISecurityService;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import javax.ejb.EJB;
+import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-
 /**
- * Managed Bean para controlar el Carrito de Compras y las Ventas.
+ * Backing Bean para controlar el Carrito de Compras y las Ventas.
  * Dicho carrito conoce las interfaces de varios Mock para interactuar con Ventas, Catalogo
  * @author Memo Toro
  */
@@ -38,13 +38,14 @@ public class CarritoCompraBean {
     @EJB
     private IVentaService ventaService;
     /**
+     * Interfaz anotada con @EJB que inyecta referencia a la interfaz ISecurityService
+     */
+    @EJB
+    private ISecurityService securityService;
+    /**
      * Variable de tipo Mueble a comprar.
      */
     private Mueble mueble;
-    /**
-     * Variable Venta para ser relacionada con el carrito de compras.
-     */
-    private Venta venta;
     /**
      * Variable para el valor de la compra.
      */
@@ -56,7 +57,6 @@ public class CarritoCompraBean {
     /** Crea una nueva instancia de CarritoCompraBean */
     public CarritoCompraBean() {
         mueble = new Mueble();
-        venta = new Venta();
     }
     /**
      * Método que obtiene el mueble .
@@ -101,40 +101,29 @@ public class CarritoCompraBean {
         this.cantidad = cantidad;
     }
     /**
-     * Método para obtener la venta que se esta manipulando con el carrito.
-     * @return Venta Variable tipo Venta.
-     */
-    public Venta getVenta() {
-        return venta;
-    }
-    /**
-     * Método para asignar la Venta.
-     * @param venta Variable tipo venta.
-     */
-    public void setVenta(Venta venta) {
-        this.venta = venta;
-    }
-    /**
      * Método para agregar un mueble al carrito de compras.
      * Se dispara a partir de un evento de clic sobre el boton de agregar mueble.
      * @param evento Variable tipo evento como clic.
      */
     public void getAgregarMueble(ActionEvent evento){
         // Lógica de captura del evento y del valor del parametro pasado.
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        String id = evento.getComponent().getClientId(contexto);
-        Map parametros = contexto.getExternalContext().getRequestParameterMap();
-        String valor = (String) parametros.get(id);
+        UIParameter componente = (UIParameter) evento.getComponent().findComponent("referencia");
+        String valor = componente.getValue().toString();
         TipoConsultaMueble criterio = TipoConsultaMueble.REFERENCIA;
-        // Busqueda del mueble por medio de la interfaz Mock de Catálogo para obtener el mueble
+        // Busqueda del mueble por medio de la interfaz de Catálogo para obtener el mueble
         List<Mueble> muebles = catalogService.consultar(criterio, valor);
-        if(muebles.size()>0)
+        if(muebles.size()>0){
             setMueble(muebles.get(0));
-        getMueble().setCantidad(getCantidad());
-        // Carga el mueble al carrito de compras.
-        carritoService.agregar(getMueble());
-        // Cálcula el valor de la compra acumulada con el mueble agregado.
-        setValorCompra(getValorCompra()+getCantidad()*getMueble().getPrecio());
+            DetalleVenta nuevoDetalle = new DetalleVenta();
+            nuevoDetalle.setId();
+            nuevoDetalle.setMuebleVendido(getMueble());
+            nuevoDetalle.setCantidadVenta(getCantidad());
+            nuevoDetalle.setPrecioVenta(getMueble().getPrecio());
+            // Carga el detalle de compra al carrito de compras.
+            carritoService.agregar(nuevoDetalle);
+            // Cálcula el valor de la compra acumulada con el mueble agregado.
+            setValorCompra(getValorCompra()+getCantidad()*nuevoDetalle.getPrecioVenta());
+        }
     }
     /**
      * Método para eliminar un mueble del carrito de compras.
@@ -143,19 +132,16 @@ public class CarritoCompraBean {
      */
     public void getEliminarMueble(ActionEvent evento){
         // Lógica de captura del evento y del valor del parametro pasado.
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        String id = evento.getComponent().getClientId(contexto);
-        Map parametros = contexto.getExternalContext().getRequestParameterMap();
-        String valor = (String) parametros.get(id);
-        TipoConsultaMueble criterio = TipoConsultaMueble.REFERENCIA;
-        // Busqueda del mueble por medio de la interfaz Mock de Catálogo para obtener el mueble
-        List<Mueble> muebles = catalogService.consultar(criterio, valor);
-        if(muebles.size()>0)
-            setMueble(muebles.get(0));
-        // Borrar el mueble al carrito de compras.
-        carritoService.eliminar(getMueble());
-        // Cálcula el valor de la compra acumulada sin el mueble eliminado.
-        setValorCompra(getValorCompra()-getMueble().getCantidad()*getMueble().getPrecio());
+        UIParameter componente = (UIParameter) evento.getComponent().findComponent("idVenta");
+        String idVenta = componente.getValue().toString();
+        // Busqueda del mueble por medio de la interfaz de Carrito para obtener el mueble
+        DetalleVenta detalle = carritoService.obtenerDetalle(Integer.valueOf(idVenta).intValue());
+        if(detalle!=null){
+            // Cálcula el valor de la compra acumulada sin el mueble eliminado.
+            setValorCompra(getValorCompra()-detalle.getCantidadVenta()*detalle.getPrecioVenta());
+            // Borrar el mueble al carrito de compras.
+            carritoService.eliminar(detalle);
+        }
     }
     /**
      * Método para crear la primera parte de la Venta.
@@ -167,32 +153,33 @@ public class CarritoCompraBean {
         // Crea un aleatorio para simlar un numero de referencia.
         Random rand = new Random();
         String referenciaCompra = (String.valueOf(rand.nextInt(1000)))+"-"+(String.valueOf(rand.nextInt(100000000)));
-        setVenta(new Venta());
-        getVenta().setReferencia(referenciaCompra);
-        getVenta().setValor(getValorCompra());
-        Iterator it = carritoService.verMueblesCarrito().iterator();
+        Venta miVenta = new Venta();
+        miVenta.setReferencia(referenciaCompra);
+        miVenta.setValor(getValorCompra());
+        Iterator it = carritoService.verDetallesCarrito().iterator();
         String referencias = "";
         int contadorMuebles = 0;
         String descripcion;
-        List<String> refMuebles = new ArrayList<String>();
         // Bucle para contar los muebles y obtener su referencia.
         while(it.hasNext()){
-            String ref = ((Mueble)it.next()).getReferencia();
+            DetalleVenta temp = (DetalleVenta)it.next();
+            String ref = temp.getMuebleVendido().getReferencia();
+            contadorMuebles += temp.getCantidadVenta();
             referencias = referencias+"--"+ ref;
-            refMuebles.add(ref);
-            contadorMuebles++;
         }
-        descripcion = "("+contadorMuebles+") muebles con referencia(s): "+referencias;
-        getVenta().setDescripcion(descripcion);
-        // Asigna el identificador del cliente con el cliente autenticado y asignado al carrito.
-        getVenta().setClienteId(carritoService.obtenerClienteAutenticado());
+        descripcion = "("+contadorMuebles+") tipos de muebles con referencia(s): "+referencias;
+        miVenta.setDescripcion(descripcion);
         // Asigna la fecha a la compra la fecha actual.
         Calendar fechaActual = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        getVenta().setFechaGeneracion(df.format(fechaActual.getTime()));
-        getVenta().setReferenciasMuebles(refMuebles);
-       // Asigna la venta creada al servicio Mock de ventas.
-        ventaService.crear(getVenta());      
+        miVenta.setFechaGeneracion(df.format(fechaActual.getTime()));
+        miVenta.setDetalleVenta(carritoService.verDetallesCarrito());
+        // Obtener el cliente que se autentico y se guardo en la sesión de la aplicación
+        Cliente cliente = (Cliente)securityService.getObjetoSesion("cliente");
+        // Asignar idcliente a venta
+        miVenta.setIdCliente(cliente.getNumeroDocumento());
+        // Asigna la venta creada al servicio de ventas.
+        ventaService.crear(miVenta);
         // String para redireccionar a la pagina de autenticación.
         return "pagar";
     }
@@ -201,6 +188,13 @@ public class CarritoCompraBean {
      * @return List Variable tipo List con los muebles cargados al carrito.
      */
     public List getVerCarrito(){
-        return carritoService.verMueblesCarrito();
+        return carritoService.verDetallesCarrito();
+    }
+    /**
+     * Método para limpiar las variables del Backng Bean.
+     */
+    public String getLimpiar(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CarritoCompraBean");
+        return "cliente";
     }
 }

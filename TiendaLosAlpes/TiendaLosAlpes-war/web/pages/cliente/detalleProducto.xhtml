@@ -98,9 +98,9 @@
                             <rich:message for="Cantidad"/>
                         </h:panelGrid>
                         <h:panelGrid>
-                            <h:outputLabel value="Agregar al Carrito el Producto: ">
-                            <h:commandButton value="#{CatalogBean.mueble.referencia}" actionListener="#{CarritoCompraBean.getAgregarMueble}" action="cliente"/>
-                            </h:outputLabel>
+                            <h:commandButton value="Agregar al Carrito !!!" actionListener="#{CarritoCompraBean.getAgregarMueble}" action="cliente">
+                                <f:param id="referencia" value="#{CatalogBean.mueble.referencia}"/>
+                            </h:commandButton>
                         </h:panelGrid>
                     </rich:panel>
                 </a4j:form>

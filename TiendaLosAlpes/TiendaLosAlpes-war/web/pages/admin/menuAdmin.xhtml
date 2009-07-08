@@ -21,8 +21,7 @@
                     <f:facet name="header">Administración de Clientes</f:facet>                        
                         <h:outputLabel value="Opciones de Administración de Clientes"/>
                         <p>
-                        <h:panelGrid columns="4">
-                            <h:commandButton action="registrarCliente" value="Registrar"/>
+                        <h:panelGrid columns="2">
                             <h:commandButton action="borrarCliente" value="Borrar"/>
                             <h:commandButton action="consultarCliente" value="Consultar"/>
                         </h:panelGrid>
@@ -57,18 +56,7 @@
                         <h:panelGrid columns="4">
                             <h:commandButton action="reporteDiario" value="Reporte Diario"/>
                             <h:commandButton action="reporteProducto" value="Reporte por Producto "/>
-                            <h:commandButton action="reporteFecha" value="Reporte por Fecha"/>
-                        </h:panelGrid>
-                        </p>
-                    </rich:panel>
-                    </a4j:form>
-                    <a4j:form>
-                    <rich:panel>
-                        <f:facet name="header">Control de Vendedores</f:facet>
-                        <h:outputLabel value="Opciones de Administración de Vendedores"/>
-                        <p>
-                        <h:panelGrid columns="4">
-                            <h:commandButton action="administrar" value="Administrar Vendedor"/>
+                            <h:commandButton action="reporteCliente" value="Reporte por Cliente"/>
                         </h:panelGrid>
                         </p>
                     </rich:panel>

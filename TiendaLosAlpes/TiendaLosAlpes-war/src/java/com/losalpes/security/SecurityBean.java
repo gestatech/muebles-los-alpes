@@ -1,11 +1,10 @@
 package com.losalpes.security;
 
-import com.losalpes.persistence.entity.TipoUsuario;
+import com.losalpes.enums.TipoUsuario;
 import com.losalpes.persistence.entity.Usuario;
 import javax.ejb.EJB;
-
 /**
- * Managed Bean para controlar la autenticación de usuarios. 
+ * Backing Bean para controlar la autenticación de usuarios.
  * Dicho carrito conoce las interfaces de varios Mocl para interactuar con Ventas, Catalogo
  * @author Memo Toro
  */
@@ -33,18 +32,22 @@ public class SecurityBean {
      */
      public String login(){
         Usuario usuario = securityService.login(nombreUsuario, contrasenia);
-        if(usuario.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
-            return "admin";
-        }
-        if(usuario.getTipoUsuario() == TipoUsuario.CLIENTE){
-            return "cliente";
+        String usua = "";
+        if(usuario == null){
+            usua = "login";
         }
         else{
-            return "login";
-        }
+            if(usuario.getTipoUsuario().equals(TipoUsuario.ADMINISTRADOR) ){
+                usua = "admin";
+            }
+            if(usuario.getTipoUsuario().equals(TipoUsuario.CLIENTE)){
+                usua = "cliente";
+            }
+       }
+       return usua;
     }
     /**
-     * Método par obtener el password del usuario.
+     * Método para obtener el password del usuario.
      * @return String variable tipo String con el password.
      */
     public String getContrasenia() {

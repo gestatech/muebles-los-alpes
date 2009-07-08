@@ -25,20 +25,26 @@
                 <a4j:form>
                 <rich:panel>
                      <f:facet name="header">Compra de Muebles</f:facet>
-                        <h:panelGrid columns="2">
-                            <h:outputLabel value="Referencia (*):"/>
-                            <h:inputText value="#{VentaBean.venta.referencia}"/>
-                            <h:outputLabel value="Valor (*):"/>
-                            <h:inputText value="#{VentaBean.venta.valor}"/>
-                            <h:outputLabel value="Descripción (*):"/>
-                            <h:inputTextarea value="#{VentaBean.venta.descripcion}"/>
-                        </h:panelGrid>
+                            <table border="1">
+                                <tr>
+                                    <td>Referencia (*)</td>
+                                    <td>#{VentaBean.venta.referencia}</td>
+                                </tr>
+                                <tr>
+                                    <td>Valor (*):</td>
+                                    <td>#{VentaBean.venta.valor}</td>
+                                </tr>
+                            <tr>
+                                <td>Descripción (*):</td>
+                                <td><h:inputTextarea value="#{VentaBean.venta.descripcion}"/></td>
+                            </tr>
+                            </table>
                 </rich:panel>
                 <rich:panel>
-                    <f:facet name="header">Compra de Muebles</f:facet>
+                    <f:facet name="header">Datos de la Compra</f:facet>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Numero de Identificación del Cliente (*):" id="NumeroId"/>
-                            <h:outputLabel value="#{VentaBean.venta.clienteId}"/>
+                            <h:outputLabel value="#{VentaBean.venta.idCliente}"/>
                             <rich:message for="NumeroId"/>
                             <h:outputLabel value="Número de Tarjeta (*):"/>
                             <h:inputText value="#{VentaBean.venta.numeroTarjeta}" required="true" id="Tarjeta">
@@ -56,14 +62,33 @@
                             </h:inputText>
                             <rich:message for="Fecha"/>
                             <h:outputLabel value="Cuotas (*):"/>
-                            <h:inputText value="#{VentaBean.venta.cuotas}" required="true" id="Cuotas">
-                                <f:validateLongRange minimum="2" maximum="36"/>
-                            </h:inputText>
+                            <h:selectOneMenu value="#{VentaBean.venta.cuotas}" required="true" id="Cuotas">
+                                <f:selectItem itemValue="2"/>
+                                <f:selectItem itemValue="6"/>
+                                <f:selectItem itemValue="12"/>
+                                <f:selectItem itemValue="24"/>
+                                <f:selectItem itemValue="36"/>
+                            </h:selectOneMenu>
                             <rich:message for="Cuotas"/>
+                            <h:outputLabel value="País (*):"/>
+                            <h:selectOneMenu value="#{VentaBean.venta.pais}" id="País">
+                                <f:selectItems value="#{VentaBean.paises}"/>
+                            </h:selectOneMenu>
+                            <rich:message for="País"/>
+                            <h:outputLabel value="Departamento (*):"/>
+                            <h:selectOneMenu value="#{VentaBean.venta.departamento}" id="Departamento">
+                                <f:selectItems value="#{VentaBean.departamentos}" />
+                            </h:selectOneMenu>
+                            <rich:message for="Departamento"/>
+                            <h:outputLabel value="Ciudad de Entrega (*):"/>
+                            <h:selectOneMenu value="#{VentaBean.venta.ciudad}" id="Ciudad">
+                                <f:selectItems value="#{VentaBean.ciudadResidencia}" />
+                            </h:selectOneMenu>
+                            <rich:message for="Ciudad"/>
                         </h:panelGrid>
                         <br/>
                         <h:panelGrid>
-                            <h:commandButton value="Pagar" action="#{VentaBean.getComprarMuebles}"/>
+                            <h:commandButton value="Pagar !!!" action="#{VentaBean.getComprarMuebles}"/>
                         </h:panelGrid>
                 </rich:panel>
                 </a4j:form>

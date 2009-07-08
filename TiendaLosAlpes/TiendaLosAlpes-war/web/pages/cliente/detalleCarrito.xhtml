@@ -7,13 +7,10 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <body>
         <ui:composition template="../main-template.xhtml">
-            <ui:param name="titulo" value="Detalle de Mueble"/>
+            <ui:param name="titulo" value="Detalle de Carrito"/>
             <ui:define name="body">
                 <a4j:form>
                     <rich:toolBar height="26" itemSeparator="Grid">
-                        <rich:toolBarGroup location="right">
-                            <h:commandButton value="Carrito de Compras" action="carrito"/>
-                        </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
                             <h:commandButton value="Catálogo" action="cliente"/>
                         </rich:toolBarGroup>
@@ -40,30 +37,32 @@
                 <a4j:form>
                 <rich:panel>
                      <f:facet name="header">Productos Agregados al Carrito de Compras</f:facet>
-                     <rich:extendedDataTable id="tablaMuebles" align="center" width="610px" height="220px" value="#{CarritoCompraBean.verCarrito}" var="mueble">
+                     <rich:extendedDataTable id="tablaMuebles" align="center" width="635px" height="220px" value="#{CarritoCompraBean.verCarrito}" var="detalle">
                         <rich:column width="110px" label="Foto">
                             <f:facet name="header">Foto</f:facet>
-                            <h:graphicImage width="100px" height="100px" value="#{mueble.foto}"/>
+                            <h:graphicImage width="100px" height="100px" value="#{detalle.muebleVendido.foto}"/>
                         </rich:column>
                         <rich:column width="100px" label="Referencia">
                             <f:facet name="header">Referencia</f:facet>
-                            #{mueble.referencia}
+                            #{detalle.muebleVendido.referencia}
                         </rich:column>
                         <rich:column width="100px" label="Nombre">
                             <f:facet name="header">Nombre</f:facet>
-                            #{mueble.nombre}
+                            #{detalle.muebleVendido.nombre}
                         </rich:column>
                         <rich:column width="100px" label="Precio">
                             <f:facet name="header">Precio</f:facet>
-                            #{mueble.precio}
+                            #{detalle.precioVenta}
                         </rich:column>
                         <rich:column width="100px" label="Cantidad">
                             <f:facet name="header">Cantidad</f:facet>
-                            #{mueble.cantidad}
+                            #{detalle.cantidadVenta}
                         </rich:column>
-                        <rich:column width="100px" label="Eliminar">
+                        <rich:column width="110px" label="Eliminar">
                             <f:facet name="header">Sacar del Carrito</f:facet>
-                            <h:commandButton id="Sacar" value="#{mueble.referencia}" actionListener="#{CarritoCompraBean.getEliminarMueble}" action="cliente"/>
+                            <h:commandButton id="Sacar" value="Sacar Mueble !!!" actionListener="#{CarritoCompraBean.getEliminarMueble}" action="cliente">
+                                <f:param id="idVenta" value="#{detalle.idVenta}"/>
+                            </h:commandButton>
                         </rich:column>
                     </rich:extendedDataTable>
                 </rich:panel>

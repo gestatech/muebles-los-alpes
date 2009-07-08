@@ -25,34 +25,30 @@
               <a4j:form>
                 <rich:panel>
                      <f:facet name="header">Compra de Producto - Listado</f:facet>
-                     <rich:extendedDataTable id="tablaProductos1" align="center" width="300px" height="150px" value="#{CarritoCompraBean.verCarrito}" var="mueble">
+                     <rich:extendedDataTable id="tablaProductos1" align="center" width="300px" height="150px" value="#{CarritoCompraBean.verCarrito}" var="detalle">
                         <rich:column width="100px" label="Nombre">
                             <f:facet name="header">Nombre</f:facet>
-                            #{mueble.nombre}
+                            #{detalle.muebleVendido.nombre}
                         </rich:column>
                         <rich:column width="100px" label="Precio">
                             <f:facet name="header">Precio</f:facet>
-                            #{mueble.precio}
+                            #{detalle.precioVenta}
                         </rich:column>
                         <rich:column width="100px" label="Cantidad">
                             <f:facet name="header">Cantidad</f:facet>
-                            #{mueble.cantidad}
+                            #{detalle.cantidadVenta}
                         </rich:column>
                     </rich:extendedDataTable>
                     <br/>
                     <rich:panel>
                     <f:facet name="header">Valor de la Compra de Muebles</f:facet>
                     <h:panelGrid columns="2">
-                        <h:outputLabel value="Valor Muebles: "/>
-                        <h:outputLabel value="#{CarritoCompraBean.valorCompra}"/>
-                        <h:outputLabel value="Valor Envio: "/>
-                        <h:outputLabel value="0"/>
                         <h:outputLabel value="Valor Total de la Compra: "/>
                         <h:outputLabel value="#{CarritoCompraBean.valorCompra}"/>
                     </h:panelGrid>
                     <br/>
                     <h:panelGrid>
-                        <h:commandButton value="Pagar !!!" action="#{CarritoCompraBean.getComprarMuebles}"/>
+                        <h:commandButton value="Iniciar Compra !!!" action="#{CarritoCompraBean.getComprarMuebles}"/>
                     </h:panelGrid>
                     </rich:panel>
                 </rich:panel>

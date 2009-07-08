@@ -15,9 +15,6 @@
                             <h:commandButton value="Carrito de Compras" action="carrito"/>
                         </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
-                            <h:commandButton value="Catálogo" action="cliente"/>
-                        </rich:toolBarGroup>
-                        <rich:toolBarGroup location="right">
                             <h:commandButton value="Salir" action="login"/>
                         </rich:toolBarGroup>
                     </rich:toolBar>
@@ -25,7 +22,7 @@
                 <a4j:form>
                 <rich:panel>
                      <f:facet name="header">Catálogo de Productos - Muebles los Alpes</f:facet>
-                     <rich:extendedDataTable id="tablaMuebles1" align="center" width="560px" height="370px" value="#{CatalogBean.mueblesTienda}" var="mueble">
+                     <rich:extendedDataTable id="tablaMuebles1" align="center" width="575px" height="370px" value="#{CatalogBean.mueblesTienda}" var="mueble">
                                 <rich:column width="110px" label="Foto">
                                     <f:facet name="header">Foto</f:facet>
                                     <h:graphicImage width="100px" height="100px" value="#{mueble.foto}"/>
@@ -44,7 +41,9 @@
                                 </rich:column>
                                 <rich:column width="100px" label="Ver">
                                     <f:facet name="header">Ver Mas...</f:facet>
-                                        <h:commandButton id="Ver" value="#{mueble.referencia}" actionListener="#{CatalogBean.getDetalleMueble}" action="detalleProducto"/>
+                                        <h:commandButton id="Ver" value="Ver Detalle !!!" actionListener="#{CatalogBean.getDetalleMueble}" action="detalleProducto">
+                                            <f:param id="referencia" value="#{mueble.referencia}"/>
+                                        </h:commandButton>
                                 </rich:column>                   
                     </rich:extendedDataTable>
                     </rich:panel>

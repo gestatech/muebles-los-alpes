@@ -2,13 +2,14 @@ package com.losalpes.persistencia;
 
 import com.losalpes.persistence.entity.Cliente;
 import com.losalpes.persistence.entity.Mueble;
+import com.losalpes.persistence.entity.Usuario;
 import java.util.List;
 import javax.ejb.Local;
-
 /**
  * Interfaz con métodos de Tienda.
  * Anotada con @Local para indicar el acceso Local por medio de un SessionBean.
  * @author Memo Toro
+ * @author Hans Escallon
  */
 @Local
 public interface ITiendaService {
@@ -37,9 +38,19 @@ public interface ITiendaService {
     void actualizarCliente(Cliente cliente);
     /**
      * Método para retornar todos los clientes del listado de la tienda.
-     * @return List con los clientes de la tienta.
+     * @return List con los clientes de la tienda.
      */
     List<Cliente> retornarClientes();
+    /**
+     * Método para registrar un nuevo usuario en el listado.
+     * @param usuario Variable tipo Usuario.
+     */
+    public void registrarUsuario(Usuario usuario);
+    /**
+     * Método para retornar todos los usuarios del listado de la tienda.
+     * @return List con los usuarios de la tienda.
+     */
+    public List<Usuario> retornarUsuarios();
     /**
      * Método para registrar mueble al catálogo.
      * @param mueble Variable tipo mueble.
@@ -60,4 +71,27 @@ public interface ITiendaService {
      * @return List con los muebles.
      */
     List<Mueble> retornarMuebles();
+    /**
+     * Método para actualizar los datos del usuario.
+     * @param usuario Variable tipo Usuario.
+     */
+    public void actualizarUsuario(Usuario usuario);
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

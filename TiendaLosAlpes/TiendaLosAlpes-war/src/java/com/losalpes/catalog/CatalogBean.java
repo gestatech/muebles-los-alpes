@@ -158,9 +158,6 @@ public class CatalogBean {
      * Método para limpiar las variables del Managed Bean.
      */
     public String getLimpiar(){
-//        setMueble(new Mueble());
-//        setMuebles(null);
-//        setValor(null);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CatalogBean");
         return "admin";
     }

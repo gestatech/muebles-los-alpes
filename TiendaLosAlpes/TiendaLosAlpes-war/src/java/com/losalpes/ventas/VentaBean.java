@@ -36,7 +36,7 @@ public class VentaBean {
     private Venta venta;
     /** Crea una nueva instancia de VentaBean */
     public VentaBean() {
-       venta = new Venta();
+        venta = new Venta();
         venta = ventaService.obtenerVenta();
     }
      /**

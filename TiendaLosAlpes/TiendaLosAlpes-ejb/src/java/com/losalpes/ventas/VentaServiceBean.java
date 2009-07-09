@@ -30,8 +30,6 @@ public class VentaServiceBean implements IVentaService{
      */
     @PostConstruct
     public void iniciar(){
-//       ventas = new ArrayList<Venta>();
-//       venta = new Venta();
     }
     /**
      * Método anotado con @PreDestroy para anunciar la destrucción del carrito.

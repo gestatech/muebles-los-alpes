@@ -76,22 +76,4 @@ public interface ITiendaService {
      * @param usuario Variable tipo Usuario.
      */
     public void actualizarUsuario(Usuario usuario);
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

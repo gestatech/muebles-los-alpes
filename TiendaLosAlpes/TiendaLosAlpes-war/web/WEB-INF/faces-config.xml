@@ -52,6 +52,11 @@
         <managed-bean-class>com.losalpes.reportes.ReporteClienteBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>PromocionBean</managed-bean-name>
+        <managed-bean-class>com.losalpes.catalog.PromocionBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 
 <!-- Reglas de Navegación Generales -->
 
@@ -148,6 +153,14 @@
         <navigation-case>
             <from-outcome>registroPrecios</from-outcome>
             <to-view-id>/pages/admin/registroPrecios.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/admin/menuAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registroPromos</from-outcome>
+            <to-view-id>/pages/admin/registrarPromocion.jsf</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

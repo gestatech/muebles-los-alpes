@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Registro de Promociones"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Menu" action="admin"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="login"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <a4j:form>
+                <rich:panel>
+                     <f:facet name="header">Registro de Promociones</f:facet>
+                     <h:panelGrid columns="3" rendered="true" id="createPromos">
+                            <h:outputLabel value="Nombre de la promoción (*)"/>
+                            <h:inputText value="#{PromocionBean.promocion.nombre}" required="true" id="Nombre"/>
+                            <rich:message for="Nombre"/>
+                            <h:outputLabel value="Mueble:"/>
+                            <h:selectOneMenu value="#{PromocionBean.promocion.mueble}" id="Mueble">
+                                <f:selectItems value="#{PromocionBean.muebles}"/>
+                            </h:selectOneMenu>
+                            <rich:message for="Mueble"/>
+                            <h:outputLabel value="Fecha Inicio"/>
+                            <h:inputText value="#{PromocionBean.promocion.fechaInicio}" id="FechaInicio"/>
+                            <rich:message for="FechaInicio"/>
+                            <h:outputLabel value="Fecha Fin"/>
+                            <h:inputText value="#{PromocionBean.promocion.fechaFin}" id="FechaFin"/>
+                            <rich:message for="FechaFin"/>
+                        </h:panelGrid>                            
+                        <h:panelGrid>
+                            <a4j:commandButton value="Crear Promocion !!!" action="#{PromocionBean.create}" reRender="tablaPromos,mensaje"/>
+                        </h:panelGrid>
+                </rich:panel>
+                </a4j:form>
+                <a4j:form>
+                <rich:panel>
+                    <f:facet name="header">Promociones existentes</f:facet>
+                    <rich:extendedDataTable id="tablaPromos" align="center" width="600px" height="100px" value="#{PromocionBean.allPromotions}" var="promo">
+                        <rich:column width="150px" label="Nombre">
+                            <f:facet name="header">Nombre de Promocion</f:facet>
+                            <h:outputLabel value="#{promo.nombre}"/>
+                        </rich:column>
+                        <rich:column width="150px" label="TipoMueble">
+                            <f:facet name="header">Tipo de mueble</f:facet>
+                            <h:outputLabel value="#{promo.mueble}"/>
+                        </rich:column>
+                        <rich:column width="150px" label="Fecha Inicio">
+                            <f:facet name="header">Tipo de mueble</f:facet>
+                            <h:outputLabel value="#{promo.fechaInicio}"/>
+                        </rich:column>
+                        <rich:column width="150px" label="Fecha Fin">
+                            <f:facet name="header">Tipo de mueble</f:facet>
+                            <h:outputLabel value="#{promo.fechaFin}"/>
+                        </rich:column>
+                    </rich:extendedDataTable>
+                </rich:panel>
+                </a4j:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

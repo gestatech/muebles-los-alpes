@@ -1,7 +1,6 @@
 package com.losalpes.cliente;
 
 import com.losalpes.persistence.entity.Cliente;
-import com.losalpes.enums.TipoConsultaCliente;
 import com.losalpes.persistence.entity.Usuario;
 import java.util.List;
 import javax.ejb.Local;
@@ -33,7 +32,7 @@ public interface IClienteService {
      * @param consula Variable String para el valor de la consula
      * @return Cliente Variable tipo Cliente.
      */
-    Cliente consultar(TipoConsultaCliente criterio, String valor);
+    Cliente consultar(String criterio, String valor);
     /**
      * Método para obtener el listado de clientes de la tienda.
      * @return List con los clientes

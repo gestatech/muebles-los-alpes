@@ -28,41 +28,56 @@
                             <table border="1">
                                 <tr>
                                     <td>Referencia (*)</td>
-                                    <td>#{VentaBean.venta.referencia}</td>
+                                    <td>#{CarritoCompraBean.venta.referencia}</td>
                                 </tr>
                                 <tr>
                                     <td>Valor (*):</td>
-                                    <td>#{VentaBean.venta.valor}</td>
+                                    <td>#{CarritoCompraBean.venta.valor}</td>
                                 </tr>
                             <tr>
                                 <td>Descripción (*):</td>
-                                <td><h:inputTextarea value="#{VentaBean.venta.descripcion}"/></td>
+                                <td><h:inputTextarea value="#{CarritoCompraBean.venta.descripcion}"/></td>
                             </tr>
                             </table>
                 </rich:panel>
+    <script type="text/javascript">
+        var curDt = new Date();
+        function disablementFunction(day){
+            if (day.isWeekend) return false;
+            if (curDt==undefined){
+                curDt = day.date.getDate;
+            }
+            if (curDt.getTime() - day.date.getTime() &lt; 0) return true; else return false;
+        }
+        function disabledClassesProv(day){
+            if (curDt.getTime() - day.date.getTime() &gt;= 0) return 'rich-calendar-boundary-dates';
+            var res = '';
+            if (day.isWeekend) res+='weekendBold ';
+            if (day.day%3==0) res+='everyThirdDay';
+            return res;
+        }
+    </script>
                 <rich:panel>
                     <f:facet name="header">Datos de la Compra</f:facet>
-                        <h:panelGrid columns="3">
+                    <h:panelGrid columns="3">
                             <h:outputLabel value="Numero de Identificación del Cliente (*):" id="NumeroId"/>
-                            <h:outputLabel value="#{VentaBean.venta.idCliente}"/>
+                            <h:outputLabel value="#{CarritoCompraBean.venta.idCliente}"/>
                             <rich:message for="NumeroId"/>
                             <h:outputLabel value="Número de Tarjeta (*):"/>
-                            <h:inputText value="#{VentaBean.venta.numeroTarjeta}" required="true" id="Tarjeta">
+                            <h:inputText value="#{CarritoCompraBean.venta.numeroTarjeta}" required="true" id="Tarjeta">
                                 <f:validateLength minimum="4" maximum="10"/>
                             </h:inputText>
                             <rich:message for="Tarjeta"/>
                             <h:outputLabel value="Código de Seguridad (*):"/>
-                            <h:inputSecret value="#{VentaBean.venta.codigoSeguridad }" required="true" id="Seguridad">
+                            <h:inputSecret value="#{CarritoCompraBean.venta.codigoSeguridad }" required="true" id="Seguridad">
                                 <f:validateLength minimum="4" maximum="4"/>
                             </h:inputSecret>
                             <rich:message for="Seguridad"/>
                             <h:outputLabel value="Fecha de Expiración (*):"/>
-                            <h:inputText value="#{VentaBean.venta.fechaExpiracionTarjeta}" required="true" id="Fecha">
-                                <f:convertDateTime pattern="dd/mm/yyyy" type="date" dateStyle="short"/>
-                            </h:inputText>
+                            <rich:calendar value="#{CarritoCompraBean.fechaExpiracion}" datePattern="dd/MM/yyyy" id="Fecha" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
                             <rich:message for="Fecha"/>
                             <h:outputLabel value="Cuotas (*):"/>
-                            <h:selectOneMenu value="#{VentaBean.venta.cuotas}" required="true" id="Cuotas">
+                            <h:selectOneMenu value="#{CarritoCompraBean.venta.cuotas}" required="true" id="Cuotas">
                                 <f:selectItem itemValue="2"/>
                                 <f:selectItem itemValue="6"/>
                                 <f:selectItem itemValue="12"/>
@@ -71,24 +86,24 @@
                             </h:selectOneMenu>
                             <rich:message for="Cuotas"/>
                             <h:outputLabel value="País (*):"/>
-                            <h:selectOneMenu value="#{VentaBean.venta.pais}" id="País">
-                                <f:selectItems value="#{VentaBean.paises}"/>
+                            <h:selectOneMenu value="#{CarritoCompraBean.venta.pais}" id="País">
+                                <f:selectItems value="#{CarritoCompraBean.paises}"/>
                             </h:selectOneMenu>
                             <rich:message for="País"/>
                             <h:outputLabel value="Departamento (*):"/>
-                            <h:selectOneMenu value="#{VentaBean.venta.departamento}" id="Departamento">
-                                <f:selectItems value="#{VentaBean.departamentos}" />
+                            <h:selectOneMenu value="#{CarritoCompraBean.venta.departamento}" id="Departamento">
+                                <f:selectItems value="#{CarritoCompraBean.departamentos}" />
                             </h:selectOneMenu>
                             <rich:message for="Departamento"/>
                             <h:outputLabel value="Ciudad de Entrega (*):"/>
-                            <h:selectOneMenu value="#{VentaBean.venta.ciudad}" id="Ciudad">
-                                <f:selectItems value="#{VentaBean.ciudadResidencia}" />
+                            <h:selectOneMenu value="#{CarritoCompraBean.venta.ciudad}" id="Ciudad">
+                                <f:selectItems value="#{CarritoCompraBean.ciudadResidencia}" />
                             </h:selectOneMenu>
                             <rich:message for="Ciudad"/>
                         </h:panelGrid>
                         <br/>
                         <h:panelGrid>
-                            <h:commandButton value="Pagar !!!" action="#{VentaBean.getComprarMuebles}"/>
+                            <h:commandButton value="Pagar !!!" action="#{CarritoCompraBean.getPagarMuebles}"/>
                         </h:panelGrid>
                 </rich:panel>
                 </a4j:form>

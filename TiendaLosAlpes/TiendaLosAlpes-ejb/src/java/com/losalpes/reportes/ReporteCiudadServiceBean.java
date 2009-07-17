@@ -1,6 +1,5 @@
 package com.losalpes.reportes;
 
-import com.losalpes.reportes.IReporteCiudadService;
 import com.losalpes.enums.TipoCiudad;
 import com.losalpes.enums.TipoDepartamento;
 import com.losalpes.enums.TipoPais;
@@ -14,8 +13,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 /**
- *
- * @author usuario
+ * Session Bean sin estado @Stateless para indicar la no persistena de datos de reporte.
+ * @author Hans Escallon
  */
 @Stateless
 public class ReporteCiudadServiceBean implements IReporteCiudadService {
@@ -24,7 +23,13 @@ public class ReporteCiudadServiceBean implements IReporteCiudadService {
      */
     @EJB
     private IVentaService ventaService;
+    /**
+     * Listado de ventas.
+     */
     private List ventas;
+    /**
+     * Listado de reportes de ciudad.
+     */
     private List<ReporteCiudad> reporteCiudad;
     /**
      * Método para obtener el reporte con las ventas diarias por ciudad
@@ -52,9 +57,7 @@ public class ReporteCiudadServiceBean implements IReporteCiudadService {
                 else{
                     reporteNuevo = report;
                 }
-                /**
-                * Obtiene la lista de detalles de venta y las almacena en el reporte.
-                */
+                // Obtiene la lista de detalles de venta y las almacena en el reporte.
                 detallesVenta = venta.getDetalleVenta();
                 Iterator itDetalle = detallesVenta.iterator();
                 while(itDetalle.hasNext()){
@@ -67,7 +70,7 @@ public class ReporteCiudadServiceBean implements IReporteCiudadService {
         return reporteCiudad;
     }
     /**
-     * Método para verificar si la ciudad ya tiene un registro en el reporte de ventas diarias por ciudadd
+     * Método para verificar si la ciudad ya tiene un registro en el reporte de ventas diarias por ciudad.
      * @param pais, departamento y ciudad para buscar la ciudad en el reporte de ventas diarias.
      */
     public ReporteCiudad existeVentaCiudad(TipoPais pais,TipoDepartamento departamento,TipoCiudad ciudadResidencia){

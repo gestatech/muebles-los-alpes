@@ -18,16 +18,15 @@ public interface ISecurityService {
     Usuario login(String usuario, String pwd);
     /** Método para asignar el cliente actualizado al usuario
      * @param cliente Variable tipo ClienteString.
-    */
+     */
     public void editarUsuario(Cliente cliente);
-
     /**
      * Método para registrar en la sesión el cliente y usuario que realizo el login
      * @param objeto Variable tipo Object.
-    */
+     */
     public void setObjetoSesion(Object objeto);
     /** Método para obtener el cliente o usuario de la sessión
      * @param clave Variable tipo String, que identifica el objeto a recuperar.
-    */
+     */
     public Object getObjetoSesion(String clave);
 }

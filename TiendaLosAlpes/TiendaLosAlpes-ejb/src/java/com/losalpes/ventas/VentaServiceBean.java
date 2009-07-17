@@ -1,35 +1,33 @@
 package com.losalpes.ventas;
 
+import com.losalpes.persistence.IPersistenceServices;
 import com.losalpes.persistence.entity.Venta;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Stateful;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import org.apache.commons.mail.SimpleEmail;
 /**
- * Servicio Bean que implementa la interfaz con los métodos de Venta. Anotada con @Stateless.
+ * Session Bean que implementa la interfaz con los métodos de Venta. Anotada con @Stateless
  * @author Memo Toro
  */
-@Stateful
+@Stateless
 public class VentaServiceBean implements IVentaService{
     /**
-     * Variable Static con el Listado de Ventas de la Tienda.
+     * Interfaz anotada como @EJB para que haga referencia e inyección con el Bean de la Persistencia.
      */
-    private static List<Venta> ventas;
-    /**
-     * Variable Satic con la Venta que se esta realizando.
-     */
-    private static Venta venta;
-    /** Crea una nueva instancia de VentaServiceMock */
-    public VentaServiceBean() {
-    }
+    @EJB
+    private IPersistenceServices persistencia;
+    /** Crea una nueva instancia de VentaServiceBean */
+    public VentaServiceBean() {}
     /**
      * Método anotado con @PostConstruct para iniciar la variable de arreglo de ventas.
      */
     @PostConstruct
     public void iniciar(){
+        System.out.println("VENTA-SERVICE-BEAN HA SIDO INICIALIZADO !!!");
     }
     /**
      * Método anotado con @PreDestroy para anunciar la destrucción del carrito.
@@ -39,37 +37,42 @@ public class VentaServiceBean implements IVentaService{
         System.out.println("VENTA-SERVICE-BEAN HA SIDO DESTRUIDA SATISFACTORIAMENTE !!!");
     }
     /**
-     * Método para crear una Venta
-     * @param ventaNueva Variable tipo Venta para crear.
-     */
-    public void crear(Venta ventaNueva){
-        venta = new Venta();
-        ventas  = new ArrayList<Venta>();
-        venta = ventaNueva;
-    }
-    /**
      * Método para almacenar una Venta a la venta actual y al listado de ventas.
      * @param ventaNueva
      */
     public void almacenar(Venta ventaNueva){
-        ventas.add(ventaNueva);
+        persistencia.create(ventaNueva);
     }
     /**
      * Método para obtener el listado de ventas de la tienda.
      * @return List con las ventas de la tienda.
      */
     public List obtenerVentas(){
+        return persistencia.findAll(Venta.class);
+    }
+    /**
+     * Método para consultar las ventas y dtellaes del cliente
+     * @param idCliente Identificador del cliente
+     * @return List de Ventas de cliente
+     */
+    public List<Venta> consultarVentas(int valor) {
+        List<String> valores = new ArrayList<String>();
+        List<Venta> ventas = new ArrayList<Venta>();
+        valores.add("idCliente|" + valor);
+        ventas = persistencia.findObjects("findVentas",valores);
+/*        Iterator it = ventas.iterator();
+        while(it.hasNext()){
+            valores.clear();
+            Venta venta = (Venta)it.next();
+            valores.add("venta|" + venta.getReferencia());
+            List<DetalleVenta> detalles = persistencia.findObjects("findDetalles", valores);
+            venta.setDetalleVenta(detalles);
+        }
+ */
         return ventas;
     }
     /**
-     * Método para obtener la venta actual.
-     * @return Venta Variable tipo Venta.
-     */
-    public Venta obtenerVenta() {
-        return venta;
-    }
-    /**
-     * Método para enviar correos electrónicos con las librerias de Apache
+     * Método para enviar correos electrónicos con las librerias de Apache.
      */
     public void enviarCorreo(){
         // Logica de envio de mensajes por email.
@@ -90,21 +93,5 @@ public class VentaServiceBean implements IVentaService{
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-    /**
-     * Método para obtener las ventas a partir de una fecha.
-     * @param valor Valor de la consulta por fecha.
-     * @return List Listado de Ventas.
-     */
-    public List<Venta> obtenerVentasConsultadas(String valor){
-        List<Venta> ventasConsultadas = new ArrayList<Venta>();
-        Venta venta = new Venta();
-        Iterator it = ventas.iterator();
-        while(it.hasNext()){
-            venta = (Venta) it.next();
-            if(venta.getFechaGeneracion().equalsIgnoreCase(valor))
-                ventasConsultadas.add(venta);
-        }
-        return ventasConsultadas;
     }
 }

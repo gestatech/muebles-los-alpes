@@ -5,7 +5,6 @@ import com.losalpes.persistence.entity.Usuario;
 import javax.ejb.EJB;
 /**
  * Backing Bean para controlar la autenticación de usuarios.
- * Dicho carrito conoce las interfaces de varios Mocl para interactuar con Ventas, Catalogo
  * @author Memo Toro
  */
 public class SecurityBean {
@@ -22,7 +21,6 @@ public class SecurityBean {
      * Variable String para el password del usuario.
      */
     private String contrasenia;
-
     /** Crea una nueva instancia de SecurityBean */
     public SecurityBean() {
     }
@@ -55,7 +53,7 @@ public class SecurityBean {
     }
    /**
      * Método para asignar el password de usuario.
-     * @param String con la contrasenia
+     * @param String con la contrasenia.
      */
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;

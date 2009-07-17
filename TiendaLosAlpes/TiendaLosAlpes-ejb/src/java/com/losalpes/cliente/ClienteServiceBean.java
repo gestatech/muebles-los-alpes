@@ -1,12 +1,11 @@
 package com.losalpes.cliente;
 
-import com.losalpes.persistencia.ITiendaService;
 import com.losalpes.persistence.entity.Cliente;
-import com.losalpes.enums.TipoConsultaCliente;
+import com.losalpes.persistence.IPersistenceServices;
 import com.losalpes.persistence.entity.Usuario;
 import com.losalpes.security.ISecurityService;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -17,17 +16,17 @@ import javax.ejb.Stateless;
  * @author Memo Toro
  */
 @Stateless
-public class ClienteServiceBean implements IClienteService {    
-    /**
-     * Interfaz anotada como @EJB para que haga referencia e inyección con el Bean Mock de de la TiendaService.
-     */
-    @EJB
-    private ITiendaService tienda;
+public class ClienteServiceBean implements IClienteService {
     /**
      * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IClienteService para los clientes.
      */
     @EJB
     private ISecurityService securityService;
+    /**
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IPersistenceServices para la persistencia de los clientes.
+     */
+    @EJB
+    private IPersistenceServices persistenceServices;
     /** Crea una nueva instancia de ClienteServiceMock */
     public ClienteServiceBean() {
     }
@@ -50,66 +49,33 @@ public class ClienteServiceBean implements IClienteService {
      */
     public void registrar(Cliente cliente) {
         // Cliente creado para compararlo con el cliente que se va a registrar.
-        Cliente comparar = new Cliente();
+        Cliente comparar = null;
         // Copia de todo el listado de clientes.
-        List<Cliente> clientes = tienda.retornarClientes();
-        Iterator it;
-        it = clientes.iterator();
-        // Variable boolean para verificar la existencia del cliente.
-        boolean existencia = false;
-        // Bucle para recorrer el listado de clientes y obtener el cliente a eliminar.
-        while(it.hasNext()){
-            comparar = (Cliente) it.next();
-            if(comparar.getNumeroDocumento()==cliente.getNumeroDocumento()){
-                existencia = true;
-                break;
-            }
-        }
-        if(existencia==true)
-            System.out.println("CLIENTE EXISTE Y NO SE REGISTRARÁ !!!");
-        else
+        comparar = consultarCliente(cliente.getNumeroDocumento());
+        if(comparar == null){
             // Registra el nuevo cliente si no esta en la lista.
-            tienda.registrarCliente(cliente);
+            persistenceServices.create(cliente);
+        }
+        else
+            System.out.println("CLIENTE EXISTE Y NO SE REGISTRARÁ !!!");
     }
     /**
      * Método para eliminar clientes a partir de un cliente seleccionado.
      * @param cliente Variable cliente seleccionado para eliminar.
      */
     public void eliminar(Cliente cliente) {
-        // Cliente para comparar con el cliente que se va a eliminar.
-        Cliente eliminado = new Cliente();
-        // Copia de todo el listado de clientes.
-        List<Cliente> clientes = tienda.retornarClientes();
-        Iterator it;
-        it = clientes.iterator();
-        // Variable boolean para verificar la existencia del cliente.
-        boolean existencia = false;
-        // Bucle para recorrer el listado de clientes y obtener el cliente a eliminar.
-        while(it.hasNext()){
-            eliminado = (Cliente) it.next();
-            if(eliminado.getNumeroDocumento()==cliente.getNumeroDocumento()){
-                existencia = true;
-                break;
-            }
-        }
-        if(existencia==true){
-            // Elimina el cliente de la lista.
-            tienda.eliminarCliente(eliminado);
-        }
+        persistenceServices.delete((Cliente)persistenceServices.findById(Cliente.class, cliente.getNumeroDocumento()));
     }
     /**
      * Método para editar Cliente
      * @param Cliente Variable cliente
      */
     public void editar(Cliente cliente){
-        // Consulta el cliente a eliminar por el Id
-        tienda.eliminarCliente(consultar(TipoConsultaCliente.NUMERO_DOCUMENTO, String.valueOf(cliente.getNumeroDocumento()).toString()));
-        // Lo envia al metodo de actualizar.
-        tienda.actualizarCliente(cliente);
+        persistenceServices.update(cliente);
         // Asigna el cliente con sus nuevos datos al usuario y actualiza la lista de usuarios
         Usuario usua = (Usuario)securityService.getObjetoSesion("usuario");
         usua.setCliente(cliente);
-        tienda.actualizarUsuario(usua);
+        persistenceServices.update(usua);
     }
     /**
      * Método para consulta clientes por criterios establecidos
@@ -117,29 +83,30 @@ public class ClienteServiceBean implements IClienteService {
      * @param consula Variable String para el valor de la consula
      * @return Cliente Variable tipo Cliente.
      */
-    public Cliente consultar(TipoConsultaCliente criterio, String valor) {
-        Cliente consultado = new Cliente();
-        // Copia de todo el listado de clientes.
-        List<Cliente> clientes = tienda.retornarClientes();
-        String valorCliente = null;
-        Iterator it;
-        it = clientes.iterator();
-        // Bucle para recorrer el listado de clientes y obtener el cliente
-        while(it.hasNext()){
-            consultado = (Cliente) it.next();
-            // Determinación de criterio de consulta y valor del cliente a obtener.
-            if(criterio.equals(TipoConsultaCliente.NUMERO_DOCUMENTO))
-                valorCliente = (Integer.valueOf(consultado.getNumeroDocumento()).toString());
-            if(criterio.equals(TipoConsultaCliente.NOMBRES))
-                valorCliente = consultado.getNombres();
-            if(criterio.equals(TipoConsultaCliente.EMAIL))
-                valorCliente = consultado.getEmail();
-            // Comparación entre el atributo del cliente y el valor de consulta.
-            if(valorCliente.equalsIgnoreCase(valor))
-                // Retorna el cliente que se buscaba
-                return consultado;
+    public Cliente consultar(String criterio, String valor) {
+        List<String> valores = new ArrayList<String>();
+        Cliente cliente = new Cliente();
+        // Determinación de criterio de consulta y valor del cliente a obtener.
+        if(criterio.equalsIgnoreCase("NUMERO_DOCUMENTO")){
+            valores.add("numeroDocumento|" + valor);
         }
-        return null;
+        else if(criterio.equalsIgnoreCase("NOMBRES")){
+            valores.add("nombres|" + valor);
+        }
+        else if(criterio.equalsIgnoreCase("EMAIL")){
+            valores.add("email|" + valor);
+        }
+        cliente = (Cliente)persistenceServices.findObjects("findCliente",valores).get(0);
+        return cliente;
+    }
+    /**
+     * Método para consulta clientes por criterios establecidos
+     * @param criterio Variable tipo TipoConsultaCliente
+     * @param consula Variable String para el valor de la consula
+     * @return Cliente Variable tipo Cliente.
+     */
+    public Cliente consultarCliente(int numeroDocumento) {
+        return (Cliente)persistenceServices.findById(Cliente.class,new Integer(numeroDocumento));
     }
     /**
      * Método para obtener el listado de clientes de la tienda.
@@ -147,14 +114,14 @@ public class ClienteServiceBean implements IClienteService {
      */
     public List<Cliente> consultarTodos(){
         // Retorna todos los clientes de la tienda.
-        return tienda.retornarClientes();
+        return (List<Cliente>)persistenceServices.findAll(Cliente.class);
     }
     /**
      * Método para registrar usuarios.
      * @param usuario Variable tipo Usuario
      */
     public void registrarUsuario(Usuario usuario) {
-        tienda.registrarUsuario(usuario);
+        persistenceServices.create(usuario);
     }
     /**
      * Método para obtener el Cliente a partir del usuario ingresado.

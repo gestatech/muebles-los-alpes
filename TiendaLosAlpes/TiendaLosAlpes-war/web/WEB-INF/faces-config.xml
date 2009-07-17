@@ -43,11 +43,6 @@
         </managed-property>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>VentaBean</managed-bean-name>
-        <managed-bean-class>com.losalpes.ventas.VentaBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
         <managed-bean-name>ReporteCliente</managed-bean-name>
         <managed-bean-class>com.losalpes.reportes.ReporteClienteBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>

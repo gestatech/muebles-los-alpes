@@ -27,3 +27,12 @@ a:link:hover, a:visited:hover  {
   font-weight : bold;
   text-decoration : underline;
 }
+
+.everyThirdDay{
+    background-color:gray;
+
+}
+.weekendBold{
+    font-weight:bold;
+    font-style: italic;
+}

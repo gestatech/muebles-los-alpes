@@ -25,10 +25,12 @@
                          <h:panelGrid columns="2">
                             <h:outputLabel value="Criterio de Busqueda:"/>
                                 <h:selectOneMenu value="#{ReporteCliente.criterio}">
-                                    <f:selectItems value="#{ReporteCliente.tipoCriterio}"/>
+                                    <f:selectItem itemValue="NUMERO_DOCUMENTO"/>
+                                    <f:selectItem itemValue="NOMBRES"/>
+                                    <f:selectItem itemValue="EMAIL"/>
                                 </h:selectOneMenu>
                             <h:outputLabel value="Valor a Consultar"/>
-                            <h:inputText value="#{ReporteCliente.valor}"/>
+                            <h:inputText value="#{ReporteCliente.valor}" required="true"/>
                         </h:panelGrid>
                         <h:panelGrid>
                             <a4j:commandButton value="Consultar" action="#{ReporteCliente.getConsultarVentas}" reRender="tablaCliente,tablaVentas,tablaDetalles"/>

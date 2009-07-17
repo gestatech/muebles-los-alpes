@@ -1,10 +1,8 @@
 package com.losalpes.catalog;
 
-import com.losalpes.persistencia.ITiendaService;
 import com.losalpes.persistence.entity.Mueble;
-import com.losalpes.enums.TipoConsultaMueble;
+import com.losalpes.persistence.IPersistenceServices;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -18,20 +16,18 @@ import javax.ejb.Stateless;
 @Stateless
 public class CatalogServiceBean implements ICatalogService {
     /**
-     * Interfaz anotada como @EJB para que haga referencia e inyección con el Bean Mock de de la TiendaService.
+     * Interfaz anotada como @EJB para que haga referencia e inyección con el Bean de la Persistencia.
      */
     @EJB
-    private ITiendaService tienda;
+    private IPersistenceServices persistencia;
     /** Crea una nueva instancia de CatalogServiceMock */
-    public CatalogServiceBean() {
-    }
+    public CatalogServiceBean() {}
     /**
      * Método anotado con @PostConstructor para que inicialice los muebles de prueba.
      */
     @PostConstruct
     public void iniciar(){
-        // Llama al contructor de tienda para el llenado de muebles iniciales.
-        tienda.crearMuebles();
+        System.out.println("CATALOG-SERVICE-BEAN HA SIDO INICIALIZADO !!!");
     }
     /**
      * Método anotado como @PreDestroy para poder avisar antes de la destrucción.
@@ -45,37 +41,29 @@ public class CatalogServiceBean implements ICatalogService {
      * @param mueble Variable tipo mueble.
      */
     public void registrar(Mueble mueble) {
-        tienda.registrarMueble(mueble);
+        persistencia.create(mueble);
     }
     /**
-     * Método para obtener los muebles consulados como Listado
-     * @param criterio Variable tipo TipoConsultaMueble
-     * @param consula Variable String para el valor de la consula
+     * Método para obtener los muebles consulados como Listado.
+     * @param criterio Variable tipo String.
+     * @param consula Variable String para el valor de la consula.
      * @return List Variable tipo List de muebles.
      */
-    public List<Mueble> consultar(TipoConsultaMueble criterio, String valor) {
-        // Arreglo para alamcenar los muebles que se consulten.
+    public List<Mueble> consultar(String criterio, String valor) {
+        List<String> valores = new ArrayList<String>();
         List<Mueble> mueblesConsultados = new ArrayList<Mueble>();
-        // Copia de todo el listado de muebles.
-        List<Mueble> muebles = tienda.retornarMuebles();
-        Mueble consultado = new Mueble();
-        String valorMueble = null;
-        Iterator it;
-        it = muebles.iterator();
-        // Bucle para recorrer el listado de muebles y obtener el mueble
-        while(it.hasNext()){
-            consultado = (Mueble) it.next();
-            if(criterio.equals(TipoConsultaMueble.NOMBRE))
-                valorMueble = consultado.getNombre();
-            if(criterio.equals(TipoConsultaMueble.REFERENCIA))
-                valorMueble = consultado.getReferencia();
-            if(criterio.equals(TipoConsultaMueble.TIPO))
-                valorMueble = consultado.getTipo().toString();
-            if(valorMueble.equalsIgnoreCase(valor))
-                // Adiciona los muebles obtenidos al listado de consulta.
-                mueblesConsultados.add(consultado);
+        // Creación de arreglos para la consulta con parametros de consulta y valor.
+        if(criterio.equalsIgnoreCase("NOMBRE")){
+            valores.add("nombre"+"|"+valor);
         }
-        // Retorna el listado de muebles de consulta.
+        else if(criterio.equalsIgnoreCase("REFERENCIA")){
+            valores.add("referencia"+"|"+valor);
+        }
+        else if(criterio.equalsIgnoreCase("TIPO")){
+            valores.add("tipo"+"|"+valor.toUpperCase());
+        }
+        // Llamar al servicio de persistencia de consulta por criterios.
+        mueblesConsultados = persistencia.findObjects("findMueble",valores);
         return mueblesConsultados;
     }
     /**
@@ -83,39 +71,20 @@ public class CatalogServiceBean implements ICatalogService {
      * @return List con los muebles.
      */
     public List<Mueble> consultarTodos() {
-        return tienda.retornarMuebles();
+        return persistencia.findAll(Mueble.class);
     }
     /**
-     * Método para eliminar un mueble del catálogo
-     * @param mueble Variable tipo mueble
+     * Método para eliminar un mueble del catálogo.
+     * @param mueble Variable tipo mueble.
      */
     public void eliminar(Mueble mueble) {
-        Mueble eliminado = new Mueble();
-        // Copia de todo el listado de muebles.
-        List<Mueble> muebles = tienda.retornarMuebles();
-        Iterator it;
-        it = muebles.iterator();
-        // Variable boolean para verificar la existencia del cliente.
-        boolean existencia = false;
-         // Bucle para recorrer el listado de muebles y obtener el mueble
-        while(it.hasNext()){
-            eliminado = (Mueble) it.next();
-            if(eliminado.getReferencia().equalsIgnoreCase(mueble.getReferencia())){
-                existencia = true;
-                break;
-            }
-        }
-        if(existencia==true){
-            System.out.println("MUEBLE EXISTE Y SE BORRARÁ !!!");
-            // Elimina el mueble del listado.
-            tienda.eliminarMueble(eliminado);
-        }
+        persistencia.delete((Mueble)persistencia.findById(Mueble.class, mueble.getReferencia()));
     }
     /**
-     * Método para actualizar los valores de un mueble
+     * Método para actualizar los valores de un mueble.
      * @param mueble Variable mueble actualizado.
      */
     public void actualizar(Mueble mueble){
-        tienda.actualizarMueble(mueble);
+        persistencia.update(mueble);
     }
 }

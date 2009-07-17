@@ -20,6 +20,23 @@
                     </rich:toolBar>
                 </a4j:form>
                 <a4j:form>
+    <script type="text/javascript">
+        var curDt = new Date();
+        function disablementFunction(day){
+            if (day.isWeekend) return false;
+            if (curDt==undefined){
+                curDt = day.date.getDate;
+            }
+            if (curDt.getTime() - day.date.getTime() &lt; 0) return true; else return false;
+        }
+        function disabledClassesProv(day){
+            if (curDt.getTime() - day.date.getTime() &gt;= 0) return 'rich-calendar-boundary-dates';
+            var res = '';
+            if (day.isWeekend) res+='weekendBold ';
+            if (day.day%3==0) res+='everyThirdDay';
+            return res;
+        }
+    </script>
                 <rich:panel>
                      <f:facet name="header">Registro de Promociones</f:facet>
                      <h:panelGrid columns="3" rendered="true" id="createPromos">
@@ -27,19 +44,19 @@
                             <h:inputText value="#{PromocionBean.promocion.nombre}" required="true" id="Nombre"/>
                             <rich:message for="Nombre"/>
                             <h:outputLabel value="Mueble:"/>
-                            <h:selectOneMenu value="#{PromocionBean.promocion.mueble}" id="Mueble">
+                            <h:selectOneMenu value="#{PromocionBean.promocion.muebleReferencia}" id="Mueble">
                                 <f:selectItems value="#{PromocionBean.muebles}"/>
                             </h:selectOneMenu>
                             <rich:message for="Mueble"/>
                             <h:outputLabel value="Fecha Inicio"/>
-                            <h:inputText value="#{PromocionBean.promocion.fechaInicio}" id="FechaInicio"/>
+                            <rich:calendar value="#{PromocionBean.fechainicial}" datePattern="dd/MM/yyyy" id="FechaInicio" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
                             <rich:message for="FechaInicio"/>
                             <h:outputLabel value="Fecha Fin"/>
-                            <h:inputText value="#{PromocionBean.promocion.fechaFin}" id="FechaFin"/>
+                            <rich:calendar value="#{PromocionBean.fechafinal}" datePattern="dd/MM/yyyy" id="FechaFin" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
                             <rich:message for="FechaFin"/>
                         </h:panelGrid>                            
                         <h:panelGrid>
-                            <a4j:commandButton value="Crear Promocion !!!" action="#{PromocionBean.create}" reRender="tablaPromos,mensaje"/>
+                            <a4j:commandButton value="Crear Promocion !!!" action="#{PromocionBean.create}" reRender="tablaPromos"/>
                         </h:panelGrid>
                 </rich:panel>
                 </a4j:form>
@@ -53,14 +70,14 @@
                         </rich:column>
                         <rich:column width="150px" label="TipoMueble">
                             <f:facet name="header">Tipo de mueble</f:facet>
-                            <h:outputLabel value="#{promo.mueble}"/>
+                            <h:outputLabel value="#{promo.muebleReferencia}"/>
                         </rich:column>
                         <rich:column width="150px" label="Fecha Inicio">
-                            <f:facet name="header">Tipo de mueble</f:facet>
+                            <f:facet name="header">Fecha Inicio</f:facet>
                             <h:outputLabel value="#{promo.fechaInicio}"/>
                         </rich:column>
                         <rich:column width="150px" label="Fecha Fin">
-                            <f:facet name="header">Tipo de mueble</f:facet>
+                            <f:facet name="header">Fecha Fin</f:facet>
                             <h:outputLabel value="#{promo.fechaFin}"/>
                         </rich:column>
                     </rich:extendedDataTable>

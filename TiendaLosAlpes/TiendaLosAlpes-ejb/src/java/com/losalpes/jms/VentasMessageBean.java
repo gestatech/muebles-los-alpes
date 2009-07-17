@@ -31,8 +31,7 @@ public class VentasMessageBean implements MessageListener {
     @Resource
     private MessageDrivenContext mdc;
     /** Crea una conexión de VentasMessageBean*/
-    public VentasMessageBean() {
-    }
+    public VentasMessageBean() {}
     /**
      * Método para la recepción del mensaje de manera asincrona leyendo el topico.
      * @param message

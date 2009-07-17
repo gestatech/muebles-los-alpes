@@ -25,10 +25,12 @@
                          <h:panelGrid columns="2">
                             <h:outputLabel value="Criterio de Busqueda:"/>
                                 <h:selectOneMenu value="#{CatalogBean.criterio}">
-                                    <f:selectItems value="#{CatalogBean.tipoCriterio}"/>
+                                    <f:selectItem itemValue="REFERENCIA"/>
+                                    <f:selectItem itemValue="NOMBRE"/>
+                                    <f:selectItem itemValue="TIPO"/>
                                 </h:selectOneMenu>
                             <h:outputLabel value="Valor a Consultar"/>
-                            <h:inputText value="#{CatalogBean.valor}"/>
+                            <h:inputText value="#{CatalogBean.valor}" required="true"/>
                         </h:panelGrid>
                         <h:panelGrid>
                             <a4j:commandButton value="Consultar" action="#{CatalogBean.getMueblesConsultados}" reRender="tablaMueble"/>

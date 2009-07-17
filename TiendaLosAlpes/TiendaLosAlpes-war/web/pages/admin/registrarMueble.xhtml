@@ -40,7 +40,8 @@
                             <rich:message for="Descripción"/>
                             <h:outputLabel value="Tipo (*):"/>
                             <h:selectOneMenu value="#{CatalogBean.mueble.tipo}" required="true" id="Tipo">
-                                <f:selectItems value="#{CatalogBean.tiposMuebles}" />
+                                <f:selectItem itemValue="EXTERIOR"/>
+                                <f:selectItem itemValue="INTERIOR"/>
                             </h:selectOneMenu>
                             <rich:message for="Tipo"/>
                             <h:outputLabel value="Material (*):"/>

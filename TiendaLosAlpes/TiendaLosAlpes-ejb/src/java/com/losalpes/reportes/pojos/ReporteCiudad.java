@@ -1,27 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.losalpes.reportes.pojos;
 
 import com.losalpes.enums.TipoCiudad;
 import com.losalpes.enums.TipoDepartamento;
-import com.losalpes.enums.TipoMueble;
 import com.losalpes.enums.TipoPais;
 import com.losalpes.persistence.entity.DetalleVenta;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * POJO de Reportes Por Ciudad
+ * POJO de Reportes Por Ciudad.
  * @author Hans Escallon
  */
 public class ReporteCiudad {
     private TipoPais pais;
     private TipoDepartamento departamento;
     private TipoCiudad ciudadResidencia;
-    private TipoMueble tipoMueble;
+    private String tipoMueble;
     List<DetalleVenta> detallesVenta = new ArrayList<DetalleVenta>();
 
     public TipoCiudad getCiudadResidencia() {
@@ -59,16 +52,11 @@ public class ReporteCiudad {
         this.pais = pais;
     }
 
-    public TipoMueble getTipoMueble() {
+    public String getTipoMueble() {
         return tipoMueble;
     }
 
-    public void setTipoMueble(TipoMueble tipoMueble) {
+    public void setTipoMueble(String tipoMueble) {
         this.tipoMueble = tipoMueble;
     }
 }
-
-
-
-
-

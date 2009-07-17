@@ -31,8 +31,7 @@ public class MercadeoMessageBean implements MessageListener {
     @Resource
     private MessageDrivenContext mdc;
     /** Crea una conexión de MercadeoMessageBean*/
-    public MercadeoMessageBean() {
-    }
+    public MercadeoMessageBean() {}
     /**
      * Método para la recepción del mensaje de manera asincrona leyendo el topico.
      * @param message
@@ -55,7 +54,7 @@ public class MercadeoMessageBean implements MessageListener {
                 // Creación del String del mensaje procesado al log
                 String sMsg = "MERCADEO - PROMOCIÓN '" + datos[0] + "' para el '" + datos[1] + "' de tipo '" + datos[2] +"'";
                 // Mensaje en el Log
-                Logger.getLogger(VentasMessageBean.class.getName()).log(Level.INFO, sMsg);
+                Logger.getLogger(MercadeoMessageBean.class.getName()).log(Level.INFO, sMsg);
             }
         }catch (JMSException ej) {
             ej.printStackTrace();

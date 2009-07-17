@@ -2,17 +2,25 @@ package com.losalpes.persistence.entity;
 
 import com.losalpes.enums.TipoCiudad;
 import com.losalpes.enums.TipoDepartamento;
-import com.losalpes.enums.TipoDocumento;
 import com.losalpes.enums.TipoPais;
-import java.util.List;
+import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 /**
  * POJO de Cliente
  * @author Memo Toro
  */
-public class Cliente {
+@Entity
+public class Cliente implements Serializable{
 
     private String nombres;
-    private TipoDocumento tipoDocumento;
+    private String tipoDocumento;
     private int numeroDocumento;
     private String direccion;
     private TipoPais pais;
@@ -22,26 +30,33 @@ public class Cliente {
     private String profesion;
     private int telefonoResidencia;
     private long telefonoCelular;
-    private List<Venta> ventas;
+    private Usuario usuario;
+
     /** Crea una nueva instancia de Cliente */
-    public Cliente() {
-    }
-    /** Crea una nueva instancia de Cliente pasandole valores */
-    public Cliente(String nombres, TipoDocumento tipoDocumento, int numeroDocumento, String direccion, TipoPais pais, TipoDepartamento departamento, TipoCiudad ciudadResidencia, String email, String profesion, int telefonoResidencia, long telefonoCelular, List<Venta> ventas) {
-        this.nombres = nombres;
-        this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
-        this.direccion = direccion;
-        this.pais = pais;
-        this.departamento = departamento;
-        this.ciudadResidencia = ciudadResidencia;
-        this.email = email;
-        this.profesion = profesion;
-        this.telefonoResidencia = telefonoResidencia;
-        this.telefonoCelular = telefonoCelular;
-        this.ventas = ventas;
+    public Cliente() {}
+    
+    @Id
+    @Column(name = "clienudo")
+    public int getNumeroDocumento() {
+        return numeroDocumento;
     }
 
+    public void setNumeroDocumento(int numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+    
+    @OneToOne(cascade={CascadeType.ALL},mappedBy="cliente")
+    @JoinColumn(name="clieusu")
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="cliecire")
     public TipoCiudad getCiudadResidencia() {
         return ciudadResidencia;
     }
@@ -50,6 +65,8 @@ public class Cliente {
         this.ciudadResidencia = ciudadResidencia;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="cliedept")
     public TipoDepartamento getDepartamento() {
         return departamento;
     }
@@ -58,6 +75,8 @@ public class Cliente {
         this.departamento = departamento;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="cliepais")
     public TipoPais getPais() {
         return pais;
     }
@@ -65,7 +84,8 @@ public class Cliente {
     public void setPais(TipoPais pais) {
         this.pais = pais;
     }
-    
+
+    @Column(name="cliedire")
     public String getDireccion() {
         return direccion;
     }
@@ -74,6 +94,7 @@ public class Cliente {
         this.direccion = direccion;
     }
 
+    @Column(name="clieemai")
     public String getEmail() {
         return email;
     }
@@ -82,6 +103,7 @@ public class Cliente {
         this.email = email;
     }
 
+    @Column(name="clienomb")
     public String getNombres() {
         return nombres;
     }
@@ -90,6 +112,7 @@ public class Cliente {
         this.nombres = nombres;
     }
 
+    @Column(name="clieprof")
     public String getProfesion() {
         return profesion;
     }
@@ -98,6 +121,7 @@ public class Cliente {
         this.profesion = profesion;
     }
 
+    @Column(name="cliecelu")
     public long getTelefonoCelular() {
         return telefonoCelular;
     }
@@ -106,6 +130,7 @@ public class Cliente {
         this.telefonoCelular = telefonoCelular;
     }
 
+    @Column(name="clietere")
     public int getTelefonoResidencia() {
         return telefonoResidencia;
     }
@@ -114,31 +139,12 @@ public class Cliente {
         this.telefonoResidencia = telefonoResidencia;
     }
 
-    public int getNumeroDocumento() {
-        return numeroDocumento;
-    }
-
-    public void setNumeroDocumento(int numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
-    }
-
-    public TipoDocumento getTipoDocumento() {
+    @Column(name="clietido")
+    public String getTipoDocumento() {
         return tipoDocumento;
     }
 
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+    public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
-    }
-
-    public List<Venta> getVentas() {
-        return ventas;
-    }
-
-    public void setVentas(List<Venta> ventas) {
-        this.ventas = ventas;
-    }
-    
-    public void setAsignarVenta(Venta venta){
-        this.ventas.add(venta);
     }
 }

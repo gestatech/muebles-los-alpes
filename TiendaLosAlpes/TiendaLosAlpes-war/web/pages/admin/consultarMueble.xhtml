@@ -25,10 +25,12 @@
                          <h:panelGrid columns="2">
                             <h:outputLabel value="Criterio de Busqueda:"/>
                                 <h:selectOneMenu value="#{CatalogBean.criterio}">
-                                    <f:selectItems value="#{CatalogBean.tipoCriterio}"/>
+                                    <f:selectItem itemValue="REFERENCIA"/>
+                                    <f:selectItem itemValue="NOMBRE"/>
+                                    <f:selectItem itemValue="TIPO"/>
                                 </h:selectOneMenu>
                             <h:outputLabel value="Valor a Consultar"/>
-                            <h:inputText value="#{CatalogBean.valor}"/>
+                            <h:inputText value="#{CatalogBean.valor}" required="true"/>
                         </h:panelGrid>
                         <h:panelGrid>
                             <a4j:commandButton value="Consultar" action="#{CatalogBean.getMueblesConsultados}" reRender="tablaMueble"/>
@@ -42,9 +44,9 @@
                             <f:facet name="header">Nombre</f:facet>
                             #{mueble.nombre}
                         </rich:column>
-                        <rich:column width="100px" label="Referencia">
-                            <f:facet name="header">Referencia</f:facet>                            
-                                <h:commandButton id="Referencia" value="Ver Detalle !!!" actionListener="#{CatalogBean.getDetalleMueble}" action="detalleMueble">
+                        <rich:column width="100px" label="Acción">
+                            <f:facet name="header">Acción</f:facet>
+                                <h:commandButton id="Acción" value="Ver Detalle !!!" actionListener="#{CatalogBean.getDetalleMueble}" action="detalleMueble">
                                     <f:param id="referencia" value="#{mueble.referencia}"/>
                                 </h:commandButton>
                         </rich:column>

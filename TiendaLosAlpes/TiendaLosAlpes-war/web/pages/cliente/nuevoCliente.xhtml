@@ -22,7 +22,9 @@
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Tipo de Documento (*):"/>
                             <h:selectOneMenu value="#{ClienteBean.cliente.tipoDocumento}" required="true" id="TipoDocumento">
-                                <f:selectItems value="#{ClienteBean.tipoDocumento}" />
+                                <f:selectItem itemValue="CEDULA"/>
+                                <f:selectItem itemValue="NIT"/>
+                                <f:selectItem itemValue="PASAPORTE"/>
                             </h:selectOneMenu>
                             <rich:message for="TipoDocumento"/>
                             <h:outputLabel value="Número de Documento (*):"/>

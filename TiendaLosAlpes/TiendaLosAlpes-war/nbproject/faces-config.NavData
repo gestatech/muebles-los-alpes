@@ -24,8 +24,8 @@
         <Node id="pages/admin/menuAdmin.jsf" x="825" y="149" zoom="true"/>
         <Node id="pages/cliente/detalleCarrito.jsf" x="650" y="300" zoom="true"/>
         <Node id="forward.jsp" x="27" y="34" zoom="true"/>
-        <Node id="pages/cliente/nuevoCliente.jsf" x="150" y="750" zoom="true"/>
         <Node id="pages/cliente/detalleCarrito.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="pages/cliente/nuevoCliente.jsf" x="150" y="750" zoom="true"/>
         <Node id="pages/cliente/detalleCompraPaso1.xhtml" x="1400" y="150" zoom="true"/>
         <Node id="pages/admin/consultarMueble.xhtml" x="400" y="300" zoom="true"/>
         <Node id="pages/admin/registroPrecios.jsf" x="1192" y="352" zoom="true"/>
@@ -34,6 +34,7 @@
         <Node id="pages/admin/menuAdmin.xhtml" x="650" y="150" zoom="true"/>
         <Node id="pages/cliente/detalleCompraPaso2.jsf" x="400" y="450" zoom="true"/>
         <Node id="pages/admin/modificarMueble.jsf" x="1461" y="145" zoom="true"/>
+        <Node id="pages/admin/reporteDiario.jsf" x="1650" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

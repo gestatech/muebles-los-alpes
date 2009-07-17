@@ -4,39 +4,27 @@ import com.losalpes.persistence.entity.Venta;
 import java.util.List;
 import javax.ejb.Local;
 /**
- * Interfaz con métodos de Venta, Anotada con @Local para acceso al Bean.
+ * Interfaz con métodos de Venta, Anotada con @Local para acceso al Session Bean.
  * @author Memo Toro
  */
 @Local
 public interface IVentaService {
     /**
-     * Método para crear una Venta
-     * @param Variable tipo Venta para crear.
-     */
-    void crear(Venta venta);
-    /**
      * Método para almacenar una Venta a la venta actual y al listado de ventas.
-     * @param ventaNueva
+     * @param ventaNueva.
      */
     void almacenar(Venta venta);
     /**
-     * Método para obtener el listado de ventas de la tienda.
-     * @return List con las ventas de la tienda.
+     * Método para obtener el listado de ventas .
+     * @return List con las ventas.
      */
     List<Venta> obtenerVentas();
-    /**
-     * Método para obtener la venta actual.
-     * @return Variable tipo Venta.
-     */
-    Venta obtenerVenta();
     /**
      * Método para enviar correos electrónicos con las librerias de Apache
      */    
     void enviarCorreo();
     /**
-     * Método para obtener las ventas a partir de una fecha.
-     * @param valor Valor de la consulta por fecha.
-     * @return List Listado de Ventas.
+     * Método para consultar las ventas y sus detalles
      */
-    List<Venta> obtenerVentasConsultadas(String valor);
+    List<Venta> consultarVentas(int valor);
 }

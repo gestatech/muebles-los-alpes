@@ -1,27 +1,49 @@
 package com.losalpes.persistence.entity;
 
 import com.losalpes.enums.TipoUsuario;
+import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 /**
  * POJO de Usuario
  * @author Memo Toro
  * @author Hans Escallon
  */
-public class Usuario {
+@Entity
+public class Usuario implements Serializable{
 
     private String nombreUsuario;
     private String contrasenia;
     private TipoUsuario tipoUsuario;
     private Cliente cliente;
     /** Crea una nueva instancia de Usuario vacia*/
-    public Usuario() {
+    public Usuario() {}
+
+    @Id
+    @Column(name = "usuanous")
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
-    /** Crea una nueva instancia de Usuario pasandole los datos al constructor*/
-    public Usuario(String nombreUsuario,String contrasenia, TipoUsuario tipoUsuario, Cliente cliente) {
+
+    public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
-        this.contrasenia = contrasenia;
-        this.tipoUsuario = tipoUsuario;
+    }
+    @OneToOne(cascade = CascadeType.ALL,optional=true)
+    @JoinColumn(name = "clienudo")
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    @Column(name="usuacont")
     public String getContrasenia() {
         return contrasenia;
     }
@@ -30,26 +52,13 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
+    @Enumerated(EnumType.STRING)
+    @Column(name="usuatisu")
     public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
     }
 
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 }

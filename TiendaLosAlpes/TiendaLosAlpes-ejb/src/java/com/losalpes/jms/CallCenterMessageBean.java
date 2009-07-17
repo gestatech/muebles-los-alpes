@@ -32,8 +32,7 @@ public class CallCenterMessageBean implements MessageListener {
     @Resource
     private MessageDrivenContext mdc;
     /** Crea una conexión de CallCenterMessageBean*/
-    public CallCenterMessageBean() {
-    }
+    public CallCenterMessageBean() {}
     /**
      * Método para la recepción del mensaje de manera asincrona leyendo el topico.
      * @param message
@@ -56,7 +55,7 @@ public class CallCenterMessageBean implements MessageListener {
                 // Creación del String del mensaje procesado al log
                 String sMsg = "CALLCENTER - PROMOCIÓN '" +datos[0]+ "'. Aplica desde '" + datos[3] +"' hasta '" + datos[4] + "', para el '" + datos[1] + "' de tipo '" + datos[2] +"'";
                 // Mensaje en el Log
-                Logger.getLogger(VentasMessageBean.class.getName()).log(Level.INFO, sMsg);
+                Logger.getLogger(CallCenterMessageBean.class.getName()).log(Level.INFO, sMsg);
             }
         }catch (JMSException ej) {
             ej.printStackTrace();

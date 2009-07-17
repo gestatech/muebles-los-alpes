@@ -19,9 +19,26 @@
                         </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
+                <a4j:form>
+    <script type="text/javascript">
+        var curDt = new Date();
+        function disablementFunction(day){
+            if (day.isWeekend) return false;
+            if (curDt==undefined){
+                curDt = day.date.getDate;
+            }
+            if (curDt.getTime() - day.date.getTime() &lt; 0) return true; else return false;
+        }
+        function disabledClassesProv(day){
+            if (curDt.getTime() - day.date.getTime() &gt;= 0) return 'rich-calendar-boundary-dates';
+            var res = '';
+            if (day.isWeekend) res+='weekendBold ';
+            if (day.day%3==0) res+='everyThirdDay';
+            return res;
+        }
+    </script>
                 <rich:panel>
                      <f:facet name="header">Reporte de Ventas Diarias</f:facet>
-                     <a4j:form>
                          <h:panelGrid columns="3">
 
                          <h:outputLabel value="País (*):"/>
@@ -42,15 +59,14 @@
                          </h:selectOneMenu>
                          <br/>
                          <h:outputLabel value="Fecha"/>
-                         <h:inputText value="#{ReporteCiudadBean.fecha}" required="true" id="Fecha">                                
-                            </h:inputText>
+                            <rich:calendar value="#{ReporteCiudadBean.fecha}" datePattern="dd/MM/yyyy" id="Fecha" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
                             <rich:message for="Fecha"/>
                         </h:panelGrid>
                         <h:panelGrid>
                             <a4j:commandButton value="Ejecutar Reporte" action="#{ReporteCiudadBean.getReporteDiario}" reRender="tablaReporte"/>
                         </h:panelGrid>
-                    </a4j:form>
                 </rich:panel>
+                </a4j:form>
                 <a4j:form>
                     <rich:panel id="tablaReporte">
                     <rich:dataTable

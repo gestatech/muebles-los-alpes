@@ -15,39 +15,39 @@
                         <table border="1">
                             <tr>
                                 <td>Numero de Referencia de Compra</td>
-                                <td>#{VentaBean.venta.referencia}</td>
+                                <td>#{CarritoCompraBean.venta.referencia}</td>
                             </tr>
                             <tr>
                                 <td>Valor de la Compra</td>
-                                <td>#{VentaBean.venta.valor}</td>
+                                <td>#{CarritoCompraBean.venta.valor}</td>
                             </tr>
                             <tr>
                                 <td>Descripción de Compra</td>
-                                <td><h:inputTextarea value="#{VentaBean.venta.descripcion}"/></td>
+                                <td><h:inputTextarea value="#{CarritoCompraBean.venta.descripcion}"/></td>
                             </tr>
                             <tr>
                                 <td>Numero de Identificación del Cliente</td>
-                                <td>#{VentaBean.venta.idCliente}</td>
+                                <td>#{CarritoCompraBean.venta.idCliente}</td>
                             </tr>
                             <tr>
                                 <td>Número de Tarjeta</td>
-                                <td>#{VentaBean.venta.numeroTarjeta}</td>
+                                <td>#{CarritoCompraBean.venta.numeroTarjeta}</td>
                             </tr>
                             <tr>
                                 <td>Fecha de Compra</td>
-                                <td><h:outputText value="#{VentaBean.venta.fechaGeneracion}">
+                                <td><h:outputText value="#{CarritoCompraBean.venta.fechaGeneracion}">
                                     <f:convertDateTime pattern="dd/mm/yyyy" type="date" dateStyle="short"/>
                                     </h:outputText></td>
                             </tr>
                             <tr>
                                 <td>Cuotas</td>
-                                <td>#{VentaBean.venta.cuotas}</td>
+                                <td>#{CarritoCompraBean.venta.cuotas}</td>
                             </tr>
                             <tr>
                                 <td>Sitio de Entrega</td>
-                                <td>#{VentaBean.venta.pais}<br/>
-                                    #{VentaBean.venta.departamento}<br/>
-                                    #{VentaBean.venta.ciudad}</td>
+                                <td>#{CarritoCompraBean.venta.pais}<br/>
+                                    #{CarritoCompraBean.venta.departamento}<br/>
+                                    #{CarritoCompraBean.venta.ciudad}</td>
                             </tr>
                         </table>
                     </rich:panel>

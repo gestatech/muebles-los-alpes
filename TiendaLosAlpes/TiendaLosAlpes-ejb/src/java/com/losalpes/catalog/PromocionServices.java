@@ -1,7 +1,7 @@
 package com.losalpes.catalog;
 
+import com.losalpes.persistence.IPersistenceServices;
 import com.losalpes.persistence.entity.Promocion;
-import com.losalpes.persistencia.IPromociones;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +25,10 @@ import javax.jms.Topic;
 @Stateless
 public class PromocionServices implements IPromocionServices {
     /**
-     * Interfaz anotada con @EJB para inyectar IPromociones.
+     * Interfaz anotada con @EJB para inyectar dependencia de IPersistenceServices.
      */
     @EJB
-    private IPromociones persistencePromos;
+    private IPersistenceServices persistencia;
     /**
      * Conexion anotada con @Resource para declara el topic factory de la conexion de mensajes.
      */
@@ -40,19 +40,26 @@ public class PromocionServices implements IPromocionServices {
     @Resource(mappedName="jms/NuevaPromocionTopic")
     private Topic topico;
     /**
-     * Contiene la información del Promocion actual
+     * Contiene la información del Promocion actual.
      */
     private Promocion cPromocion;
     /** Crea una nueva instancia de PromocionServices */
     public PromocionServices() {
+        cPromocion = new Promocion();
     }
     /**
-     * Método que inicializa la promocion y la retorna.
-     * @return
+    * Método para obtener la promocion.
+    * @return Promocion.
+    */
+    public Promocion getPromocion() {
+        return (cPromocion);
+    }
+    /**
+     * Método para asignar la promocion actual.
+     * @param promo Promocion actual.
      */
-    public Promocion newPromocion() {
-        cPromocion = new Promocion();
-        return(cPromocion);
+    public void setPromocion(Promocion promo) {
+        cPromocion = promo;
     }
     /**
      * Metoco para la construcción del mensaje a enviar al Topic.
@@ -62,7 +69,7 @@ public class PromocionServices implements IPromocionServices {
      */
     private Message crearMensajePromocion(Session session) throws JMSException{
         String msg = cPromocion.getNombre() + "|";
-        msg += cPromocion.getMueble() + "|";
+        msg += cPromocion.getMuebleReferencia() + "|";
         msg += cPromocion.getFechaInicio() + "|";
         msg += cPromocion.getFechaFin();
         // Variable de tipo TextMessage para ser enviado
@@ -73,8 +80,8 @@ public class PromocionServices implements IPromocionServices {
         return(tm);
     }
     /**
-     * Método para enviar el mensaje
-     * @throws javax.jms.JMSException
+     * Método para enviar el mensaje.
+     * @throws javax.jms.JMSException.
      */
     private void notificarMensajePromocion() throws JMSException{
         // Creación de una conexión al factory de mensajes.
@@ -110,8 +117,8 @@ public class PromocionServices implements IPromocionServices {
      * Método para crear la promocion.
      */
     public void create() {
-        // Registra la promocino en el servicio de persistencia Mock.
-        persistencePromos.registrarPromocion(cPromocion);
+        // Registra la promocino en el servicio de persistencia.
+        persistencia.create(cPromocion);
         try{
             // Llama al mensaje de creación y envio de mensaje.
             notificarMensajePromocion();
@@ -121,24 +128,10 @@ public class PromocionServices implements IPromocionServices {
         }
     }
     /**
-     * Método para retornar todas las promociones del servicio Mock de persistencia
-     * @return List con promociones
+     * Método para retornar todas las promociones del servicio de persistencia.
+     * @return List con promociones.
      */
     public List <Promocion> findAll() {
-        return persistencePromos.retornarPromociones();
-    }
-    /**
-     * Método para obtener la promocion
-     * @return Promocion
-     */
-    public Promocion getPromocion() {
-        return (cPromocion);
-    }
-    /**
-     * Método para asignar la promocion actual
-     * @param promo Promocion actual
-     */
-    public void setPromocion(Promocion promo) {
-        cPromocion = promo;
+        return persistencia.findAll(Promocion.class);
     }
 }

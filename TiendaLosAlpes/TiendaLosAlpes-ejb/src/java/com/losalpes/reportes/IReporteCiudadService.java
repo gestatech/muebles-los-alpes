@@ -7,7 +7,7 @@ import com.losalpes.reportes.pojos.ReporteCiudad;
 import java.util.List;
 import javax.ejb.Local;
 /**
- *
+ * Interfaz anotada con @Local para definir el acceso al Session Bean de reporte ciudad.
  * @author Hans Escallon
  */
 @Local

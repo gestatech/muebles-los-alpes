@@ -1,11 +1,10 @@
 package com.losalpes.security;
 
 import com.losalpes.enums.TipoUsuario;
+import com.losalpes.persistence.IPersistenceServices;
 import com.losalpes.persistence.entity.Cliente;
 import com.losalpes.persistence.entity.Usuario;
-import com.losalpes.persistencia.ITiendaService;
-import com.losalpes.ventas.ICarritoService;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,26 +19,19 @@ import javax.servlet.http.HttpSession;
  */
 @Stateless
 public class SecurityServiceBean implements ISecurityService {
-    /**
-     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IVentaService para las ventas.
+    /** 
+     * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IPersistenceServices para la persistencia de los clientes.
      */
     @EJB
-    private ICarritoService carritoService;
-    /**
-     * Interfaz anotada como @EJB para que haga referencia e inyección con el Bean Mock de de la TiendaService.
-     */
-    @EJB
-    private ITiendaService tienda;
+    private IPersistenceServices persistenceServices;
     /** Crea una nueva instancia de SecurityServiceBean */
-    public SecurityServiceBean() {
-    }
+    public SecurityServiceBean() {}
     /**
-     * Método anotado con PostConstructor para que inicialice los usuarios de prueba.
+     * Método anotado con PostConstructor inicializar el session beana
      */
     @PostConstruct
     public void iniciar(){
-        // Llama al contructor de tienda para el llenado de clientes iniciales.
-        tienda.crearClientes();
+        System.out.println("SECURITY-SERVICE-BEAN SE HA INICIALIZADO !!!");
     }
     /**
      * Método para autenticar usuarios y establecer su rol.
@@ -49,31 +41,24 @@ public class SecurityServiceBean implements ISecurityService {
      */
     public Usuario login(String nombreUsuario, String contrasenia) {
         // Verifica si el nombre de usuario y la contraseÃ±ia son admin, si son, crea un usuario con perfil de administrador.
-        List<Usuario> usuarios = tienda.retornarUsuarios();
-        Iterator itUsuario = usuarios.iterator();
-        Usuario usua = new Usuario();
-        boolean encontro = false;
-        while(itUsuario.hasNext()){
-            usua = (Usuario)itUsuario.next();
-            if(usua.getNombreUsuario().equalsIgnoreCase(nombreUsuario) && usua.getContrasenia().equalsIgnoreCase(contrasenia)){
-                encontro = true;
-                break;
-            }
-        }
-        if(encontro == true){
-            if(usua.getTipoUsuario().equals(TipoUsuario.CLIENTE)){
-            carritoService.clienteAutenticado(Integer.valueOf(nombreUsuario).intValue());
-        }
-        //Mete al cliente asociado al usuario en la sesion.
-        if(usua.getTipoUsuario().equals(TipoUsuario.CLIENTE) ){
-            setObjetoSesion(usua.getCliente());
-            setObjetoSesion(usua);
-        }
-        return usua;
-        }
-        else{
+        List<String> valores = new ArrayList<String>();
+        List<Object> usuarios;// = new ArrayList<Object>();
+        Usuario usuario = new Usuario();
+        valores.add("nombreUsuario|" + nombreUsuario);
+        valores.add("contrasenia|" + contrasenia);
+        usuarios = persistenceServices.findObjects("findUsuario",valores);
+        if (usuarios.size() <= 0){
             return null;
         }
+        else{
+            usuario = (Usuario)usuarios.get(0);
+            // Agrega al cliente asociado al usuario en la sesion.
+            if(usuario.getTipoUsuario().equals(TipoUsuario.CLIENTE) ){
+                setObjetoSesion(usuario.getCliente());
+                setObjetoSesion(usuario);
+            }
+        }
+        return usuario;
     }
     /**
      * Método para registrar en la sesión el cliente y usuario que realizo el login
@@ -104,7 +89,6 @@ public class SecurityServiceBean implements ISecurityService {
             }
         }
         return null;
-
     }
     /**
      * Método para obtener el cliente o usuario de la sessión

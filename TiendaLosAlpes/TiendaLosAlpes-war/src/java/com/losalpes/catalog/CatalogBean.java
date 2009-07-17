@@ -1,16 +1,12 @@
 package com.losalpes.catalog;
 
 import com.losalpes.persistence.entity.Mueble;
-import com.losalpes.enums.TipoConsultaMueble;
-import com.losalpes.enums.TipoMueble;
-import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
+import javax.faces.event.ActionEvent;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 /**
  * Backing Bean para controlar el Catalogo de Productos y sus Muebles.
  * @author Memo Toro
@@ -26,19 +22,20 @@ public class CatalogBean {
      */
     private List<Mueble> muebles;
     /**
-     * Mueble del catálogo
+     * Mueble del catálogo.
      */
     private Mueble mueble;
     /**
-     * TIpo de Consulta de muebles.
+     * String de Consulta de muebles.
      */
-    private TipoConsultaMueble criterio;
+    private String criterio;
     /**
      * Valor de la consulta de los muebles.
      */
     private String valor;
     /** Crea una nueva instancia de CatalogBean */
-    public CatalogBean() {        
+    public CatalogBean() {
+        // Inicializa variables.
         mueble = new Mueble();
         muebles = new ArrayList<Mueble>();
     }
@@ -57,17 +54,17 @@ public class CatalogBean {
         this.valor = valor;
     }    
     /**
-     * Método para obtener el criterio de consulta de muebles.
-     * @return TipoConsultaMueble Variable TipoConsultaMueble
+     * Método para obtener el criterio de consulta.
+     * @return String Variable con el criterio.
      */
-    public TipoConsultaMueble getCriterio() {
+    public String getCriterio() {
         return criterio;
     }
     /**
-     * Método para establecer el criterio de consulta de muebles.
-     * @param criterio Variable tipo TipoConsultaMueble.
+     * Método para establecer el criterio de consulta.
+     * @param criterio String con el criterio.
      */
-    public void setCriterio(TipoConsultaMueble criterio) {
+    public void setCriterio(String criterio) {
         this.criterio = criterio;
     }
     /**
@@ -85,7 +82,7 @@ public class CatalogBean {
         this.mueble = mueble;
     }
     /**
-     * Método para obtener todo el listado de muebles del catálogo.
+     * Método para obtener el listado de muebles.
      * @return List Variable tipo List con los muebles.
      */
     public List<Mueble> getMuebles() {
@@ -98,38 +95,11 @@ public class CatalogBean {
     public void setMuebles(List<Mueble> muebles) {
         this.muebles = muebles;
     }
-     /**
-     * Método para cargar el Listado de la interfaz con los posibles tipos de muebles.
-     * @return SelectItem Variable Enum con el TipoMeble.
-     */
-    public SelectItem[] getTiposMuebles() {
-        TipoMueble[] tipos =  TipoMueble.values();
-        SelectItem[] sitems = new SelectItem[tipos.length];
-        for (int i = 0; i < sitems.length; i++) {
-             sitems[i] = new SelectItem(tipos[i]);
-        }
-        return sitems;
-    }
-    /**
-     * Método para cargar el Listado de la interfaz con los posibles criterios de consulta.
-     * @return SelectItem Variable Enum con el TipoCriterio
-     */
-    public SelectItem[] getTipoCriterio() {
-        TipoConsultaMueble[] tipos =  TipoConsultaMueble.values();
-        SelectItem[] sItems = new SelectItem[tipos.length];
-        for (int i = 0; i < sItems.length; i++) {
-             sItems[i] = new SelectItem(tipos[i]);
-        }
-        return sItems;
-    }
     /**
      * Método para obtener el listado de los muebles consultados.
-     * Adicionalmente asigna el primer mueble cuando la consulta arroja solo un mueble.
      */
     public void getMueblesConsultados(){
         setMuebles(catalogService.consultar(criterio, valor));
-        if(getMuebles().size()>0)
-            setMueble(getMuebles().get(0));
     }
     /**
      * Método para obtener todos los muebles del catálogo.
@@ -139,7 +109,7 @@ public class CatalogBean {
         return catalogService.consultarTodos();
     }
     /**
-     * Método que registra el mueble en el listado del catálogo.
+     * Método que registra el mueble en el catálogo.
      * @return String para el redireccionamiento.
      */
     public String getRegistrar() {
@@ -155,17 +125,26 @@ public class CatalogBean {
         return getLimpiar();
     }
     /**
-     * Método para limpiar las variables del Managed Bean.
+     * Método para limpiar las variables del Backing Bean.
      */
     public String getLimpiar(){
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CatalogBean");
         return "admin";
     }
     /**
-     * Método para Redireccionamiento luego de actualizar los precios del catálogo.
+     * Método para limpiar las variables del Backing Bean. al salir de la aplicacion.
+     */
+    public String getSalir(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CatalogBean");
+        return "login";
+    }
+    /**
+     * Método para actualizar los precios del catálogo.
+     * Este método se dispara con un evento gráfico de clic.
      * @param evento Variable de tipo evento para capturar los parametros.
      */
     public void getActualizarPrecios(ActionEvent evento){
+        // Lógica de captura del evento y del valor del parametro pasado.
         UIParameter componente = (UIParameter) evento.getComponent().findComponent("referencia");
         String referencia = componente.getValue().toString();
         componente = (UIParameter) evento.getComponent().findComponent("cantidad");
@@ -173,7 +152,7 @@ public class CatalogBean {
         componente = (UIParameter) evento.getComponent().findComponent("precio");
         double precio = Double.valueOf(componente.getValue().toString()).doubleValue();
         setValor(referencia);
-        setCriterio(TipoConsultaMueble.REFERENCIA);
+        setCriterio("REFERENCIA");
         // Busqueda del mueble por medio de la interfaz de Catalogo para obtener el mueble
         List<Mueble> mueblePrecio = catalogService.consultar(getCriterio(),getValor());
         if(mueblePrecio.size()>0){
@@ -194,7 +173,7 @@ public class CatalogBean {
         UIParameter componente = (UIParameter) evento.getComponent().findComponent("referencia");
         String referencia = componente.getValue().toString();
         setValor(referencia);
-        setCriterio(TipoConsultaMueble.REFERENCIA);
+        setCriterio("REFERENCIA");
         // Busqueda del mueble por medio de la interfaz de Catalogo para obtener el mueble
         setMuebles(catalogService.consultar(getCriterio(),getValor()));
         if(getMuebles().size()>0)
@@ -208,16 +187,16 @@ public class CatalogBean {
      */
     public void getBorrarMueble(ActionEvent evento){
         // Lógica de captura del evento y del valor del parametro pasado.
-        FacesContext contexto = FacesContext.getCurrentInstance();
-        String id = evento.getComponent().getClientId(contexto);
-        Map parametros = contexto.getExternalContext().getRequestParameterMap();
-        setValor((String) parametros.get(id));
-        setCriterio(TipoConsultaMueble.REFERENCIA);
+        UIParameter componente = (UIParameter) evento.getComponent().findComponent("referencia");
+        String referencia = componente.getValue().toString();
+        setValor(referencia);
+        setCriterio("REFERENCIA");
         // Busqueda del mueble por medio de la interfaz de Catalogo para obtener el mueble
         setMuebles(catalogService.consultar(getCriterio(),getValor()));
-        if(getMuebles().size()>0)
+        if(getMuebles().size()>0){
             setMueble(getMuebles().get(0));
-        // Elimina el mueble del listado de mueble del catálogo.
-        catalogService.eliminar(getMueble());
+            // Elimina el mueble del listado de mueble del catálogo.
+            catalogService.eliminar(getMueble());
+        }
     }
 }

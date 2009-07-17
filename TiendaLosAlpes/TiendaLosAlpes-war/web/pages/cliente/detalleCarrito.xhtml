@@ -61,7 +61,7 @@
                         <rich:column width="110px" label="Eliminar">
                             <f:facet name="header">Sacar del Carrito</f:facet>
                             <h:commandButton id="Sacar" value="Sacar Mueble !!!" actionListener="#{CarritoCompraBean.getEliminarMueble}" action="cliente">
-                                <f:param id="idVenta" value="#{detalle.idVenta}"/>
+                                <f:param id="referencia" value="#{detalle.muebleVendido.referencia}"/>
                             </h:commandButton>
                         </rich:column>
                     </rich:extendedDataTable>

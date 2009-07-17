@@ -2,8 +2,6 @@ package com.losalpes.cliente;
 
 import com.losalpes.enums.TipoCiudad;
 import com.losalpes.persistence.entity.Cliente;
-import com.losalpes.enums.TipoDocumento;
-import com.losalpes.enums.TipoConsultaCliente;
 import com.losalpes.enums.TipoDepartamento;
 import com.losalpes.enums.TipoPais;
 import com.losalpes.enums.TipoUsuario;
@@ -35,7 +33,7 @@ public class ClienteBean {
     /**
      * Variable tipo Enum para establecer los criterios de seleccion de clientes.
      */
-    private TipoConsultaCliente criterio;
+    private String criterio;
     /**
      * Variable tipos String para el valor de la consulta.
      */
@@ -91,39 +89,15 @@ public class ClienteBean {
      * Método para obtener el criterio de consulta de cliente.
      * @return TipoConsultaCliente Variable TipoConsultaCliente
      */
-    public TipoConsultaCliente getCriterio() {
+    public String getCriterio() {
         return criterio;
     }
     /**
      * Método para establecer el criterio de consulta de clientes.
      * @param TipoConsultaCliente Variable tipo TipoConsultaCliente.
      */
-    public void setCriterio(TipoConsultaCliente criterio) {
+    public void setCriterio(String criterio) {
         this.criterio = criterio;
-    }
-    /**
-     * Método para cargar el Listado de la interfaz con los posibles criterios de consulta.
-     * @return SelectItem Variable Enum con el TipoCriterio
-     */
-    public SelectItem[] getTipoCriterio() {
-        TipoConsultaCliente[] tipos =  TipoConsultaCliente.values();
-        SelectItem[] sItems = new SelectItem[tipos.length];
-        for (int i = 0; i < sItems.length; i++) {
-             sItems[i] = new SelectItem(tipos[i]);
-        }
-        return sItems;
-    }
-    /**
-     * Método para cargar el Listado de la interfaz con los posibles criterios de tipo de documento.
-     * @return SelectItem Variable Enum con el TipoDocumento
-     */
-    public SelectItem[] getTipoDocumento() {
-        TipoDocumento[] tipos =  TipoDocumento.values();
-        SelectItem[] sItems = new SelectItem[tipos.length];
-        for (int i = 0; i < sItems.length; i++) {
-             sItems[i] = new SelectItem(tipos[i]);
-        }
-        return sItems;
     }
     /**
      * Método para cargar el Listado de la interfaz con las ciudades registradas en el sistema.
@@ -179,7 +153,7 @@ public class ClienteBean {
      * @return String Variable tipo String con el redireccionamiento.
      */
     public String getRegistrar(){
-        clienteService.registrar(getCliente());
+        // clienteService.registrar(getCliente());
         // Registra el nuevo usuario.
         Usuario usua = new Usuario();
         usua.setNombreUsuario(Integer.valueOf(cliente.getNumeroDocumento()).toString());
@@ -200,10 +174,10 @@ public class ClienteBean {
         String id = evento.getComponent().getClientId(contexto);
         Map parametros = contexto.getExternalContext().getRequestParameterMap();
         setValor((String) parametros.get(id));
-        setCriterio(TipoConsultaCliente.NUMERO_DOCUMENTO);
+        setCriterio("NUMERO_DOCUMENTO");
         // Busqueda del cliente por medio de la interfaz Mock de Cliente para obtener el cliente
         setCliente(clienteService.consultar(criterio, valor));
-        if(getCliente() != null)
+        if(getCliente()!= null)
             // Elimina el cliente del listado de clientes.
             clienteService.eliminar(getCliente());
     }
@@ -211,7 +185,8 @@ public class ClienteBean {
      * Método que consulta por el numero de identificación del cliente que es el usuario y password para editarlo.
      */
     public void getClienteEditar(){
-        setCliente(clienteService.consultarPorUsuario(usuario.getNombreUsuario(),usuario.getContrasenia()));
+        Cliente clien = clienteService.consultarPorUsuario(usuario.getNombreUsuario(),usuario.getContrasenia());
+        setCliente(clien);
     }
     /**
      * Método para editar los clientes. Lo ejecutan los Clientes.

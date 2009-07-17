@@ -18,10 +18,6 @@ public class CarritoServiceBean implements ICarritoService{
      * Listado de Muebles Static con los muebles del carrito.
      */
     private List<DetalleVenta> detallesCarrito;
-    /**
-     * Identificador del usuario autenticado en el carrito.
-     */
-    private static int idClienteAutenticado;
     /** Crea una nueva instancia de CarritoServiceMock */
     public CarritoServiceBean() {
     }
@@ -30,6 +26,7 @@ public class CarritoServiceBean implements ICarritoService{
      */
     @PostConstruct
     public void iniciar(){
+        System.out.println("CARRITO-SERVICE-BEAN HA SIDO INICIALIZADO !!!");
         detallesCarrito = new ArrayList<DetalleVenta>();
     }
     /**
@@ -49,7 +46,7 @@ public class CarritoServiceBean implements ICarritoService{
         boolean existe = false;
         while(it.hasNext()){
             viejo = (DetalleVenta) it.next();
-            if(viejo.getMuebleVendido().equals(nuevoDetalle.getMuebleVendido())){
+            if(viejo.getMuebleVendido().getReferencia().equalsIgnoreCase(nuevoDetalle.getMuebleVendido().getReferencia())){
                 existe = true;
                 break;
             }
@@ -80,40 +77,34 @@ public class CarritoServiceBean implements ICarritoService{
         detallesCarrito.remove(detalle);
     }
     /**
-     * Método para obtener todos el listado de detalle de muebles del carrito
+     * Método para obtener todos el listado de detalle de muebles del carrito.
      * @return List Variable tipo List con detalle de muebles del carrito.
      */
     public List<DetalleVenta> verDetallesCarrito(){
         return detallesCarrito;
     }
     /**
-     * Método para obtener todos el listado de detalles del carrito
-     * @return Variable tipo List con detalles del carrito.
+     * Método para obtener todos el listado de detalles del carrito.
+     * @param referencia String con la referencia.
+     * @return DetalleVenta detalle de venta del carrito
      */
-    public DetalleVenta obtenerDetalle(int idDetalle){
+    public DetalleVenta obtenerDetalle(String referencia){
         DetalleVenta consultado = new DetalleVenta();
         Iterator it;
         it = detallesCarrito.iterator();
         // Recorre todo el listado comparando el mueble del listado con el mueble que llego.
         while(it.hasNext()){
             consultado = (DetalleVenta) it.next();
-            if(consultado.getIdVenta()==idDetalle)
+            if(consultado.getMuebleVendido().getReferencia().equalsIgnoreCase(referencia))
                 return consultado;
         }
         return null;
     }
     /**
-    * Métoro para asignar el Id del cliente autenticado a la variable del carrito.
-    * @param idCliente Identificador del cliente.
-    */
-    public void clienteAutenticado(int idCliente){
-        idClienteAutenticado = idCliente;
-    }
-    /**
-     * Método para obtener el id del cliente autenticado
-     * @return int con el Id del cliente autenticado en la aplicación
+     * Método que actualiza los detalles de la venta.
+     * @param detalle Detalle a actualizar.
      */
-    public int obtenerClienteAutenticado() {
-        return idClienteAutenticado;
+    public void actualizar(DetalleVenta detalle){
+        detallesCarrito.set(detallesCarrito.indexOf(detalle), detalle);
     }
 }

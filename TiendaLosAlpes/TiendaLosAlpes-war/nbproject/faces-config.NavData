@@ -8,10 +8,10 @@
         <Node id="pages/admin/consultarMueble.jsf" x="837" y="351" zoom="true"/>
         <Node id="pages/admin/borrarCliente.jsf" x="511" y="148" zoom="true"/>
         <Node id="pages/cliente/confirmacionCompra.jsf" x="400" y="600" zoom="true"/>
+        <Node id="pages/admin/reporteMasVendido.jsf" x="1400" y="300" zoom="true"/>
         <Node id="pages/admin/registrarPromocion.jsf" x="150" y="900" zoom="true"/>
         <Node id="pages/admin/consultarCliente.jsf" x="118" y="545" zoom="true"/>
         <Node id="pages/cliente/detalleCompraPaso2.xhtml" x="650" y="450" zoom="true"/>
-        <Node id="pages/cliente/nuevoCliente.xhtml" x="650" y="600" zoom="true"/>
         <Node id="pages/cliente/detalleCompraPaso1.jsf" x="900" y="300" zoom="true"/>
         <Node id="pages/cliente/detalleProducto.jsf" x="900" y="150" zoom="true"/>
         <Node id="pages/login.xhtml" x="150" y="600" zoom="true"/>
@@ -29,11 +29,12 @@
         <Node id="pages/cliente/detalleCompraPaso1.xhtml" x="1400" y="150" zoom="true"/>
         <Node id="pages/admin/consultarMueble.xhtml" x="400" y="300" zoom="true"/>
         <Node id="pages/admin/registroPrecios.jsf" x="1192" y="352" zoom="true"/>
-        <Node id="pages/cliente/menuCliente.jsf" x="400" y="150" zoom="true"/>
         <Node id="pages/login.jsf" x="231" y="34" zoom="true"/>
+        <Node id="pages/cliente/menuCliente.jsf" x="400" y="150" zoom="true"/>
         <Node id="pages/admin/menuAdmin.xhtml" x="650" y="150" zoom="true"/>
-        <Node id="pages/cliente/detalleCompraPaso2.jsf" x="400" y="450" zoom="true"/>
         <Node id="pages/admin/modificarMueble.jsf" x="1461" y="145" zoom="true"/>
+        <Node id="pages/cliente/detalleCompraPaso2.jsf" x="400" y="450" zoom="true"/>
+        <Node id="pages/errores_permisos.jsp" x="650" y="600" zoom="true"/>
         <Node id="pages/admin/reporteDiario.jsf" x="1650" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>

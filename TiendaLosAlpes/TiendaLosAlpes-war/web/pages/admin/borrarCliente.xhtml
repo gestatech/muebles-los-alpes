@@ -15,7 +15,7 @@
                             <h:commandButton value="Menu" action="admin"/>
                         </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
-                            <h:commandButton value="Salir" action="login"/>
+                            <h:commandButton value="Salir" action="#{SecurityBean.cerrarSession}"/>
                         </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>

@@ -4,13 +4,30 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://java.sun.com/jstl/core"
       xmlns:f="http://java.sun.com/jsf/core">
     <body>
         <ui:composition template="./main-template.xhtml">
-            <ui:param name="titulo" value="Control de Acceso"/>
+            <ui:param name="titulo" value="Control de Acceso" />
             <ui:define name="body">
                 <rich:panel>
-                    <f:facet name="header">Ingreso al Sistema</f:facet>
+                    <f:facet name="header">Ingreso al Sistema de Funcionalidades Administrativas</f:facet>
+                    <center>
+                        <form action="j_security_check" method="POST">
+                            <h:panelGrid >
+                                <h:outputLabel value="Usuario"/>
+                                <input type="text" name="j_username"/>
+                                <h:outputLabel value="Contraseña"/>
+                                <input type="password" name="j_password"/>
+                            </h:panelGrid>
+                            <h:panelGrid>
+                                <input type="submit" value="Ingresar al Sistema"/>
+                            </h:panelGrid>
+                        </form>
+                    </center>
+                </rich:panel>
+                <rich:panel>
+                    <f:facet name="header">Ingreso a la Tienda de Muebles y Productos Los Alpes - Cliente</f:facet>
                     <a4j:form>
                         <p>
                             <h:panelGrid columns="3">
@@ -24,22 +41,19 @@
                         </p>
                         <p>
                             <h:panelGrid>
-                                <h:commandButton value="Ingresar" action="#{SecurityBean.login}"/>
+                                <h:commandButton value="Ingresar a la Tienda" action="#{SecurityBean.login}"/>
                             </h:panelGrid>
                         </p>
                     </a4j:form>
                     <br/>
-                    <rich:panel>
                     <a4j:form>
-                        <h:outputLabel value="Opciones para el Cliente"/>
                         <h:panelGrid columns="2">
                             <h:commandButton value="Nuevo Cliente" action="nuevoCliente"/>
                             <h:commandButton value="Editar Mis Datos" action="editarCliente"/>
                         </h:panelGrid>
                     </a4j:form>
-                    </rich:panel>
                 </rich:panel>
             </ui:define>
-        </ui:composition>
+        </ui:composition>>
     </body>
 </html>

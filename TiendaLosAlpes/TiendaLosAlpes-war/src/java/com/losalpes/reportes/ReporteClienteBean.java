@@ -2,7 +2,6 @@ package com.losalpes.reportes;
 
 import com.losalpes.cliente.IClienteService;
 import com.losalpes.persistence.entity.Cliente;
-import com.losalpes.persistence.entity.DetalleVenta;
 import com.losalpes.persistence.entity.Venta;
 import com.losalpes.ventas.IVentaService;
 import java.util.List;
@@ -34,14 +33,6 @@ public class ReporteClienteBean {
      * Listado de ventas que tenga asociadas el cliente.
      */
     private List<Venta> ventas;
-    /**
-     * Listado de Detalles de venta de una venta.
-     */
-    private List<DetalleVenta> detalles;
-    /**
-     * Detalle de venta de una venta.
-     */
-    private DetalleVenta detalleVenta;
     /**
      * Variable de tipo Cliente.
      */
@@ -78,20 +69,6 @@ public class ReporteClienteBean {
         this.valor = valor;
     }
     /**
-     * Método para obtener el detalle de venta
-     * @return DetalleVenta
-     */
-    public DetalleVenta getDetalleVenta() {
-        return detalleVenta;
-    }
-    /**
-     * Mëtodo para asignar el detalle de venta
-     * @param detalleVenta Detalle de Venta
-     */
-    public void setDetalleVenta(DetalleVenta detalleVenta) {
-        this.detalleVenta = detalleVenta;
-    }
-    /**
      * Método para obtener el listado de ventas de un cliente
      * @return
      */
@@ -118,20 +95,6 @@ public class ReporteClienteBean {
      */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-    /**
-     * Metodo para asignar la lista de detalles
-     * @return List de detalles
-     */
-    public List<DetalleVenta> getDetalles() {
-        return detalles;
-    }
-    /**
-     * Método para asignar los detalles de venta
-     * @param detalles
-     */
-    public void setDetalles(List<DetalleVenta> detalles) {
-        this.detalles = detalles;
     }
     /**
      * Mëtodo para consulta el cliente,obtener de él el listado de ventas que tiene y el detallde de venta de cada una.

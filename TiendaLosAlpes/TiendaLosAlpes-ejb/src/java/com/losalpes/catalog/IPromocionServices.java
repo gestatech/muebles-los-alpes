@@ -6,6 +6,7 @@ import javax.ejb.Local;
 /**
  * Interfaz para las promociones anotado con @Local para indicar el acceso al Session Bean como local.
  * @author Kerlyn Hans
+ * @author Memo Toro
  */
 @Local
 public interface IPromocionServices {

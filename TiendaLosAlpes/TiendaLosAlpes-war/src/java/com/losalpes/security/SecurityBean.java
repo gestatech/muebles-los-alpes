@@ -2,7 +2,12 @@ package com.losalpes.security;
 
 import com.losalpes.enums.TipoUsuario;
 import com.losalpes.persistence.entity.Usuario;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 /**
  * Backing Bean para controlar la autenticación de usuarios.
  * @author Memo Toro
@@ -35,9 +40,6 @@ public class SecurityBean {
             usua = "login";
         }
         else{
-            if(usuario.getTipoUsuario().equals(TipoUsuario.ADMINISTRADOR) ){
-                usua = "admin";
-            }
             if(usuario.getTipoUsuario().equals(TipoUsuario.CLIENTE)){
                 usua = "cliente";
             }
@@ -71,5 +73,22 @@ public class SecurityBean {
      */
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+    /**
+     * Método para salir de la aplicación de como clientes y como administradores y gerentes y destruiri la session.
+     * @return String valor de redireccionamiento.
+     */
+    public void cerrarSession() {
+        try {
+            // Toma la sesión con el contexto Faces.
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            // Vuelve no valida la sesión.
+            session.invalidate();
+            // redirecciona a la pagina de admin.
+            FacesContext.getCurrentInstance().getExternalContext().redirect("./menuAdmin.jsf");
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (IOException ex) {
+            Logger.getLogger(SecurityBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

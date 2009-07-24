@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="../main-template.xhtml">
+            <ui:param name="titulo" value="Reporte de Producto Más Vendido"/>
+            <ui:define name="body">
+                <a4j:form>
+                    <rich:toolBar height="26" itemSeparator="Grid">
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Menu" action="#{CatalogBean.getLimpiar}"/>
+                        </rich:toolBarGroup>
+                        <rich:toolBarGroup location="right">
+                            <h:commandButton value="Salir" action="#{SecurityBean.cerrarSession}"/>
+                        </rich:toolBarGroup>
+                    </rich:toolBar>
+                </a4j:form>
+                <a4j:form>
+                <script type="text/javascript" src="../calendario.js"></script>
+                <rich:panel>
+                     <f:facet name="header">Reporte de Producto Más Vendido</f:facet>
+                         <h:panelGrid columns="3">                            
+                             <h:outputLabel value="Fecha Inicio"/>
+                             <rich:calendar value="#{ReporteMasVendidoBean.fechaInicio}" datePattern="dd/MM/yyyy" id="FechaInicio" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
+                             <rich:message for="FechaInicio"/>
+                             <h:outputLabel value="Fecha Fin"/>
+                             <rich:calendar value="#{ReporteMasVendidoBean.fechaFin}" datePattern="dd/MM/yyyy" id="FechaFin" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
+                             <rich:message for="FechaFin"/>
+                         </h:panelGrid>
+                         <h:panelGrid>
+                            <a4j:commandButton value="Construir Reporte" action="#{ReporteMasVendidoBean.getMasVendidos}" reRender="tablaReporte"/>
+                         </h:panelGrid>
+                 </rich:panel>
+                 <rich:panel>
+                     <f:facet name="header">Productos Más Vendidos por Ciudad</f:facet>
+                     <rich:extendedDataTable id="tablaReporte" align="center" width="750px" height="100px" value="#{ReporteMasVendidoBean.mueblesMasVendidos}" var="reporte">
+                         <rich:column width="100px" label="Pais">
+                            <f:facet name="header">Pais</f:facet>
+                            #{reporte.pais}
+                        </rich:column>
+                         <rich:column width="150px" label="Departamento">
+                            <f:facet name="header">Departamento</f:facet>
+                            #{reporte.depto}
+                        </rich:column>
+                        <rich:column width="100px" label="Ciudad">
+                            <f:facet name="header">Ciudad</f:facet>
+                            #{reporte.ciudad}
+                        </rich:column>
+                        <rich:column width="100px" label="Cantidad">
+                            <f:facet name="header">Cantidad</f:facet>
+                            #{reporte.cantidad}
+                        </rich:column>
+                        <rich:column width="100px" label="Referencia">
+                            <f:facet name="header">Referencia</f:facet>
+                            #{reporte.mueble.referencia}
+                        </rich:column>
+                        <rich:column width="100px" label="Nombre">
+                            <f:facet name="header">Nombre</f:facet>
+                            #{reporte.mueble.nombre}
+                        </rich:column>
+                        <rich:column width="100px" label="Material">
+                            <f:facet name="header">Material</f:facet>
+                            #{reporte.mueble.material}
+                        </rich:column>
+                     </rich:extendedDataTable>
+                </rich:panel>
+                </a4j:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+</html>

@@ -5,6 +5,7 @@ import com.losalpes.persistence.entity.Cliente;
 import com.losalpes.enums.TipoDepartamento;
 import com.losalpes.enums.TipoPais;
 import com.losalpes.enums.TipoUsuario;
+import com.losalpes.persistence.entity.Tarjeta;
 import com.losalpes.persistence.entity.Usuario;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import javax.faces.model.SelectItem;
  * @author Memo Toro
  */
 public class ClienteBean {
+
     /**
      * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IClienteService para los clientes.
      */
@@ -26,6 +28,10 @@ public class ClienteBean {
      * Variable Tipo Cliente
      */
     private Cliente cliente;
+    /**
+     * Variable Tipo Tarjeta
+     */
+    private Tarjeta tarjeta;
     /**
      * Variable Tipo Usuario
      */
@@ -42,6 +48,7 @@ public class ClienteBean {
     public ClienteBean() {
         cliente = new Cliente();
         usuario = new Usuario();
+        tarjeta = new Tarjeta();
     }
     /**
      * Método para obtener el cliente
@@ -56,6 +63,20 @@ public class ClienteBean {
      */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+    /**
+     * Método para obtener la tarjeta de credito
+     * @return tarjeta Variable Tipo Tarjeta
+     */
+    public Tarjeta getTarjeta() {
+        return tarjeta;
+    }
+    /**
+     * Método para asignar la tarjeta de credito
+     * @param tarjeta Variable Tipo Tarjeta
+     */
+    public void setTarjeta(Tarjeta tarjeta) {
+        this.tarjeta = tarjeta;
     }
    /**
      * Método para obtener el usuario
@@ -159,6 +180,14 @@ public class ClienteBean {
         usua.setNombreUsuario(Integer.valueOf(cliente.getNumeroDocumento()).toString());
         usua.setContrasenia(usuario.getContrasenia());
         usua.setTipoUsuario(TipoUsuario.CLIENTE);
+        // Registra la nueva tarjeta de credito
+        Tarjeta tarj = new Tarjeta();
+        tarj.setNumeroTarjeta(tarjeta.getNumeroTarjeta());
+        tarj.setCodigoSeguridad(tarjeta.getCodigoSeguridad());
+        tarj.setFechaExpiracionTarjeta(tarjeta.getFechaExpiracionTarjeta());
+        tarj.setMonto(tarjeta.getMonto());
+        tarj.setClienudo(getCliente().getNumeroDocumento());
+        getCliente().setTarjeta(tarj);
         usua.setCliente(getCliente());
         clienteService.registrarUsuario(usua);
         return "login";

@@ -15,55 +15,36 @@
                             <h:commandButton value="Menu" action="#{CatalogBean.getLimpiar}"/>
                         </rich:toolBarGroup>
                         <rich:toolBarGroup location="right">
-                            <h:commandButton value="Salir" action="login"/>
+                            <h:commandButton value="Salir" action="#{SecurityBean.cerrarSession}"/>
                         </rich:toolBarGroup>
                     </rich:toolBar>
                 </a4j:form>
                 <a4j:form>
-    <script type="text/javascript">
-        var curDt = new Date();
-        function disablementFunction(day){
-            if (day.isWeekend) return false;
-            if (curDt==undefined){
-                curDt = day.date.getDate;
-            }
-            if (curDt.getTime() - day.date.getTime() &lt; 0) return true; else return false;
-        }
-        function disabledClassesProv(day){
-            if (curDt.getTime() - day.date.getTime() &gt;= 0) return 'rich-calendar-boundary-dates';
-            var res = '';
-            if (day.isWeekend) res+='weekendBold ';
-            if (day.day%3==0) res+='everyThirdDay';
-            return res;
-        }
-    </script>
+                <script type="text/javascript" src="../calendario.js"></script>
                 <rich:panel>
                      <f:facet name="header">Reporte de Ventas Diarias</f:facet>
                          <h:panelGrid columns="3">
-
                          <h:outputLabel value="País (*):"/>
                          <h:selectOneMenu value="#{ReporteCiudadBean.reporteCiudad.pais}" id="País">
                              <f:selectItems value="#{ReporteCiudadBean.paises}" />
                          </h:selectOneMenu>
                          <rich:message for="País"/>
-
                          <h:outputLabel value="Departamento:"/>
                          <h:selectOneMenu value="#{ReporteCiudadBean.reporteCiudad.departamento}" id="Departamento">
                                 <f:selectItems value="#{ReporteCiudadBean.departamentos}" />
                          </h:selectOneMenu>
                          <rich:message for="Departamento"/>
-
                          <h:outputLabel value="Ciudad (*):"/>
                          <h:selectOneMenu value="#{ReporteCiudadBean.reporteCiudad.ciudadResidencia}" id="Ciudad">
                              <f:selectItems value="#{ReporteCiudadBean.ciudadResidencia}" />
                          </h:selectOneMenu>
                          <br/>
                          <h:outputLabel value="Fecha"/>
-                            <rich:calendar value="#{ReporteCiudadBean.fecha}" datePattern="dd/MM/yyyy" id="Fecha" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
+                         <rich:calendar value="#{ReporteCiudadBean.fechaCalendario}" datePattern="dd/MM/yyyy" id="Fecha" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
                             <rich:message for="Fecha"/>
                         </h:panelGrid>
                         <h:panelGrid>
-                            <a4j:commandButton value="Ejecutar Reporte" action="#{ReporteCiudadBean.getReporteDiario}" reRender="tablaReporte"/>
+                            <a4j:commandButton value="Construir Reporte" action="#{ReporteCiudadBean.getReporteDiario}" reRender="tablaReporte"/>
                         </h:panelGrid>
                 </rich:panel>
                 </a4j:form>
@@ -99,8 +80,6 @@
                     <rich:column  colspan="4">
                     <h:outputText value="#{record.ciudadResidencia}"/>
                     </rich:column>
-
-
                     <rich:subTable
                         onRowMouseOver="this.style.backgroundColor='#F8F8F8'"
                         onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
@@ -118,7 +97,6 @@
                             <h:outputText value="#{expense.precioVenta}"><f:convertNumber  pattern="$####.00"  /></h:outputText>
                         </rich:column>
                     </rich:subTable>
-
                 </rich:dataTable>
                 </rich:panel>
                 </a4j:form>

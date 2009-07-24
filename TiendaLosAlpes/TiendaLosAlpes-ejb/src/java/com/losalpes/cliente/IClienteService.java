@@ -1,6 +1,7 @@
 package com.losalpes.cliente;
 
 import com.losalpes.persistence.entity.Cliente;
+import com.losalpes.persistence.entity.Tarjeta;
 import com.losalpes.persistence.entity.Usuario;
 import java.util.List;
 import javax.ejb.Local;
@@ -48,4 +49,9 @@ public interface IClienteService {
      * @return Cliente asociado al usuario
      */
     public Cliente consultarPorUsuario(String nombreUsuario,String contrasenia);
+        /**
+     * Método para consultar tarjetas de credito asociada al cliente.
+     * @param numeroDocumento Variable tipo int, corresponde al documento del cliente.
+     */
+     public Tarjeta consultarTarjeta(int numeroDocumento);
 }

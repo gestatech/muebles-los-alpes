@@ -10,6 +10,8 @@ import com.losalpes.ventas.IVentaService;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 /**
@@ -17,6 +19,7 @@ import javax.ejb.Stateless;
  * @author Hans Escallon
  */
 @Stateless
+@DeclareRoles({"Gerente"})
 public class ReporteCiudadServiceBean implements IReporteCiudadService {
     /**
      * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IVentaService para los ventas.
@@ -33,8 +36,10 @@ public class ReporteCiudadServiceBean implements IReporteCiudadService {
     private List<ReporteCiudad> reporteCiudad;
     /**
      * Método para obtener el reporte con las ventas diarias por ciudad
+     * Anotado con @RolesAllowed para que pueda solo acceder el Gerente a la funcionalidad
      * @param ventaNueva Variable tipo Venta para crear.
      */
+    @RolesAllowed({"Gerente"})
     public List<ReporteCiudad> obtenerVentasDiarias(TipoPais pais,TipoDepartamento departamento,TipoCiudad ciudadResidencia,String fecha) {
         reporteCiudad = new ArrayList<ReporteCiudad>();
         ventas = ventaService.obtenerVentas();
@@ -71,8 +76,10 @@ public class ReporteCiudadServiceBean implements IReporteCiudadService {
     }
     /**
      * Método para verificar si la ciudad ya tiene un registro en el reporte de ventas diarias por ciudad.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Gerente a la funcionalidad
      * @param pais, departamento y ciudad para buscar la ciudad en el reporte de ventas diarias.
      */
+    @RolesAllowed({"Gerente"})
     public ReporteCiudad existeVentaCiudad(TipoPais pais,TipoDepartamento departamento,TipoCiudad ciudadResidencia){
         Iterator itReporte = reporteCiudad.iterator();
         while(itReporte.hasNext()){
@@ -81,9 +88,6 @@ public class ReporteCiudadServiceBean implements IReporteCiudadService {
                 return reporte;
             }
         }
-        return null;
-    }
-    public List<ReporteCiudad> obtenerProductoMasVendido(TipoPais pais,TipoDepartamento departamento,TipoCiudad ciudadResidencia,String fecha) {
         return null;
     }
 }

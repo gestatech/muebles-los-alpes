@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.apache.commons.mail.SimpleEmail;
@@ -14,6 +17,7 @@ import org.apache.commons.mail.SimpleEmail;
  * @author Memo Toro
  */
 @Stateless
+@DeclareRoles({"Gerente"})
 public class VentaServiceBean implements IVentaService{
     /**
      * Interfaz anotada como @EJB para que haga referencia e inyección con el Bean de la Persistencia.
@@ -38,42 +42,41 @@ public class VentaServiceBean implements IVentaService{
     }
     /**
      * Método para almacenar una Venta a la venta actual y al listado de ventas.
+     * Anotadocon @PermitAll para no restringir el acceso a este metodo.
      * @param ventaNueva
      */
+    @PermitAll
     public void almacenar(Venta ventaNueva){
-        persistencia.create(ventaNueva);
+        persistencia.createVenta(ventaNueva);
     }
     /**
      * Método para obtener el listado de ventas de la tienda.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Gerente a la funcionalidad*
      * @return List con las ventas de la tienda.
      */
+    @RolesAllowed({"Gerente"})
     public List obtenerVentas(){
         return persistencia.findAll(Venta.class);
     }
     /**
      * Método para consultar las ventas y dtellaes del cliente
+     * Anotado con @RolesAllowed para que pueda solo acceder el Gerente a la funcionalidad
      * @param idCliente Identificador del cliente
      * @return List de Ventas de cliente
      */
+    @RolesAllowed({"Gerente"})
     public List<Venta> consultarVentas(int valor) {
         List<String> valores = new ArrayList<String>();
         List<Venta> ventas = new ArrayList<Venta>();
         valores.add("idCliente|" + valor);
         ventas = persistencia.findObjects("findVentas",valores);
-/*        Iterator it = ventas.iterator();
-        while(it.hasNext()){
-            valores.clear();
-            Venta venta = (Venta)it.next();
-            valores.add("venta|" + venta.getReferencia());
-            List<DetalleVenta> detalles = persistencia.findObjects("findDetalles", valores);
-            venta.setDetalleVenta(detalles);
-        }
- */
         return ventas;
     }
     /**
      * Método para enviar correos electrónicos con las librerias de Apache.
+     * Anotadocon @PermitAll para no restringir el acceso a este metodo.
      */
+    @PermitAll
     public void enviarCorreo(){
         // Logica de envio de mensajes por email.
         try{

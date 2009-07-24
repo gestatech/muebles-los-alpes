@@ -4,14 +4,16 @@ import com.losalpes.enums.TipoCiudad;
 import com.losalpes.enums.TipoDepartamento;
 import com.losalpes.enums.TipoPais;
 import com.losalpes.reportes.pojos.ReporteCiudad;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
 /**
  * Backing Bean para los reportes de Ciudad.
  * @author Hans Escallon
+ * @author Memo Toro
  */
 public class ReporteCiudadBean {
     /**
@@ -24,6 +26,10 @@ public class ReporteCiudadBean {
      */
     private ReporteCiudad reporteCiudad;
     /**
+     * Variable Date para la fecha.
+     */
+    private Date fechaCalendario;
+    /**
      * Variable String para la fecha.
      */
     private String fecha;
@@ -35,6 +41,7 @@ public class ReporteCiudadBean {
     /** Crea una nueva instancia de ReporteCiudadBean */
     public ReporteCiudadBean() {
        reporteCiudad = new ReporteCiudad();
+       fechaCalendario = new Date();
     }
     /**
      * Método para obtener la fecha
@@ -50,6 +57,21 @@ public class ReporteCiudadBean {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+    /**
+     * Método para obtener la fecha del calendario
+     * @return
+     */
+    public Date getFechaCalendario() {
+        return fechaCalendario;
+    }
+    /**
+     * Método para asignar la fecha del calendario
+     * @param fechaCalendario
+     */
+    public void setFechaCalendario(Date fechaCalendario) {
+        this.fechaCalendario = fechaCalendario;
+    }
+
     /**
      * M;etodo para obtener el reporte
      * @return ReporteCiudad Variable de tipo reporte.
@@ -68,15 +90,12 @@ public class ReporteCiudadBean {
      * Método para obtener las ventas diarias por ciudad.
      * @return List con todas las ventas diarias por ciudad.
      */
-    public List<ReporteCiudad> getReporteDiario(){        
+    public List<ReporteCiudad> getReporteDiario(){
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        fecha = df.format(fechaCalendario.getTime());
         lreporteCiudad = reporteCiudadService.obtenerVentasDiarias(reporteCiudad.getPais(),reporteCiudad.getDepartamento(),
                                                                    reporteCiudad.getCiudadResidencia(),fecha);
-        Iterator it = lreporteCiudad.iterator();
-        while(it.hasNext()){
-            ReporteCiudad rc = (ReporteCiudad)it.next();
-            System.out.println(rc.getCiudadResidencia());
-        }
-      return lreporteCiudad;
+        return lreporteCiudad;
     }
      /**
      * Método para cargar el Listado de la interfaz con las ciudades registradas en el sistema.

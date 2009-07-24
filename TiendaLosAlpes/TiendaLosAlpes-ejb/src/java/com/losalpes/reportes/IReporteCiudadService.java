@@ -4,6 +4,7 @@ import com.losalpes.enums.TipoCiudad;
 import com.losalpes.enums.TipoDepartamento;
 import com.losalpes.enums.TipoPais;
 import com.losalpes.reportes.pojos.ReporteCiudad;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 /**

@@ -4,5 +4,8 @@ package com.losalpes.enums;
  * @author Memo Toro
  */
 public enum TipoUsuario {
-    ADMINISTRADOR, CLIENTE
+    /**
+     * Rol de Cliente para la aplicación.
+     */
+    CLIENTE, CLIENTE_GOLD, CLIENTE_PLATINUM
 }

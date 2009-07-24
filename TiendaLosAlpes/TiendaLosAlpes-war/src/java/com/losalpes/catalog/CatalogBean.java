@@ -125,16 +125,17 @@ public class CatalogBean {
         return getLimpiar();
     }
     /**
-     * Método para limpiar las variables del Backing Bean.
+     * Método para limpiar las variables del Backing Bean de los procesos y las paginas del admin.
      */
     public String getLimpiar(){
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CatalogBean");
         return "admin";
     }
     /**
-     * Método para limpiar las variables del Backing Bean. al salir de la aplicacion.
+     * Método para limpiar las variables del Backing Bean desde la compra y las paginas del cliente.
      */
-    public String getSalir(){
+    public String getLimpiarCompra(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CarritoCompraBean");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CatalogBean");
         return "login";
     }

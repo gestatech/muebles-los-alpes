@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <ui:composition template="./main-template.xhtml">
+            <ui:param name="titulo" value="Error inicio de sesión" />
+            <ui:define name="body">
+                <rich:panel>
+                    <f:facet name="header">Error de Autenticación</f:facet>
+                    <h1><h:outputText value="Error de Inicio de Sesión"/></h1>
+                    <h:graphicImage width="250px" height="250px" value="/img/usuario_no_registrado.png"/><br/>
+                    <h3><h:outputText value="Verfique Su Nombre de Usuario y/o Contraseña"/></h3>
+                    <h:commandButton value="Regresar" onclick="back()" />
+                </rich:panel>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

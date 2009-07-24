@@ -72,6 +72,22 @@
                                 <rich:message for="Celular"/>
                         </h:panelGrid>
                         <rich:panel>
+                        <f:facet name="header">Datos de Tarjeta de Crédito</f:facet>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Número de Tarjeta"/>
+                            <h:inputText value="#{ClienteBean.tarjeta.numeroTarjeta}" id="NumeroTarjeta"/><br/>
+                            <h:outputLabel value="Código de Seguridad"/>
+                            <h:inputText value="#{ClienteBean.tarjeta.codigoSeguridad}" id="CodigoSeguridad"/><br/>
+                            <h:outputLabel value="Fecha de Expiración"/>
+                            <h:inputText value="#{ClienteBean.tarjeta.fechaExpiracionTarjeta}" id="FechaExpiracion"/><br/>
+                            <h:outputLabel value="Monto"/>
+                            <h:inputText value="#{ClienteBean.tarjeta.monto}" id="Monto"/>
+                        </h:panelGrid>
+                        </rich:panel>
+                        <br/>
+
+
+                        <rich:panel>
                         <f:facet name="header">Datos de Usuario</f:facet>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Usuario"/>

@@ -2,12 +2,16 @@ package com.losalpes.cliente;
 
 import com.losalpes.persistence.entity.Cliente;
 import com.losalpes.persistence.IPersistenceServices;
+import com.losalpes.persistence.entity.Tarjeta;
 import com.losalpes.persistence.entity.Usuario;
 import com.losalpes.security.ISecurityService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 /**
@@ -16,6 +20,7 @@ import javax.ejb.Stateless;
  * @author Memo Toro
  */
 @Stateless
+@DeclareRoles({"Administrador","Gerente"})
 public class ClienteServiceBean implements IClienteService {
     /**
      * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IClienteService para los clientes.
@@ -44,9 +49,12 @@ public class ClienteServiceBean implements IClienteService {
         System.out.println("CLIENTE-SERVICE-BEAN DESTRUIDO SATISFACTORIAMENTE !!!");
     }
     /**
-     * Método para registrar clientes. Verifica si el cliente existe a partir del número de identificación. Si existe, no lo ingresa.
+     * Método para registrar clientes. Verifica si el cliente existe a partir del número de identificación.
+     * Si existe, no lo ingresa.
+     * Anotadocon @PermitAll para no restringir el acceso a este metodo.
      * @param cliente Variable tipo Cliente
      */
+    @PermitAll
     public void registrar(Cliente cliente) {
         // Cliente creado para compararlo con el cliente que se va a registrar.
         Cliente comparar = null;
@@ -61,15 +69,19 @@ public class ClienteServiceBean implements IClienteService {
     }
     /**
      * Método para eliminar clientes a partir de un cliente seleccionado.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @param cliente Variable cliente seleccionado para eliminar.
      */
+    @RolesAllowed({"Administrador"})
     public void eliminar(Cliente cliente) {
         persistenceServices.delete((Cliente)persistenceServices.findById(Cliente.class, cliente.getNumeroDocumento()));
     }
     /**
-     * Método para editar Cliente
+     * Método para editar Cliente.
+     * Anotadocon @PermitAll para no restringir el acceso a este metodo.
      * @param Cliente Variable cliente
      */
+    @PermitAll
     public void editar(Cliente cliente){
         persistenceServices.update(cliente);
         // Asigna el cliente con sus nuevos datos al usuario y actualiza la lista de usuarios
@@ -79,10 +91,12 @@ public class ClienteServiceBean implements IClienteService {
     }
     /**
      * Método para consulta clientes por criterios establecidos
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @param criterio Variable tipo TipoConsultaCliente
      * @param consula Variable String para el valor de la consula
      * @return Cliente Variable tipo Cliente.
      */
+    @RolesAllowed({"Administrador","Gerente"})
     public Cliente consultar(String criterio, String valor) {
         List<String> valores = new ArrayList<String>();
         Cliente cliente = new Cliente();
@@ -101,40 +115,58 @@ public class ClienteServiceBean implements IClienteService {
     }
     /**
      * Método para consulta clientes por criterios establecidos
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @param criterio Variable tipo TipoConsultaCliente
      * @param consula Variable String para el valor de la consula
      * @return Cliente Variable tipo Cliente.
      */
+    @RolesAllowed({"Administrador"})
     public Cliente consultarCliente(int numeroDocumento) {
         return (Cliente)persistenceServices.findById(Cliente.class,new Integer(numeroDocumento));
     }
     /**
      * Método para obtener el listado de clientes de la tienda.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @return List con los clientes
      */
+    @RolesAllowed({"Administrador"})
     public List<Cliente> consultarTodos(){
         // Retorna todos los clientes de la tienda.
         return (List<Cliente>)persistenceServices.findAll(Cliente.class);
     }
-    /**
-     * Método para registrar usuarios.
-     * @param usuario Variable tipo Usuario
+     /**
+     * Método para consultar la tarjeta de credito asociada al cliente
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
+     * @param criterio Variable tipo TipoConsultaCliente
+     * @param consula Variable String para el valor de la consula
+     * @return Cliente Variable tipo Cliente.
      */
-    public void registrarUsuario(Usuario usuario) {
-        persistenceServices.create(usuario);
+    @PermitAll
+    public Tarjeta consultarTarjeta(int numeroDocumento) {
+        return (Tarjeta)persistenceServices.findRemoteDatabase(numeroDocumento);
     }
     /**
+     * Método para registrar usuarios.
+     * Anotadocon @PermitAll para no restringir el acceso a este metodo.
+     * PermitAll@param usuario Variable tipo Usuario
+     */
+    @PermitAll
+    public void registrarUsuario(Usuario usuario) {
+        persistenceServices.createCliente(usuario);
+    }
+
+    /**
      * Método para obtener el Cliente a partir del usuario ingresado.
+     * Anotadocon @PermitAll para no restringir el acceso a este metodo.
      * @return cliente  variable de tipo Cliente
      */
+    @PermitAll
     public Cliente consultarPorUsuario(String nombreUsuario,String contrasenia){
         // Retorna todos los clientes de la tienda.
         Usuario usuario = securityService.login(nombreUsuario, contrasenia);
-        if(usuario == null){
+        if(usuario == null)
             return null;
-        }
-        else{
+        else
            return usuario.getCliente();
-        }
     }
 }

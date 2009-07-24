@@ -4,5 +4,8 @@ package com.losalpes.enums;
  * @author Memo Toro
  */
 public enum TipoPais {
+    /**
+     * Tipos de Paises Cargados
+     */
     COLOMBIA,VENEZUELA,ECUADOR,BRASIL,ARGENTINA
 }

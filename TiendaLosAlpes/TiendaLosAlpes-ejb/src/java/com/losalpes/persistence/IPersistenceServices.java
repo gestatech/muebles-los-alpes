@@ -1,5 +1,6 @@
 package com.losalpes.persistence;
 
+import com.losalpes.persistence.entity.Venta;
 import java.util.List;
 import javax.ejb.Local;
 /**
@@ -44,4 +45,16 @@ public interface IPersistenceServices {
      * @return List Listado con los objetos que satisfacen la consulta.
      */
     public List findObjects(String consulta, List<String> valores);
+
+    public void createCliente(Object obj);
+    public Object findRemoteDatabase(int id);
+
+
+
+
+    /**
+     * Método para crear una venta con transaccionalidad
+     * @param obj de tipo Venta
+     */
+    public void createVenta(Object obj);
 }

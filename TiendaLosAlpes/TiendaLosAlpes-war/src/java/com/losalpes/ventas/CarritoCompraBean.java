@@ -9,6 +9,7 @@ import com.losalpes.persistence.entity.Mueble;
 import com.losalpes.persistence.entity.Venta;
 import com.losalpes.persistence.entity.Cliente;
 import com.losalpes.persistence.entity.DetalleVenta;
+import com.losalpes.persistence.entity.Tarjeta;
 import com.losalpes.security.ISecurityService;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,6 +61,11 @@ public class CarritoCompraBean {
      * Variable tipo Venta con la venta del carrito.
      */
     private Venta venta;
+    /**
+     * Variable tipo Venta con la venta del carrito.
+     */
+    private Tarjeta tarjeta;
+
     /**
      * Variable para el valor de la compra.
      */
@@ -199,7 +205,7 @@ public class CarritoCompraBean {
     }
     /**
      * Método para crear la primera parte de la Venta.
-     * La primera parte de la venta se inicia con el numero de referencia, el valor de la compra, la descripción de la venta. 
+     * La primera parte de la venta se inicia con el numero de referencia, el valor de la compra, la descripción de la venta.
      * @return Variable de tipo String para redireccionar a la autenticación.
      */
     public String getComprarMuebles(){
@@ -233,8 +239,24 @@ public class CarritoCompraBean {
         Cliente cliente = (Cliente)securityService.getObjetoSesion("cliente");
         // Asignar idcliente a venta
         getVenta().setIdCliente(cliente.getNumeroDocumento());
+        //obtiene la tarjeta del cliente
+        if(!(cliente == null) && cliente.getNumeroDocumento() != 0){
+        tarjeta = clienteService.consultarTarjeta(cliente.getNumeroDocumento());
+        //asigna los valores de la tarjeta a la venta
+        getVenta().setNumeroTarjeta(tarjeta.getNumeroTarjeta());
+        getVenta().setCodigoSeguridad(tarjeta.getCodigoSeguridad());
+        setFechaExpiracion(fechaActual.getTime());//PENDIENTE POR CAMBIAR
+        }
         // String para redireccionar a la pagina de autenticación.
         return "pagar";
+    }
+
+    public Tarjeta getTarjeta() {
+        return tarjeta;
+    }
+
+    public void setTarjeta(Tarjeta tarjeta) {
+        this.tarjeta = tarjeta;
     }
     /**
      * Método para Almacenar la venta para efectos de reportes.
@@ -257,6 +279,7 @@ public class CarritoCompraBean {
      */
     public String getLimpiar(){
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CarritoCompraBean");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CatalogBean");
         return "cliente";
     }
     /**

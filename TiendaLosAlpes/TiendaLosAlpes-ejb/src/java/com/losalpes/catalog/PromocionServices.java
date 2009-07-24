@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jms.Connection;
@@ -23,6 +25,7 @@ import javax.jms.Topic;
  * @author Memo Toro
  */
 @Stateless
+@DeclareRoles({"Administrador"})
 public class PromocionServices implements IPromocionServices {
     /**
      * Interfaz anotada con @EJB para inyectar dependencia de IPersistenceServices.
@@ -49,24 +52,30 @@ public class PromocionServices implements IPromocionServices {
     }
     /**
     * Método para obtener la promocion.
+    * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
     * @return Promocion.
     */
+    @RolesAllowed({"Administrador"})
     public Promocion getPromocion() {
         return (cPromocion);
     }
     /**
      * Método para asignar la promocion actual.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @param promo Promocion actual.
      */
+    @RolesAllowed({"Administrador"})
     public void setPromocion(Promocion promo) {
         cPromocion = promo;
     }
     /**
      * Metoco para la construcción del mensaje a enviar al Topic.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @param session Sesion como parametro de contexto de unicidad de mensaje.
      * @return Message Mensaje enviado al topic.
      * @throws javax.jms.JMSException
      */
+    @RolesAllowed({"Administrador"})
     private Message crearMensajePromocion(Session session) throws JMSException{
         String msg = cPromocion.getNombre() + "|";
         msg += cPromocion.getMuebleReferencia() + "|";
@@ -81,8 +90,10 @@ public class PromocionServices implements IPromocionServices {
     }
     /**
      * Método para enviar el mensaje.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @throws javax.jms.JMSException.
      */
+    @RolesAllowed({"Administrador"})
     private void notificarMensajePromocion() throws JMSException{
         // Creación de una conexión al factory de mensajes.
         Connection conexion = connectionFactory.createConnection();
@@ -115,7 +126,9 @@ public class PromocionServices implements IPromocionServices {
     }
     /**
      * Método para crear la promocion.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      */
+    @RolesAllowed({"Administrador"})
     public void create() {
         // Registra la promocino en el servicio de persistencia.
         persistencia.create(cPromocion);
@@ -129,8 +142,10 @@ public class PromocionServices implements IPromocionServices {
     }
     /**
      * Método para retornar todas las promociones del servicio de persistencia.
+     * Anotado con @RolesAllowed para que pueda solo acceder el Administrador a la funcionalidad
      * @return List con promociones.
      */
+    @RolesAllowed({"Administrador"})
     public List <Promocion> findAll() {
         return persistencia.findAll(Promocion.class);
     }

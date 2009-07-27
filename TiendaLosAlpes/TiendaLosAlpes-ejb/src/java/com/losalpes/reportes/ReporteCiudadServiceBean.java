@@ -16,7 +16,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 /**
  * Session Bean sin estado @Stateless para indicar la no persistena de datos de reporte.
+ * Bean anotado con @DeclareRoles para asignar los rolesque pueden utilizar este bean.
  * @author Hans Escallon
+ * @author Memo Toro
  */
 @Stateless
 @DeclareRoles({"Gerente"})

@@ -11,11 +11,16 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 /**
  * Session Bean que implementa la interfaz con los métodos del Catálogo.
  * Bean anotado con @Stateless por no ser necesario guardar los datos del catálogo en sesion.
+ * Bean anotado con @WebService para poderlo exponer como servicio web.
+ * Bean anotado con @DeclareRoles para asignar los rolesque pueden utilizar este bean.
  * @author Memo Toro
  */
+@WebService(name="TiendaWebService",serviceName="TiendaWS")
 @Stateless
 @DeclareRoles({"Administrador"})
 public class CatalogServiceBean implements ICatalogService {
@@ -77,8 +82,10 @@ public class CatalogServiceBean implements ICatalogService {
     /**
      * Método que retorna el listado de todos los muebles del catálogo.
      * Anotado con @PermitAll para que puedan a la funcionalidad cualquier rol.
+     * Anotado con @WebMethod como metodo publico para operacion de servicio web.
      * @return List con los muebles.
      */
+    @WebMethod(operationName="VerMueblesTienda")
     @PermitAll
     public List<Mueble> consultarTodos() {
         return persistencia.findAll(Mueble.class);

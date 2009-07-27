@@ -11,11 +11,14 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 import org.apache.commons.mail.SimpleEmail;
 /**
  * Session Bean que implementa la interfaz con los métodos de Venta. Anotada con @Stateless
  * @author Memo Toro
  */
+@WebService(name="VentaWebService",serviceName="VentaWS")
 @Stateless
 @DeclareRoles({"Gerente"})
 public class VentaServiceBean implements IVentaService{
@@ -45,6 +48,7 @@ public class VentaServiceBean implements IVentaService{
      * Anotadocon @PermitAll para no restringir el acceso a este metodo.
      * @param ventaNueva
      */
+    @WebMethod(operationName="ComprarMueble")
     @PermitAll
     public void almacenar(Venta ventaNueva){
         persistencia.createVenta(ventaNueva);
@@ -54,7 +58,8 @@ public class VentaServiceBean implements IVentaService{
      * Anotado con @RolesAllowed para que pueda solo acceder el Gerente a la funcionalidad*
      * @return List con las ventas de la tienda.
      */
-    @RolesAllowed({"Gerente"})
+//    @RolesAllowed({"Gerente"})
+    @PermitAll
     public List obtenerVentas(){
         return persistencia.findAll(Venta.class);
     }

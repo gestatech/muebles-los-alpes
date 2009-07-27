@@ -7,6 +7,8 @@ import com.losalpes.enums.TipoPais;
 import com.losalpes.enums.TipoUsuario;
 import com.losalpes.persistence.entity.Tarjeta;
 import com.losalpes.persistence.entity.Usuario;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -18,7 +20,6 @@ import javax.faces.model.SelectItem;
  * @author Memo Toro
  */
 public class ClienteBean {
-
     /**
      * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IClienteService para los clientes.
      */
@@ -44,6 +45,10 @@ public class ClienteBean {
      * Variable tipos String para el valor de la consulta.
      */
     private String valor;
+    /**
+     * Fecha de expiracion de tarjeta
+     */
+    private Date fechaexp;
     /** Crea una nueva instancia de ClienteBean */
     public ClienteBean() {
         cliente = new Cliente();
@@ -121,6 +126,20 @@ public class ClienteBean {
         this.criterio = criterio;
     }
     /**
+     * Obtiene la fecha de expiracion.
+     * @return Date con fecha de expiracion
+     */
+    public Date getFechaexp() {
+        return fechaexp;
+    }
+    /**
+     * Asignar la fecha de expiracion.
+     * @param fechaexp Fecha de expiracion
+     */
+    public void setFechaexp(Date fechaexp) {
+        this.fechaexp = fechaexp;
+    }
+    /**
      * Método para cargar el Listado de la interfaz con las ciudades registradas en el sistema.
      * @return SelectItem Variable Enum con el listado de ciudades.
      */
@@ -183,8 +202,9 @@ public class ClienteBean {
         // Registra la nueva tarjeta de credito
         Tarjeta tarj = new Tarjeta();
         tarj.setNumeroTarjeta(tarjeta.getNumeroTarjeta());
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         tarj.setCodigoSeguridad(tarjeta.getCodigoSeguridad());
-        tarj.setFechaExpiracionTarjeta(tarjeta.getFechaExpiracionTarjeta());
+        tarj.setFechaExpiracionTarjeta(df.format(fechaexp.getTime()));
         tarj.setMonto(tarjeta.getMonto());
         tarj.setClienudo(getCliente().getNumeroDocumento());
         getCliente().setTarjeta(tarj);

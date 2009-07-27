@@ -155,6 +155,20 @@ public class CarritoCompraBean {
         this.fechaExpiracion = fechaExpiracion;
     }
     /**
+     * Método para retornar la tarjeta de crédito.
+     * @return Tarjeta de crédito.
+     */
+    public Tarjeta getTarjeta() {
+        return tarjeta;
+    }
+    /**
+     * Método para asignar la tarjeta de crédito.
+     * @param tarjeta tarjeta de crédito.
+     */
+    public void setTarjeta(Tarjeta tarjeta) {
+        this.tarjeta = tarjeta;
+    }
+    /**
      * Método que retorna un List con todos los muebles agregados al carrito de compras.
      * @return List Variable tipo List con los muebles cargados al carrito.
      */
@@ -241,22 +255,14 @@ public class CarritoCompraBean {
         getVenta().setIdCliente(cliente.getNumeroDocumento());
         //obtiene la tarjeta del cliente
         if(!(cliente == null) && cliente.getNumeroDocumento() != 0){
-        tarjeta = clienteService.consultarTarjeta(cliente.getNumeroDocumento());
-        //asigna los valores de la tarjeta a la venta
-        getVenta().setNumeroTarjeta(tarjeta.getNumeroTarjeta());
-        getVenta().setCodigoSeguridad(tarjeta.getCodigoSeguridad());
-        setFechaExpiracion(fechaActual.getTime());//PENDIENTE POR CAMBIAR
+            tarjeta = clienteService.consultarTarjeta(cliente.getNumeroDocumento());
+            //asigna los valores de la tarjeta a la venta
+            getVenta().setNumeroTarjeta(tarjeta.getNumeroTarjeta());
+            getVenta().setCodigoSeguridad(tarjeta.getCodigoSeguridad());
+            getVenta().setFechaExpiracionTarjeta(tarjeta.getFechaExpiracionTarjeta());
         }
         // String para redireccionar a la pagina de autenticación.
         return "pagar";
-    }
-
-    public Tarjeta getTarjeta() {
-        return tarjeta;
-    }
-
-    public void setTarjeta(Tarjeta tarjeta) {
-        this.tarjeta = tarjeta;
     }
     /**
      * Método para Almacenar la venta para efectos de reportes.
@@ -264,9 +270,6 @@ public class CarritoCompraBean {
      * @return Variable tipo String con el direccionamiento al Reporte.
      */
     public String getPagarMuebles(){
-        // Parseo de fecha a string con el formato indicado
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        getVenta().setFechaExpiracionTarjeta(df.format(fechaExpiracion.getTime()));
         // Cargar la venta a la persistencia de Venta para reportes.
         ventaService.almacenar(getVenta());
         // Envío de correo electrónico de notificación.

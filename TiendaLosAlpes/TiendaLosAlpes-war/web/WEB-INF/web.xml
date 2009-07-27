@@ -59,7 +59,11 @@
     </welcome-file-list>
     <error-page>
         <error-code>403</error-code>
-        <location>/pages/errores_permisos.jsp</location>
+        <location>/pages/errores_permisos_web.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/errores_permisos_ejb.jsp</location>
     </error-page>
     <jsp-config>
         </jsp-config>
@@ -68,14 +72,11 @@
         <web-resource-collection>
             <web-resource-name>Acceso a Muebles</web-resource-name>
             <description>Acceso a las Funcionalidades de los Muebles y Productos</description>
-            <url-pattern>/pages/admin/borrarCliente.jsf</url-pattern>
             <url-pattern>/pages/admin/borrarMueble.jsf</url-pattern>
-            <url-pattern>/pages/admin/consultarCliente.jsf</url-pattern>
             <url-pattern>/pages/admin/consultarMueble.jsf</url-pattern>
             <url-pattern>/pages/admin/detalleMueble.jsf</url-pattern>
             <url-pattern>/pages/admin/edicionMueble.jsf</url-pattern>
             <url-pattern>/pages/admin/modificarMueble.jsf</url-pattern>
-            <url-pattern>/pages/admin/registrarMueble.jsf</url-pattern>
             <url-pattern>/pages/admin/registrarPromocion.jsf</url-pattern>
             <url-pattern>/pages/admin/registroPrecios.jsf</url-pattern>
             <http-method>GET</http-method>
@@ -87,17 +88,16 @@
             <http-method>DELETE</http-method>
         </web-resource-collection>
         <auth-constraint>
-            <description>Rol de Administrador para Funcionalidades de Clientes y Productos</description>
+            <description>Rol de Administrador para Funcionalidades de y Productos</description>
             <role-name>Administrador</role-name>
-        </auth-constraint>
-    </security-constraint>
+            </auth-constraint>
+        </security-constraint>
     <security-constraint>
         <display-name>Acceso a Reportes</display-name>
         <web-resource-collection>
             <web-resource-name>Acceso a Reportes</web-resource-name>
             <description>Acceso a los Reportes de Ventas de la Tienda</description>
             <url-pattern>/pages/admin/reporteDiario.jsf</url-pattern>
-            <url-pattern>/pages/admin/reporteMasVendido.jsf</url-pattern>
             <url-pattern>/pages/admin/reporteCliente.jsf</url-pattern>
 
             <http-method>GET</http-method>
@@ -151,6 +151,26 @@
             <description/>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+        </security-constraint>
+    <security-constraint>
+        <display-name>Acceso a Cliente</display-name>
+        <web-resource-collection>
+            <web-resource-name>Acceso a Clientes</web-resource-name>
+            <description>Acceso a las Funcionalidades de los Clientes</description>
+            <url-pattern>/pages/admin/borrarCliente.jsf</url-pattern>
+            <url-pattern>/pages/admin/consultarCliente.jsf</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Rol de Administrador para Funcionalidades de Clientes</description>
+            <role-name>Administrador</role-name>
+            </auth-constraint>
         </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>

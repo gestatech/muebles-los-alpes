@@ -13,7 +13,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 /**
- * Session Bean que implementa la interfaz con los métodos del Autenticacion. Abnotado con @Statelss para indicar que no guarda ningun estado.
+ * Session Bean que implementa la interfaz con los métodos del Autenticacion.
+ * Anotado con @Statelss para indicar que no guarda ningun estado.
  * @author Memo Toro
  * @author Hans Escallon
  */

@@ -49,9 +49,9 @@ public interface IClienteService {
      * @return Cliente asociado al usuario
      */
     public Cliente consultarPorUsuario(String nombreUsuario,String contrasenia);
-        /**
+    /**
      * Método para consultar tarjetas de credito asociada al cliente.
      * @param numeroDocumento Variable tipo int, corresponde al documento del cliente.
      */
-     public Tarjeta consultarTarjeta(int numeroDocumento);
+    public Tarjeta consultarTarjeta(int numeroDocumento);
 }

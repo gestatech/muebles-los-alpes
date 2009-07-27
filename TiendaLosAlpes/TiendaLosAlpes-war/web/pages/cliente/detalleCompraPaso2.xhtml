@@ -40,7 +40,6 @@
                             </tr>
                             </table>
                 </rich:panel>
-                <script type="text/javascript" src="../calendario.js"></script>
                 <rich:panel>
                     <f:facet name="header">Datos de la Compra</f:facet>
                     <h:panelGrid columns="3">
@@ -48,13 +47,16 @@
                             <h:outputLabel value="#{CarritoCompraBean.venta.idCliente}"/>
                             <rich:message for="NumeroId"/>
                             <h:outputLabel value="Número de Tarjeta (*):"/>
-    <h:outputText value="#{CarritoCompraBean.tarjeta.numeroTarjeta}" required="true" id="Tarjeta"/><br/>
+                            <h:outputText value="#{CarritoCompraBean.tarjeta.numeroTarjeta}" required="true" id="Tarjeta"/>
+                            <rich:message for="Tarjeta"/>
                             <h:outputLabel value="Código de Seguridad (*):"/>
-                            <h:outputText value="#{CarritoCompraBean.tarjeta.codigoSeguridad }" id="Seguridad"/><br/>
+                            <h:inputSecret value="#{CarritoCompraBean.tarjeta.codigoSeguridad}" id="Seguridad"/>
+                            <rich:message for="Seguridad"/>
                             <h:outputLabel value="Fecha de Expiración (*):"/>
-                            <h:outputText value="#{CarritoCompraBean.tarjeta.fechaExpiracionTarjeta}" id="Fecha" /><br/>
+                            <h:outputText value="#{CarritoCompraBean.tarjeta.fechaExpiracionTarjeta}" id="Fecha" />
+                            <rich:message for="Fecha"/>
                             <h:outputLabel value="Cuotas (*):"/>
-                            <h:selectOneMenu value="#{CarritoCompraBean.venta.cuotas}" required="true" id="Cuotas"><br/>
+                            <h:selectOneMenu value="#{CarritoCompraBean.venta.cuotas}" required="true" id="Cuotas">
                                 <f:selectItem itemValue="2"/>
                                 <f:selectItem itemValue="6"/>
                                 <f:selectItem itemValue="12"/>
@@ -63,12 +65,12 @@
                             </h:selectOneMenu>
                             <rich:message for="Cuotas"/>
                             <h:outputLabel value="País (*):"/>
-                            <h:selectOneMenu value="#{CarritoCompraBean.venta.pais}" id="País"><br/>
+                            <h:selectOneMenu value="#{CarritoCompraBean.venta.pais}" id="País">
                                 <f:selectItems value="#{CarritoCompraBean.paises}"/>
                             </h:selectOneMenu>
                             <rich:message for="País"/>
                             <h:outputLabel value="Departamento (*):"/>
-                            <h:selectOneMenu value="#{CarritoCompraBean.venta.departamento}" id="Departamento"><br/>
+                            <h:selectOneMenu value="#{CarritoCompraBean.venta.departamento}" id="Departamento">
                                 <f:selectItems value="#{CarritoCompraBean.departamentos}" />
                             </h:selectOneMenu>
                             <rich:message for="Departamento"/>

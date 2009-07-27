@@ -1,6 +1,5 @@
 package com.losalpes.persistence;
 
-import com.losalpes.persistence.entity.Venta;
 import java.util.List;
 import javax.ejb.Local;
 /**
@@ -45,13 +44,16 @@ public interface IPersistenceServices {
      * @return List Listado con los objetos que satisfacen la consulta.
      */
     public List findObjects(String consulta, List<String> valores);
-
+    /**
+     * Método para crear el cliente
+     * @param objeto parametro de tipo Object
+     */
     public void createCliente(Object obj);
+    /**
+     * Método para realizar la busqueda de la tarjeta de credito del cliente
+     * @param id variable de tipo int ue corresponde al numero de documento del cliente
+     */
     public Object findRemoteDatabase(int id);
-
-
-
-
     /**
      * Método para crear una venta con transaccionalidad
      * @param obj de tipo Venta

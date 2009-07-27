@@ -14,11 +14,16 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 /**
  * Session Bean que implementa la interfaz con los métodos del Cliente.
- * Esta anotado como @Stateless por ser un bien sin estado.
+ * Bean anotado con @Stateless por no ser necesario guardar los datos del cliente en sesion.
+ * Bean anotado con @WebService para poderlo exponer como servicio web.
+ * Bean anotado con @DeclareRoles para asignar los rolesque pueden utilizar este bean.
  * @author Memo Toro
  */
+@WebService(name="ClienteWebService",serviceName="ClienteWS")
 @Stateless
 @DeclareRoles({"Administrador","Gerente"})
 public class ClienteServiceBean implements IClienteService {
@@ -99,6 +104,7 @@ public class ClienteServiceBean implements IClienteService {
     @RolesAllowed({"Administrador","Gerente"})
     public Cliente consultar(String criterio, String valor) {
         List<String> valores = new ArrayList<String>();
+        List<Cliente> clientes = new ArrayList<Cliente>();
         Cliente cliente = new Cliente();
         // Determinación de criterio de consulta y valor del cliente a obtener.
         if(criterio.equalsIgnoreCase("NUMERO_DOCUMENTO")){
@@ -109,8 +115,10 @@ public class ClienteServiceBean implements IClienteService {
         }
         else if(criterio.equalsIgnoreCase("EMAIL")){
             valores.add("email|" + valor);
-        }
-        cliente = (Cliente)persistenceServices.findObjects("findCliente",valores).get(0);
+        }        
+        clientes = persistenceServices.findObjects("findCliente",valores);
+        if(clientes.size()>0)
+            cliente = clientes.get(0);
         return cliente;
     }
     /**
@@ -147,14 +155,15 @@ public class ClienteServiceBean implements IClienteService {
     }
     /**
      * Método para registrar usuarios.
-     * Anotadocon @PermitAll para no restringir el acceso a este metodo.
+     * Anotado con @PermitAll para no restringir el acceso a este metodo.
+     * Anotado con @WebMethod como metodo publico para operacion de servicio web.
      * PermitAll@param usuario Variable tipo Usuario
      */
+    @WebMethod(operationName="CrearCliente")
     @PermitAll
     public void registrarUsuario(Usuario usuario) {
         persistenceServices.createCliente(usuario);
     }
-
     /**
      * Método para obtener el Cliente a partir del usuario ingresado.
      * Anotadocon @PermitAll para no restringir el acceso a este metodo.

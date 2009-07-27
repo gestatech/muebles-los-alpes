@@ -18,23 +18,22 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import javax.sql.DataSource;
 import javax.transaction.NotSupportedException;
 import javax.transaction.Status;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
-
 /**
  * Sessión Bean con lógica de persistencia. Implementa un Entity Manager para realizar las
  * operaciones sobre la base de datos a nivel de object. Todos los session bean que quieren persistir
  * una entidad invocan este session bean.
+ * Bean anotado con @Stateless por no ser necesario guardar los datos de persistencia en sesion.
+ * Bean anotado con @TransactionManagement para indicar que la transaccion se trabaja al interior del bean y no por el contenedor.
  * @author Memo Toro
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class PersistenceServices implements IPersistenceServices {
-
     /**
      * Variable de Persistence Context para realizar las operaciones de persistencia de entidades @Entity
      */
@@ -55,7 +54,6 @@ public class PersistenceServices implements IPersistenceServices {
     /**  Crea una nueva instacia de PersistenceServices */
     public PersistenceServices() {
     }
-
     /**
      * Método para Iniciar una transaccion
      */
@@ -68,7 +66,6 @@ public class PersistenceServices implements IPersistenceServices {
             Logger.getLogger(PersistenceServices.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     /**
      * Método para confirmar una transaccion
      */
@@ -86,7 +83,6 @@ public class PersistenceServices implements IPersistenceServices {
             }
         }
     }
-
     /**
      * Método para marcar una transaccion para rollback
      */
@@ -97,22 +93,21 @@ public class PersistenceServices implements IPersistenceServices {
             e.printStackTrace();
         }
     }
-
     /**
      * Método para crear una venta con transaccionalidad
      * @param obj parametro de tipo Venta
      */
     public void createVenta(Object obj) {
         try {
-        Venta vent = (Venta) obj;
-        initTransaction();
-        em.persist(vent);
-        updateRemoteDatabase(vent);
-        commitTransaction();
-    } catch (Exception ex) {
-    Logger.getLogger(PersistenceServices.class.getName()).log(Level.SEVERE, null, ex);
-    rollBackTransaction();
-    }
+            Venta vent = (Venta) obj;
+            initTransaction();
+            em.persist(vent);
+            updateRemoteDatabase(vent);
+            commitTransaction();
+        } catch (Exception ex) {
+            Logger.getLogger(PersistenceServices.class.getName()).log(Level.SEVERE, null, ex);
+            rollBackTransaction();
+        }
     }
     /**
      * Método para crear el cliente
@@ -155,7 +150,6 @@ public class PersistenceServices implements IPersistenceServices {
             System.out.println("Error de SQL");
         }
     }
-
     /**
      * Método para actualizar le monto de la tarjeta en base de datos remota con las tarjetas de credito
      * @param objeto parametro de tipo Object
@@ -166,15 +160,11 @@ public class PersistenceServices implements IPersistenceServices {
         try {
             Connection con = dataSource.getConnection();
             con.setAutoCommit(false);
-            /* Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación)
-             * en caso afirmativo hacer rollback de la transacción global
-             */
+            // Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación) en caso afirmativo hacer rollback de la transacción global             
             ps = con.prepareStatement("select tarjnume,tarjclie,tarjmont,tarjcose,tarjfeex from tarjeta where tarjnume = ?");
             ps.setString(1, venta.getNumeroTarjeta());
             ResultSet rs = ps.executeQuery();
-            /* Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación)
-             * en caso afirmativo hacer rollback de la transacción global
-             */
+            // Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación) en caso afirmativo hacer rollback de la transacción global
             if (!rs.next()) {
                 System.out.println("Error en la venta");
                 throw new VentaException();
@@ -201,7 +191,6 @@ public class PersistenceServices implements IPersistenceServices {
             throw new SQLException();
         }
     }
-
     /**
      * Método para realizar la busqueda de la tarjeta de credito del cliente
      * @param id variable de tipo int ue corresponde al numero de documento del cliente
@@ -211,17 +200,13 @@ public class PersistenceServices implements IPersistenceServices {
         PreparedStatement ps;
         Tarjeta tar = new Tarjeta();
         try {
-            /* Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación)
-             * en caso afirmativo hacer rollback de la transacción global
-             */
+            // Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación) en caso afirmativo hacer rollback de la transacción global
             Connection con = dataSource.getConnection();
             con.setAutoCommit(false);
             ps = con.prepareStatement("select tarjnume,tarjclie,tarjmont,tarjcose,tarjfeex from tarjeta where tarjclie = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            /* Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación)
-             * en caso afirmativo hacer rollback de la transacción global
-             */
+            // Verificar si el usuario ya se encuentra registrado (existe un registro con la misma identificación) en caso afirmativo hacer rollback de la transacción global
             if (!rs.next()) {
                 throw new VentaException();
             } else {
@@ -237,7 +222,6 @@ public class PersistenceServices implements IPersistenceServices {
         return tar;
 
     }
-
     /**
      * Método para almacenar entidades.
      * @param obj Object de una entidad anotada con @Entity
@@ -247,7 +231,6 @@ public class PersistenceServices implements IPersistenceServices {
         em.persist(obj);
         commitTransaction();
     }
-
     /**
      * Método para actualizar entidades
      * @param obj Object de una entidad anotada con @Entity
@@ -257,17 +240,15 @@ public class PersistenceServices implements IPersistenceServices {
         em.merge(obj);
         commitTransaction();
     }
-
     /**
      * Método para eliminar entidades
      * @param obj Object de una entidad anotada con @Entity
      */
     public void delete(Object obj) {
-        initTransaction();
+//        initTransaction();
         em.remove(obj);
-        commitTransaction();
+//        commitTransaction();
     }
-
     /**
      * Método para retornar el listado de toda una entidad
      * @param c Class con el tipo de clase a consultar
@@ -276,7 +257,6 @@ public class PersistenceServices implements IPersistenceServices {
     public List findAll(Class c) {
         return em.createQuery("SELECT o FROM " + c.getSimpleName() + " AS o").getResultList();
     }
-
     /**
      * Método para encontrar un objeto por su Id
      * @param c Class con el tipo de clase a consultar
@@ -286,7 +266,6 @@ public class PersistenceServices implements IPersistenceServices {
     public Object findById(Class c, Object id) {
         return em.find(c, id);
     }
-
     /**
      * Método para cosultar por varios criterios y retornar listas de objetos
      * @param consulta String Criterio de consulta

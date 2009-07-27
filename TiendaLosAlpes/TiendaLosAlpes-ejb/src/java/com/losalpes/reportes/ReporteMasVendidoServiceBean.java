@@ -12,14 +12,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 /**
  * Session Bean anotado con @Stateless al no mantener información para la lógica de consulta de
  * producto mas vendido en un rango de fechas determinado.
+ * Bean anotado con @DeclareRoles para asignar los rolesque pueden utilizar este bean.
  * @author Memo Toro
  */
 @Stateless
+@DeclareRoles({"Gerente"})
 public class ReporteMasVendidoServiceBean  implements IReporteMasVendidoService {
     /**
      * Interfaz Anotada con @EJB que inyecta la referencia a la interfaz IVentaService para los ventas.

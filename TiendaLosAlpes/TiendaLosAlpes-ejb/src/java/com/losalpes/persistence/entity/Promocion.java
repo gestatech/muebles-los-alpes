@@ -37,7 +37,7 @@ public class Promocion implements Serializable{
      * String con la fecha de fin.
      */
     private String fechaFin;
-    /** Crea una nueva instancia de Promocion vacia*/
+    /** Crea una nueva instancia de Promocion */
     public void Promocion(){}
     /**
      * Método que retorna el id de la promocion.

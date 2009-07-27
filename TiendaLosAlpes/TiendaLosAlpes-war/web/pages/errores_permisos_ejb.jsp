@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Error de Autenticación</title>
+<title>Error de Permisos en Capa EJB</title>
 <style type="text/css">
 <!--
 .Estilo2 {font-family: Verdana, Arial, Helvetica, sans-serif}
@@ -15,10 +15,11 @@
 
 <body>
 <p align="center"><img src="../../img/header.jpg" width="800" height="126" /></p>
-<h2 align="center" class="Estilo2">Error de Permisos !!! </h2>
-<p align="center" class="Estilo2"><img src="../../img/prohibido.jpg" width="252" height="246" /></p>
-<p align="center" class="Estilo3">Usted No esta Autorizado para Acceder a esta funcionalidad.</p>
-<h3 align="center"><em>Comuniquese con Soporte T&eacute;cnico de la Tienda si Requiere de Permisos para dichas Funcionalidades   </em></h3>
+<h2 align="center" class="Estilo2">Error de Permisos - EJB!!! </h2>
+<p align="center" class="Estilo2"><img src="../../img/prohibido_ejb.jpg" width="200" height="220" /></p>
+<p align="center" class="Estilo3">Usted No esta Autorizado para Hacer Uso de Esta Funcionalidad por su Tipo de Rol.</p>
+<h3 align="center"><em>Comuniquese con Soporte T&eacute;cnico de la Tienda si Requiere de Permisos para dichas Funcionalidades.</em></h3>
+<p align="center"><input type="button" value="Regresar" onclick="back()"/></p>
 <p align="center"><img src="../../img/bottom.jpg" width="800" height="38" /></p>
 </body>
 

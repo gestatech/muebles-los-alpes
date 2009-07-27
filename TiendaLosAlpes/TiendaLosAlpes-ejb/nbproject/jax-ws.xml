@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="ClienteWebService">
+      <implementation-class>com.losalpes.cliente.ClienteServiceBean</implementation-class>
+    </service>
+    <service name="TiendaWebService">
+      <implementation-class>com.losalpes.catalog.CatalogServiceBean</implementation-class>
+    </service>
+    <service name="VentaWebService">
+      <implementation-class>com.losalpes.ventas.VentaServiceBean</implementation-class>
+    </service>
+  </services>
+  <clients/>
+</jax-ws>

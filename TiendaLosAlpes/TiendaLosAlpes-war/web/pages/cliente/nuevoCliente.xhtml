@@ -17,6 +17,7 @@
                     </rich:toolBar>
                 </a4j:form>
                 <a4j:form>
+                <script type="text/javascript" src="../calendario.js"></script>
                 <rich:panel>
                      <f:facet name="header">Menú de Registro de Clientes</f:facet>
                         <h:panelGrid columns="3">
@@ -75,18 +76,20 @@
                         <f:facet name="header">Datos de Tarjeta de Crédito</f:facet>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Número de Tarjeta"/>
-                            <h:inputText value="#{ClienteBean.tarjeta.numeroTarjeta}" id="NumeroTarjeta"/><br/>
+                            <h:inputText value="#{ClienteBean.tarjeta.numeroTarjeta}" id="NumeroTarjeta"/>
+                            <rich:message for="NumeroTarjeta"/>
                             <h:outputLabel value="Código de Seguridad"/>
-                            <h:inputText value="#{ClienteBean.tarjeta.codigoSeguridad}" id="CodigoSeguridad"/><br/>
+                            <h:inputSecret value="#{ClienteBean.tarjeta.codigoSeguridad}" id="CodigoSeguridad"/>
+                            <rich:message for="CodigoSeguridad"/>
                             <h:outputLabel value="Fecha de Expiración"/>
-                            <h:inputText value="#{ClienteBean.tarjeta.fechaExpiracionTarjeta}" id="FechaExpiracion"/><br/>
+                            <rich:calendar value="#{ClienteBean.fechaexp}" datePattern="dd/MM/yyyy" id="FechaExpiracion" isDayEnabled="disablementFunction" dayStyleClass="disabledClassesProv" boundaryDatesMode="scroll" required="true"/>
+                            <rich:message for="FechaExpiracion"/>
                             <h:outputLabel value="Monto"/>
                             <h:inputText value="#{ClienteBean.tarjeta.monto}" id="Monto"/>
+                            <rich:message for="Monto"/>
                         </h:panelGrid>
                         </rich:panel>
                         <br/>
-
-
                         <rich:panel>
                         <f:facet name="header">Datos de Usuario</f:facet>
                         <h:panelGrid columns="3">

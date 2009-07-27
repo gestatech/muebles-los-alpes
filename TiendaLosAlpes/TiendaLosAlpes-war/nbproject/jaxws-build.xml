@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xalan="http://xml.apache.org/xslt" xmlns:webproject2="http://www.netbeans.org/ns/web-project/2" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
+    <!--
+                ===================
+                JAX-WS WSIMPORT SECTION
+                ===================
+            -->
+    <target name="wsimport-init" depends="init">
+        <mkdir dir="${build.generated.dir}/wsimport/client"/>
+        <mkdir dir="${build.generated.dir}/wsimport/binaries"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${java.home}/../lib/tools.jar:${j2ee.platform.wsimport.classpath}:${javac.classpath}"/>
+        </taskdef>
+        <condition property="conf-dir" value="${conf.dir}/" else="">
+            <isset property="conf.dir"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-check-ClienteWebService" depends="wsimport-init">
+        <condition property="wsimport-client-ClienteWebService.notRequired">
+            <available file="${build.generated.dir}/wsimport/client/com/losalpes/cliente/ClienteWebService.java"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-ClienteWebService" depends="wsimport-init,wsimport-client-check-ClienteWebService" unless="wsimport-client-ClienteWebService.notRequired">
+        <wsimport sourcedestdir="${build.generated.dir}/wsimport/client" destdir="${build.generated.dir}/wsimport/binaries" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/ClienteWebService/wsdl/localhost_8080/ClienteWS/ClienteWebService.wsdl" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/ClienteWS/ClienteWebService?wsdl" xnocompile="true"/>
+    </target>
+    <target name="wsimport-client-clean-ClienteWebService" depends="-init-project">
+        <delete dir="${build.generated.dir}/wsimport/client/com/losalpes/cliente"/>
+    </target>
+    <target name="wsimport-client-check-VentaWebService" depends="wsimport-init">
+        <condition property="wsimport-client-VentaWebService.notRequired">
+            <available file="${build.generated.dir}/wsimport/client/com/losalpes/ventas/VentaWebService.java"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-VentaWebService" depends="wsimport-init,wsimport-client-check-VentaWebService" unless="wsimport-client-VentaWebService.notRequired">
+        <wsimport sourcedestdir="${build.generated.dir}/wsimport/client" destdir="${build.generated.dir}/wsimport/binaries" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/VentaWebService/wsdl/localhost_8080/VentaWS/VentaWebService.wsdl" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/VentaWS/VentaWebService?wsdl" xnocompile="true"/>
+    </target>
+    <target name="wsimport-client-clean-VentaWebService" depends="-init-project">
+        <delete dir="${build.generated.dir}/wsimport/client/com/losalpes/ventas"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-ClienteWebService, wsimport-client-VentaWebService"/>
+    <target name="wsimport-client-compile" depends="-pre-pre-compile">
+        <webproject2:javac srcdir="${build.generated.dir}/wsimport/client" classpath="${j2ee.platform.wsimport.classpath}:${javac.classpath}" destdir="${build.classes.dir}"/>
+        <copy todir="${build.classes.dir}">
+            <fileset dir="${build.generated.dir}/wsimport/binaries" includes="**/*.xml"/>
+        </copy>
+    </target>
+</project>

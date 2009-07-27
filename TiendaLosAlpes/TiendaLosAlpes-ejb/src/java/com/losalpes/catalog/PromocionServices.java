@@ -21,6 +21,7 @@ import javax.jms.TextMessage;
 import javax.jms.Topic;
 /**
  * Session Bean para el manejo de las promociones.
+ * Bean anotado con @DeclareRoles para asignar los rolesque pueden utilizar este bean.
  * @author Kerlyn Hans
  * @author Memo Toro
  */

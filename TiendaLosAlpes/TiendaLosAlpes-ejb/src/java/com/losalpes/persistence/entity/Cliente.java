@@ -12,8 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 /**
@@ -36,8 +34,6 @@ public class Cliente implements Serializable{
      * Int para el numero de documento.
      */
     private int numeroDocumento;
-
-    private Tarjeta tarjeta;
     /**
      * String para la direccion.
      */
@@ -73,7 +69,7 @@ public class Cliente implements Serializable{
     /**
      * Tarjeta de credito del cliente.
      */
-     //Tarjeta tarjeta;
+    private Tarjeta tarjeta;
     /**
      * Usuario para el usuario del cliente.
      */
@@ -284,8 +280,9 @@ public class Cliente implements Serializable{
     }
     /**
      * Método para obtener la tarjeta de credito del cliente.
+     * @return Tarjeta Tarjeta de credito del cliente.
      */
-     @Transient
+    @Transient
     public Tarjeta getTarjeta() {
         return tarjeta;
     }

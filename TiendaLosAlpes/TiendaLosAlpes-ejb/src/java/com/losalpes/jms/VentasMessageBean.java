@@ -13,7 +13,7 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 /**
  * Message-Driven Bean para simular la aplicaciond el Ventas.
- * Se anotan todas la propiedades que necesita el MDB para su funcionamiento y procesamiento del mensaje.
+ * Anotado con @MessageDriven. Se anotan todas la propiedades que necesita el MDB para su funcionamiento y procesamiento del mensaje.
  * @author Kerlyn Hans
  * @author Memo Toro
  */

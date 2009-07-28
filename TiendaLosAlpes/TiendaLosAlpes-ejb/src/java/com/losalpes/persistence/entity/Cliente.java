@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 /**
  * POJO de Cliente
  * Anotado con @Entity y @Table para indicar que este objeto persiste y será una tabla.
@@ -100,6 +101,7 @@ public class Cliente implements Serializable{
      * Anotado con @JoinColumn para indicar la columna de enlace de la relación.
      * @return Usuario TIpo de usuario del cliente.
      */
+    
     @OneToOne(cascade={CascadeType.ALL},mappedBy="cliente")
     @JoinColumn(name="clieusu")
     public Usuario getUsuario() {

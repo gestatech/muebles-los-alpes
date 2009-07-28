@@ -245,9 +245,9 @@ public class PersistenceServices implements IPersistenceServices {
      * @param obj Object de una entidad anotada con @Entity
      */
     public void delete(Object obj) {
-//        initTransaction();
+        initTransaction();
         em.remove(obj);
-//        commitTransaction();
+        commitTransaction();
     }
     /**
      * Método para retornar el listado de toda una entidad

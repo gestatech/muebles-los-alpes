@@ -58,8 +58,7 @@ public class VentaServiceBean implements IVentaService{
      * Anotado con @RolesAllowed para que pueda solo acceder el Gerente a la funcionalidad*
      * @return List con las ventas de la tienda.
      */
-//    @RolesAllowed({"Gerente"})
-    @PermitAll
+    @RolesAllowed({"Gerente"})
     public List obtenerVentas(){
         return persistencia.findAll(Venta.class);
     }

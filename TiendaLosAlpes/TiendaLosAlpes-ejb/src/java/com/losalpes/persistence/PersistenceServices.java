@@ -1,5 +1,7 @@
 package com.losalpes.persistence;
 
+import com.losalpes.persistence.entity.DetalleVenta;
+import com.losalpes.persistence.entity.Mueble;
 import com.losalpes.persistence.entity.Tarjeta;
 import com.losalpes.persistence.entity.Usuario;
 import com.losalpes.persistence.entity.Venta;
@@ -8,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

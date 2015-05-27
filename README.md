@@ -2,10 +2,9 @@ Los Alpes Furniture Company is a company known for its products nationwide. In i
 
 Currently the sales process is efficient but has a problem with its data and reports required. To this aims to develop a system on the JEE platform that allows registered customers, vendors, products and each of the sales achieved in such a way that can be identified through reports which is the amount parts sold and thus calculate commissions each vendor must receive, in addition to supporting the process of inventory for manufacturing new parts.
 
-Taken from Wiki "Internet Technologies Development" (http://xue.uniandes.edu.co/ ~ csof6201/doku.php id = project)
+Description taken from Wiki "Internet Technologies Development" (http://xue.uniandes.edu.co/ ~ csof6201/doku.php id = project)
 
-
-
+This is a coursework for JEE development course.
 
 La compañía Muebles los Alpes, es una empresa reconocida por sus productos a nivel nacional. En su portafolio de productos ofrece muebles para interior y exterior, con materiales de alta calidad, diseños exclusivos y justos a la necesidad del mercado. Para los muebles de exterior ha desarrollado una amplia línea de muebles en aluminio fundido tratados con pintura en polvo, aptos para el uso en el exterior e interior, además de ser piezas elegantes y óptimas. Entre sus procesos de negocio más importantes están: el proceso de ventas, inventarios, publicidad y recursos humanos. Estos procesos son vitales para la compañía y algunos deben ser mejorados para que los servicios ofrecidos al cliente permitan manejar un mayor nivel de respuesta y calidad.
 
@@ -13,3 +12,5 @@ Actualmente el proceso de ventas es eficiente pero se presenta un problema con l
 
 
 Tomado de la Wiki de "Tecnologías de Desarrollo para Internet" (http://xue.uniandes.edu.co/~csof6201/doku.php?id=proyecto)
+
+Ejercicio de clase para Desarrollo JEE
